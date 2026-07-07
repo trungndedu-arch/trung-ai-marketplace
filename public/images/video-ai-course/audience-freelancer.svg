@@ -1,0 +1,19 @@
+<svg width="720" height="360" viewBox="0 0 720 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="360" rx="30" fill="#070506"/>
+  <defs><radialGradient id="f" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(505 126) rotate(135) scale(340 220)"><stop stop-color="#a855f7" stop-opacity=".42"/><stop offset=".45" stop-color="#ff4a1a" stop-opacity=".32"/><stop offset="1" stop-opacity="0"/></radialGradient></defs>
+  <rect width="720" height="360" fill="url(#f)"/>
+  <g transform="translate(398 50)">
+    <circle cx="96" cy="60" r="42" fill="#171116" stroke="#ff6a47" stroke-opacity=".42"/>
+    <path d="M52 114c31-26 84-28 120 0l22 116H28l24-116z" fill="#1a1518" stroke="#ff6a47" stroke-opacity=".28"/>
+    <rect x="12" y="166" width="220" height="78" rx="14" fill="#060606" stroke="#a855f7" stroke-opacity=".48"/>
+    <text x="100" y="213" fill="#f0abfc" font-size="24" font-family="Arial" font-weight="800">AI</text>
+  </g>
+  <g transform="translate(552 70)">
+    <rect width="70" height="50" rx="12" fill="#100812" stroke="#c084fc"/>
+    <path d="M18 18h34v20H18zM26 42h18" stroke="#fff" stroke-opacity=".85"/>
+  </g>
+  <g transform="translate(568 160)">
+    <rect width="88" height="62" rx="14" fill="#120808" stroke="#ff7657"/>
+    <path d="M18 24h52M18 38h38" stroke="#ffb36b" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,19 @@
+<svg width="720" height="360" viewBox="0 0 720 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="360" rx="30" fill="#080506"/>
+  <defs><radialGradient id="b" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(530 130) rotate(136) scale(340 230)"><stop stop-color="#ff56c7" stop-opacity=".36"/><stop offset=".45" stop-color="#ff6a1a" stop-opacity=".34"/><stop offset="1" stop-opacity="0"/></radialGradient></defs>
+  <rect width="720" height="360" fill="url(#b)"/>
+  <g transform="translate(410 52)">
+    <circle cx="96" cy="60" r="42" fill="#211016" stroke="#ff8ac8" stroke-opacity=".42"/>
+    <path d="M54 112c28-25 80-28 116 0l22 118H28l26-118z" fill="#221116" stroke="#ff6a47" stroke-opacity=".3"/>
+    <rect x="18" y="166" width="210" height="76" rx="14" fill="#070707" stroke="#ff6aee" stroke-opacity=".46"/>
+    <path d="M106 190l38 24l-38 24v-48z" fill="#f5c2ff"/>
+  </g>
+  <g transform="translate(574 82)">
+    <rect width="82" height="64" rx="14" fill="#120808" stroke="#ff7b4a"/>
+    <path d="M18 28l23-12l23 12l-23 12l-23-12zM27 38v16c10 8 19 8 29 0V38" stroke="#ffd6a5" stroke-width="4" fill="none"/>
+  </g>
+  <g transform="translate(594 174)">
+    <rect width="68" height="56" rx="12" fill="#100812" stroke="#f0abfc"/>
+    <path d="M16 40h36M16 26h24" stroke="#f0abfc" stroke-width="5" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,0 +1,22 @@
+<svg width="720" height="360" viewBox="0 0 720 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="360" rx="30" fill="#080506"/>
+  <defs><radialGradient id="r" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(510 132) rotate(135) scale(350 230)"><stop stop-color="#ff3a1a" stop-opacity=".55"/><stop offset=".55" stop-color="#6d28d9" stop-opacity=".24"/><stop offset="1" stop-color="#020202" stop-opacity="0"/></radialGradient></defs>
+  <rect width="720" height="360" fill="url(#r)"/>
+  <g opacity=".2" stroke="#ff4a2a"><path d="M240 60C380 10 520 60 690 15"/><path d="M270 290C430 230 520 300 720 230"/></g>
+  <g transform="translate(408 52)">
+    <circle cx="96" cy="58" r="42" fill="#1d1112" stroke="#ff6a47" stroke-opacity=".45"/>
+    <path d="M55 116c25-23 78-30 112 3l20 116H32l23-119z" fill="#171112" stroke="#ff6a47" stroke-opacity=".32"/>
+    <rect x="4" y="174" width="220" height="68" rx="12" fill="#050505" stroke="#ff6a47" stroke-opacity=".5"/>
+    <rect x="32" y="193" width="158" height="28" rx="6" fill="#111827"/>
+  </g>
+  <g transform="translate(346 118)">
+    <path d="M35 0h70v44H35z" fill="#161616" stroke="#ff7657"/>
+    <path d="M35 44L0 76h38l12-12h40l12 12h38l-35-32" fill="#0b0b0b" stroke="#ff7657"/>
+    <circle cx="70" cy="22" r="10" fill="#ff3a1a"/>
+  </g>
+  <g transform="translate(620 72)">
+    <rect width="46" height="46" rx="12" fill="#111" stroke="#ff4a7a"/><text x="13" y="31" fill="#fff" font-size="22" font-family="Arial">♪</text>
+    <rect y="58" width="46" height="46" rx="12" fill="#111" stroke="#ff4a2a"/><text x="12" y="88" fill="#fff" font-size="19" font-family="Arial">▶</text>
+    <rect y="116" width="46" height="46" rx="12" fill="#111" stroke="#ff8a3d"/><text x="12" y="147" fill="#fff" font-size="20" font-family="Arial">◎</text>
+  </g>
+</svg>

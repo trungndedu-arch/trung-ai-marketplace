@@ -1,0 +1,30 @@
+<svg width="720" height="360" viewBox="0 0 720 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="720" height="360" rx="30" fill="#090506"/>
+  <defs>
+    <radialGradient id="g1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(520 126) rotate(132) scale(320 210)">
+      <stop stop-color="#ff4a18" stop-opacity=".62"/><stop offset=".52" stop-color="#7f1d1d" stop-opacity=".25"/><stop offset="1" stop-color="#050505" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="line" x1="180" y1="40" x2="720" y2="300"><stop stop-color="#ff2d2d"/><stop offset="1" stop-color="#ffb21a"/></linearGradient>
+  </defs>
+  <rect width="720" height="360" fill="url(#g1)"/>
+  <g opacity=".22">
+    <path d="M0 310C120 250 220 240 340 280C480 326 570 310 720 230" stroke="url(#line)" stroke-width="2"/>
+    <path d="M40 300C170 212 330 220 470 260C580 292 660 260 720 210" stroke="#ff3b25" stroke-opacity=".7"/>
+  </g>
+  <g opacity=".17">
+    <path d="M0 0h720v360H0z" fill="url(#grid)"/>
+  </g>
+  <defs><pattern id="grid" width="26" height="26" patternUnits="userSpaceOnUse"><path d="M26 0H0v26" stroke="#fff" stroke-opacity=".18"/></pattern></defs>
+  <g transform="translate(378 54)">
+    <circle cx="92" cy="62" r="42" fill="#191012" stroke="#ff7657" stroke-opacity=".45"/>
+    <path d="M52 112c22-22 75-28 103 0l20 126H28l24-126z" fill="#201313" stroke="#ff5b3c" stroke-opacity=".28"/>
+    <path d="M66 72c15 22 52 22 63 0" stroke="#ffad7b" stroke-width="4" stroke-linecap="round"/>
+    <rect x="16" y="166" width="210" height="72" rx="12" fill="#050505" stroke="#ff5b3c" stroke-opacity=".45"/>
+    <rect x="46" y="186" width="150" height="32" rx="6" fill="#111" stroke="#ffb36b" stroke-opacity=".25"/>
+  </g>
+  <g transform="translate(520 156)">
+    <rect width="120" height="76" rx="14" fill="#120909" stroke="#ff5b3c" stroke-opacity=".6"/>
+    <rect x="20" y="45" width="10" height="20" fill="#ff3b25"/><rect x="42" y="28" width="10" height="37" fill="#ff8b22"/><rect x="64" y="18" width="10" height="47" fill="#ffd166"/>
+    <text x="16" y="24" fill="#ffb36b" font-size="16" font-family="Arial" font-weight="700">ADS</text>
+  </g>
+</svg>
