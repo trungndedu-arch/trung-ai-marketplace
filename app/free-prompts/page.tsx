@@ -51,6 +51,20 @@ type PromptItem = {
 
 const prompts: PromptItem[] = [
   {
+    id: 20,
+    title: "Tạo Ảnh Quảng Cáo Đồ Lót",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Thời Trang",
+    description: "Tạo ảnh quảng cáo lingerie cao cấp phong cách beauty-fashion Nhật Bản, ánh sáng mềm, màu ivory sang trọng và bố cục e-commerce premium.",
+    image: "/images/prompts/lingerie-nhat-ban-cao-cap-01.png",
+    images: ["/images/prompts/lingerie-nhat-ban-cao-cap-01.png"],
+    gradient: "from-stone-100 via-amber-200 to-violet-950",
+    icon: Shirt,
+    height: "h-[30rem]",
+    prompt: `Create a hyper-realistic luxury lingerie e-commerce detail-page visual inspired by premium Japanese beauty-fashion brands. IMPORTANT: Generate ONLY ONE SINGLE VERTICAL IMAGE. Do NOT create multiple posters. Do NOT create collages. STYLE: Luxury glossy beauty-commercial realism. Soft dreamy fashion aesthetics. Premium feminine branding. MAIN CONCEPT: A glowing soft-beauty lingerie campaign focused on: radiant feminine elegance, luxury comfort, soft body glow, and dreamy romantic styling. MODEL: Adult female model with glowing skin texture. Soft cinematic makeup. Elegant emotional beauty. Luxury fashion styling. PRODUCT: Luxury ivory-white lace lingerie with: soft reflective fabric, light floral lace details, premium smooth texture, and natural support fit. VISUAL STRUCTURE: cinematic beauty hero shot dreamy close-up details luxury typography overlays premium spacing hierarchy soft glowing beauty atmosphere BACKGROUND: Minimal ivory-beauty studio with dreamy sunlight diffusion and floating light particles. COLOR PALETTE: Ivory white, soft pearl, light champagne, warm blush glow, cream beige. MOOD: Dreamy. Luxury. Elegant. Soft romantic beauty. QUALITY: Ultra realistic HDR. 8K cinematic realism. Looks like a real premium Japanese lingerie e-commerce detail-page campaign.`,
+  },
+  {
     id: 19,
     title: "Character Sheet Đồng Nhất Nhân Vật",
     model: "GPT Image",
