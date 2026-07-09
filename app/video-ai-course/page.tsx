@@ -42,7 +42,13 @@ import {
   X,
 } from "lucide-react";
 
-const menuItems = ["Vấn đề", "Dành cho ai", "Nội dung khóa", "Giảng viên", "FAQ"];
+const menuItems = [
+  { label: "Vấn đề", target: "van-de" },
+  { label: "Dành cho ai", target: "doi-tuong" },
+  { label: "Nội dung khóa", target: "noi-dung-khoa-hoc" },
+  { label: "Giảng viên", target: "nguoi-huong-dan" },
+  { label: "FAQ", target: "faq" },
+];
 
 const featureItems = [
   { label: "Sản xuất video AI", icon: Clapperboard, color: "text-red-400", border: "border-red-500/55", glow: "shadow-[0_0_28px_rgba(239,68,68,.32)]" },
@@ -122,8 +128,12 @@ const problemCards = [
 ];
 
 function Header() {
+  const scrollToSection = (target: string) => {
+    document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+
   return (
-    <header className="sticky top-0 z-50 border-b border-red-500/15 bg-[#09090b]/95 shadow-[0_10px_45px_rgba(239,68,68,.13)] backdrop-blur-xl">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-red-500/15 bg-[#09090b]/95 shadow-[0_10px_45px_rgba(239,68,68,.13)] backdrop-blur-xl">
       <div className="mx-auto flex h-[68px] max-w-[1360px] items-center gap-4 px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-red-600 via-orange-500 to-amber-300 shadow-[0_0_32px_rgba(249,115,22,.45)]">
@@ -134,9 +144,17 @@ function Header() {
 
         <nav className="mx-auto hidden items-center gap-9 lg:flex">
           {menuItems.map((item) => (
-            <a key={item} href="#" className="text-sm font-semibold text-zinc-400 transition hover:text-white">
-              {item}
-            </a>
+            <button key={item.target} type="button" onClick={() => scrollToSection(item.target)} className="text-sm font-semibold text-zinc-400 transition hover:text-white">
+              {item.label}
+            </button>
+          ))}
+        </nav>
+
+        <nav className="mx-auto hidden items-center gap-4 md:flex lg:hidden">
+          {menuItems.slice(0, 3).map((item) => (
+            <button key={item.target} type="button" onClick={() => scrollToSection(item.target)} className="text-xs font-semibold text-zinc-400 transition hover:text-white">
+              {item.label}
+            </button>
           ))}
         </nav>
 
@@ -145,15 +163,24 @@ function Header() {
             <p className="text-xs font-bold text-zinc-500 line-through">899.000đ</p>
             <p className="text-sm font-black text-white">149.000đ</p>
           </div>
-          <a href="#register" className="rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-red-500 px-4 py-2.5 text-xs font-black text-white shadow-[0_0_30px_rgba(239,68,68,.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(249,115,22,.55)] sm:px-6">
+          <button type="button" onClick={() => scrollToSection("dang-ky-thanh-toan")} className="rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-red-500 px-4 py-2.5 text-xs font-black text-white shadow-[0_0_30px_rgba(239,68,68,.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(249,115,22,.55)] sm:px-6">
             Đăng ký ngay
-          </a>
+          </button>
         </div>
       </div>
+      <style jsx global>{`
+        #van-de,
+        #doi-tuong,
+        #noi-dung-khoa-hoc,
+        #nguoi-huong-dan,
+        #faq,
+        #dang-ky-thanh-toan {
+          scroll-margin-top: 88px;
+        }
+      `}</style>
     </header>
   );
 }
-
 function VideoPanel({ className = "", wide = false, label = "AI Render" }: { className?: string; wide?: boolean; label?: string }) {
   return (
     <div className={`absolute overflow-hidden rounded-[1.35rem] border border-orange-400/35 bg-black/45 p-2 shadow-[0_0_36px_rgba(249,115,22,.28)] backdrop-blur-md ${className}`}>
@@ -207,15 +234,16 @@ function HeroGraphic() {
       <VideoPanel label="YouTube Preview" wide className="right-[3%] top-[12%] z-10 w-[210px] rotate-6 sm:w-[260px] xl:right-[5%]" />
       <TimelinePanel />
 
-      <div className="absolute left-1/2 top-[51%] z-20 h-[475px] w-[355px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-b-[3rem]">
-        <div className="absolute bottom-2 left-1/2 h-[360px] w-[300px] -translate-x-1/2 rounded-full bg-gradient-to-t from-red-600/45 to-transparent blur-3xl" />
+      <div className="absolute left-1/2 top-[52%] z-20 h-[520px] w-[400px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-b-[3rem]">
+        <div className="absolute bottom-2 left-1/2 h-[380px] w-[320px] -translate-x-1/2 rounded-full bg-gradient-to-t from-red-600/45 to-transparent blur-3xl" />
+        <div className="absolute left-1/2 top-[18%] h-[290px] w-[290px] -translate-x-1/2 rounded-full border border-orange-300/18 bg-gradient-to-b from-orange-500/10 to-red-700/10 shadow-[0_0_70px_rgba(249,115,22,.25)]" />
         <Image
-          src="/images/video-ai-course-instructor-cutout.png"
+          src="/images/video-ai-course-hero-portrait-clean-transparent-v5.png"
           alt="Giảng viên Trung AI Studio"
           fill
           priority
-          sizes="(max-width: 768px) 80vw, 360px"
-          className="object-cover object-top mix-blend-normal drop-shadow-[0_0_38px_rgba(249,115,22,.45)]"
+          sizes="(max-width: 768px) 82vw, 400px"
+          className="object-contain object-bottom mix-blend-normal drop-shadow-[0_0_42px_rgba(249,115,22,.46)]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
       </div>
@@ -296,9 +324,9 @@ function ProblemSection() {
         <div className="relative max-w-4xl">
           <p className="text-[11px] font-black uppercase tracking-[0.34em] text-red-400 sm:text-xs">• NHỮNG RÀO CẢN PHỔ BIẾN</p>
           <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight tracking-[-.035em] text-white sm:text-5xl">
-            Điểm nghẽn lớn nhất
+            Rào Cản Lớn Khi Xây Kênh Kiếm Tiền
             <br />
-            khi bắt đầu làm Video AI
+            Chính Là Video
           </h2>
           <p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400 sm:text-base">
             Rất nhiều người muốn xây kênh, bán hàng hoặc làm Affiliate bằng Video AI nhưng luôn bị mắc kẹt ở những rào cản dưới đây.
@@ -477,42 +505,56 @@ const courseParts = [
   },
 ];
 
-const sampleVideos = [
+type SampleVideo = {
+  title: string;
+  desc: string;
+  platform: string;
+  gradient: string;
+  video?: string;
+};
+
+const sampleVideos: SampleVideo[] = [
   {
-    title: "Thời Trang AI",
+    title: "Thời Trang AI Triệu View",
     desc: "Video người mẫu AI thay đổi trang phục, phù hợp bán quần áo và Affiliate thời trang.",
     platform: "TikTok",
     gradient: "from-pink-500 via-red-600 to-zinc-950",
+    video: "/videos/thoi-trang-ai-trieu-view.mp4",
   },
   {
     title: "Review Sản Phẩm AI",
     desc: "MC AI review sản phẩm mà không cần quay mặt thật.",
     platform: "Reels",
     gradient: "from-orange-300 via-red-600 to-zinc-950",
+    video: "/videos/review-san-pham-ai.mp4",
   },
   {
     title: "TVC Quảng Cáo AI",
     desc: "Video quảng cáo sản phẩm ngắn, dùng cho Facebook, TikTok và landing page.",
     platform: "YouTube",
     gradient: "from-cyan-300 via-blue-700 to-zinc-950",
+    video: "/videos/tvc-quang-cao-ai.mp4",
   },
   {
     title: "Video Không Lộ Mặt",
     desc: "Nội dung dạng kể chuyện, triết lý, sách, phong thủy, đạo lý cổ nhân.",
     platform: "Shorts",
     gradient: "from-amber-300 via-orange-700 to-zinc-950",
+    video: "/videos/video-khong-lo-mat.mp4",
   },
   {
     title: "Hoạt Hình 3D AI",
     desc: "Video hoạt hình giáo dục, mẹ bầu, sức khỏe, tiếng Anh hoặc nội dung trẻ em.",
     platform: "TikTok",
     gradient: "from-violet-300 via-fuchsia-700 to-zinc-950",
+    video: "/videos/hoat-hinh-3d-ai-youtube.mp4",
   },
   {
-    title: "Thumbnail & Hook AI",
-    desc: "Tạo ảnh bìa, hook visual và video ngắn thu hút người xem.",
+    title: "Thời Trang AI Nữ Nhảy Trend Tiktok",
+    desc: "Video thời trang AI nữ nhảy trend TikTok, phù hợp làm nội dung ngắn thu hút người xem.",
     platform: "Reels",
     gradient: "from-lime-200 via-emerald-700 to-zinc-950",
+    video: "/videos/thoi-trang-ai-nu-nhay-trend-tiktok.mp4",
   },
 ];
 
@@ -1278,13 +1320,16 @@ function MentorSection() {
 
         <div className="relative grid gap-0 lg:grid-cols-[.82fr_1.18fr]">
           <div className="animate-[mentorLeft_.85s_ease_both] p-5 sm:p-7 lg:p-0">
-            <div className="relative min-h-[520px] overflow-hidden rounded-[1.45rem] border border-orange-300/20 bg-gradient-to-b from-zinc-100 to-zinc-300 shadow-[0_0_55px_rgba(239,68,68,.18)] lg:h-full lg:rounded-r-none">
+            <div className="relative min-h-[520px] overflow-hidden rounded-[1.45rem] border border-orange-300/20 bg-gradient-to-br from-[#10070b] via-[#1b0a12] to-[#050505] shadow-[0_0_55px_rgba(239,68,68,.18)] lg:h-full lg:rounded-r-none">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(249,115,22,.24),transparent_28%),radial-gradient(circle_at_50%_64%,rgba(220,38,38,.22),transparent_36%)]" />
+              <div className="absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 rounded-full border border-orange-300/18 bg-gradient-to-b from-orange-500/10 to-transparent shadow-[0_0_80px_rgba(249,115,22,.22)]" />
+              <div className="absolute bottom-0 left-1/2 h-72 w-[92%] -translate-x-1/2 rounded-t-full bg-gradient-to-t from-red-600/24 to-transparent blur-2xl" />
               <Image
-                src="/images/video-ai-course-instructor.jpg"
+                src="/images/video-ai-course-instructor-20260709-cutout.png"
                 alt="Trung AI"
                 fill
                 sizes="(max-width: 1024px) 100vw, 420px"
-                className="object-cover object-top"
+                className="object-contain object-bottom drop-shadow-[0_0_36px_rgba(249,115,22,.32)]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-transparent to-transparent" />
               <div className="absolute left-5 top-5 rounded-full border border-emerald-300/20 bg-black/70 px-4 py-2 text-xs font-black text-white backdrop-blur-md">
@@ -1363,10 +1408,41 @@ function MentorSection() {
   );
 }
 
-function SampleVideoCard({ item, index }: { item: (typeof sampleVideos)[number]; index: number }) {
+function SampleVideoCard({ item, index }: { item: SampleVideo; index: number }) {
+  const videoRef = useRef<HTMLVideoElement>(null);
+  const [isPlaying, setIsPlaying] = useState(false);
+
+  const togglePlayback = () => {
+    if (!item.video) return;
+    const video = videoRef.current;
+    if (!video) return;
+
+    if (video.paused) {
+      video.muted = false;
+      video.volume = 1;
+      video.play();
+      setIsPlaying(true);
+    } else {
+      video.pause();
+      setIsPlaying(false);
+    }
+  };
+
   return (
     <article className="group relative w-[230px] flex-none animate-[videoCardIn_.65s_ease_both] overflow-hidden rounded-[1.55rem] border border-white/12 bg-black shadow-[0_28px_80px_rgba(0,0,0,.45)] transition duration-500 hover:-translate-y-2 hover:border-orange-300/55 hover:shadow-[0_0_64px_rgba(249,115,22,.28)] sm:w-[250px]" style={{ animationDelay: `${index * 80}ms` }}>
       <div className={`relative aspect-[9/16] overflow-hidden bg-gradient-to-br ${item.gradient}`}>
+        {item.video ? (
+          <video
+            ref={videoRef}
+            src={item.video}
+            className="absolute inset-0 h-full w-full object-cover"
+            loop
+            playsInline
+            preload="metadata"
+            onPlay={() => setIsPlaying(true)}
+            onPause={() => setIsPlaying(false)}
+          />
+        ) : null}
         <div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(255,255,255,.42)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.42)_1px,transparent_1px)] [background-size:32px_32px]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_18%,rgba(255,255,255,.35),transparent_20%),radial-gradient(circle_at_50%_88%,rgba(0,0,0,.55),transparent_35%)]" />
         <div className="absolute inset-x-0 top-0 z-10 bg-gradient-to-b from-black/80 via-black/30 to-transparent p-4">
@@ -1379,10 +1455,17 @@ function SampleVideoCard({ item, index }: { item: (typeof sampleVideos)[number];
           </div>
         </div>
 
-        <div className="absolute left-1/2 top-[48%] z-20 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-black/42 text-white shadow-[0_0_34px_rgba(249,115,22,.25)] backdrop-blur-md transition duration-500 group-hover:scale-110 group-hover:shadow-[0_0_52px_rgba(249,115,22,.55)]">
-          <span className="absolute h-full w-full animate-[playPulse_2s_ease-in-out_infinite] rounded-full border border-white/20" />
-          <Play className="ml-1 h-8 w-8 fill-white" />
-        </div>
+        <button type="button" onClick={togglePlayback} aria-label={`Phát video ${item.title}`} className={`absolute left-1/2 top-[48%] z-20 grid h-16 w-16 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/25 bg-black/42 text-white shadow-[0_0_34px_rgba(249,115,22,.25)] backdrop-blur-md transition duration-500 group-hover:scale-110 group-hover:shadow-[0_0_52px_rgba(249,115,22,.55)] ${isPlaying ? "bg-black/26 opacity-75 hover:opacity-100" : "opacity-100"}`}>
+          {!isPlaying ? <span className="absolute h-full w-full animate-[playPulse_2s_ease-in-out_infinite] rounded-full border border-white/20" /> : null}
+          {isPlaying ? (
+            <span className="flex items-center gap-1.5">
+              <span className="h-7 w-2.5 rounded-sm bg-white" />
+              <span className="h-7 w-2.5 rounded-sm bg-white" />
+            </span>
+          ) : (
+            <Play className="ml-1 h-8 w-8 fill-white" />
+          )}
+        </button>
 
         <div className="absolute bottom-0 left-0 right-0 z-10 bg-gradient-to-t from-black via-black/72 to-transparent p-4 pt-24">
           <p className="line-clamp-3 text-xs leading-5 text-zinc-200">{item.desc}</p>
@@ -1582,6 +1665,24 @@ function WhyNowSection() {
 
 function RegistrationSection() {
   const [isPaymentOpen, setIsPaymentOpen] = useState(false);
+  const [customerInfo, setCustomerInfo] = useState({
+    name: "",
+    phone: "",
+    email: "",
+  });
+  const [formError, setFormError] = useState("");
+
+  const handlePaymentRequest = () => {
+    const hasEmptyField = !customerInfo.name.trim() || !customerInfo.phone.trim() || !customerInfo.email.trim();
+
+    if (hasEmptyField) {
+      setFormError("Vui lòng nhập đầy đủ họ tên, số điện thoại và email trước khi thanh toán.");
+      return;
+    }
+
+    setFormError("");
+    setIsPaymentOpen(true);
+  };
 
   const comboItems = [
     {
@@ -1678,52 +1779,67 @@ function RegistrationSection() {
             </div>
           </div>
 
-          <div className="animate-[registerRight_.8s_.08s_ease_both] rounded-[1.65rem] bg-gradient-to-br from-red-500 via-orange-400 to-red-700 p-px shadow-[0_0_62px_rgba(239,68,68,.42)]">
-            <div className="relative overflow-hidden rounded-[1.6rem] bg-gradient-to-br from-[#1b0a13]/98 via-[#10070b]/98 to-[#080405] p-5 sm:p-6">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_8%,rgba(249,115,22,.3),transparent_25%),radial-gradient(circle_at_8%_90%,rgba(239,68,68,.18),transparent_28%)]" />
+          <div className="animate-[registerRight_.8s_.08s_ease_both] rounded-[1.65rem] bg-gradient-to-br from-red-400 via-orange-300 to-yellow-200 p-[2px] shadow-[0_0_72px_rgba(249,115,22,.42)]">
+            <div className="relative overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-[#080207] via-[#16060b] to-[#2a0704] p-5 sm:p-6">
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_8%,rgba(249,115,22,.26),transparent_25%),radial-gradient(circle_at_8%_90%,rgba(239,68,68,.18),transparent_28%)]" />
+              <div className="absolute inset-0 bg-black/58" />
               <div className="relative">
                 <div className="flex flex-wrap items-center gap-2">
-                  <p className="text-[11px] font-black uppercase tracking-[0.28em] text-red-400">• ĐĂNG KÝ HỌC NGAY</p>
+                  <p className="text-[11px] font-black uppercase tracking-[0.28em] text-orange-200 drop-shadow-[0_0_12px_rgba(249,115,22,.35)]">• ĐĂNG KÝ HỌC NGAY</p>
                   <span className="rounded-full bg-gradient-to-r from-red-500 to-orange-400 px-3 py-1 text-[11px] font-black text-white shadow-[0_0_24px_rgba(249,115,22,.38)]">GIẢM 83%</span>
                 </div>
 
                 <div className="mt-7">
-                  <p className="text-sm font-bold text-zinc-500 line-through">899.000đ</p>
-                  <p className="mt-1 bg-gradient-to-r from-red-400 via-orange-300 to-yellow-200 bg-clip-text text-5xl font-black tracking-[-.04em] text-transparent">149.000đ</p>
-                  <p className="mt-2 inline-flex rounded-full border border-orange-300/25 bg-orange-400/10 px-3 py-1 text-xs font-bold text-orange-200">
+                  <p className="text-sm font-bold text-zinc-300 line-through">899.000đ</p>
+                  <p className="mt-1 text-5xl font-black tracking-[-.04em] text-yellow-200 drop-shadow-[0_0_28px_rgba(250,204,21,.48)]">149.000đ</p>
+                  <p className="mt-2 inline-flex rounded-full border border-yellow-200/45 bg-yellow-300/12 px-3 py-1 text-xs font-bold text-yellow-100">
                     Tiết kiệm 750.000đ
                   </p>
                 </div>
 
                 <form className="mt-6 space-y-3">
-                  {["Họ và tên", "Số điện thoại", "Email"].map((placeholder) => (
+                  {[
+                    ["name", "Họ và tên"],
+                    ["phone", "Số điện thoại"],
+                    ["email", "Email"],
+                  ].map(([field, placeholder]) => (
                     <input
-                      key={placeholder}
-                      className="w-full rounded-xl border border-white/10 bg-black/45 px-4 py-3 text-sm text-white outline-none transition placeholder:text-zinc-600 focus:border-orange-300/70 focus:bg-black/62 focus:shadow-[0_0_0_3px_rgba(249,115,22,.12)]"
+                      key={field}
+                      className="w-full rounded-xl border border-orange-200/35 bg-white px-4 py-3 text-sm font-semibold text-zinc-950 outline-none transition placeholder:text-zinc-500 focus:border-yellow-200 focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,255,255,.22)]"
                       placeholder={placeholder}
+                      value={customerInfo[field as keyof typeof customerInfo]}
+                      onChange={(event) => {
+                        setCustomerInfo((current) => ({ ...current, [field]: event.target.value }));
+                        if (formError) setFormError("");
+                      }}
                     />
                   ))}
                   <button
                     type="button"
-                    onClick={() => setIsPaymentOpen(true)}
+                    onClick={handlePaymentRequest}
                     className="mt-2 w-full rounded-full bg-gradient-to-r from-red-500 via-orange-500 to-red-500 px-5 py-4 text-sm font-black text-white shadow-[0_16px_48px_rgba(239,68,68,.36)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_62px_rgba(249,115,22,.5)]"
                   >
                     Đăng ký & nhận hướng dẫn thanh toán
                   </button>
+                  {formError ? (
+                    <p className="rounded-xl border border-red-200/40 bg-red-950/55 px-4 py-3 text-sm font-bold leading-6 text-red-50">
+                      {formError}
+                    </p>
+                  ) : null}
                 </form>
 
                 <div className="mt-5 flex flex-wrap justify-center gap-2">
                   {["Chuyển khoản QR", "Xác nhận qua Zalo", "Nhận tài nguyên thủ công", "Học trọn đời"].map((badge) => (
-                    <span key={badge} className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.035] px-3 py-1.5 text-[11px] font-semibold text-zinc-300">
+                    <span key={badge} className="inline-flex items-center gap-1.5 rounded-full border border-white/14 bg-black/38 px-3 py-1.5 text-[11px] font-semibold text-zinc-100">
                       <CheckCircle2 className="h-3.5 w-3.5 text-emerald-400" />
                       {badge}
                     </span>
                   ))}
                 </div>
 
-                <div className="mt-5 rounded-2xl border border-orange-300/22 bg-orange-400/8 p-4 text-sm leading-6 text-zinc-300">
+                <div className="mt-5 rounded-2xl border border-orange-200/35 bg-black/36 p-4 text-sm leading-6 text-zinc-100 shadow-[inset_0_0_0_1px_rgba(255,255,255,.035)]">
                   <p className="font-black text-white">Không cần chờ kích hoạt tự động.</p>
-                  <p className="mt-1">Sau khi chuyển khoản, bạn gửi xác nhận qua Zalo để được cấp quyền truy cập khóa học và tài nguyên.</p>
+                  <p className="mt-1 text-zinc-200">Sau khi chuyển khoản, bạn gửi xác nhận qua Zalo để được cấp quyền truy cập khóa học và tài nguyên.</p>
                 </div>
               </div>
             </div>
@@ -1914,39 +2030,40 @@ function FinalCTASection() {
         <div className="absolute bottom-0 left-1/2 h-64 w-[520px] -translate-x-1/2 rounded-full bg-red-600/18 blur-[80px]" />
         <div className="absolute right-10 top-20 h-80 w-80 rounded-full bg-orange-500/16 blur-[95px]" />
 
-        <div className="relative mx-auto max-w-3xl animate-[finalCtaIn_.75s_ease_both] rounded-[1.55rem] bg-gradient-to-br from-red-500 via-orange-400 to-red-700 p-px shadow-[0_0_70px_rgba(239,68,68,.34)]">
-          <div className="relative overflow-hidden rounded-[1.5rem] bg-[#120d12]/94 px-5 py-10 text-center shadow-[inset_0_0_0_1px_rgba(255,255,255,.04)] sm:px-10 sm:py-12">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(239,68,68,.16),transparent_30%),radial-gradient(circle_at_90%_15%,rgba(249,115,22,.12),transparent_24%)]" />
-            <div className="absolute -bottom-20 left-1/2 h-44 w-80 -translate-x-1/2 rounded-full bg-red-500/18 blur-[55px]" />
+        <div className="relative mx-auto max-w-3xl animate-[finalCtaIn_.75s_ease_both] rounded-[1.65rem] bg-gradient-to-br from-red-400 via-orange-300 to-yellow-200 p-[2px] shadow-[0_0_72px_rgba(249,115,22,.42)]">
+          <div className="relative overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-[#080207] via-[#16060b] to-[#2a0704] px-5 py-10 text-center shadow-[inset_0_0_0_1px_rgba(255,255,255,.04)] sm:px-10 sm:py-12">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(239,68,68,.16),transparent_30%),radial-gradient(circle_at_90%_15%,rgba(249,115,22,.22),transparent_24%)]" />
+            <div className="absolute inset-0 bg-black/58" />
+            <div className="absolute -bottom-20 left-1/2 h-44 w-80 -translate-x-1/2 rounded-full bg-red-500/20 blur-[55px]" />
 
             <div className="relative">
-              <span className="inline-flex rounded-full border border-white/10 bg-black/34 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-zinc-300">
+              <span className="inline-flex rounded-full border border-yellow-200/35 bg-yellow-300/10 px-4 py-2 text-[11px] font-black uppercase tracking-[0.18em] text-yellow-100 shadow-[0_0_24px_rgba(249,115,22,.18)]">
                 GIẢM 83%
               </span>
 
               <h2 className="mx-auto mt-6 max-w-2xl text-3xl font-black leading-tight tracking-[-.045em] text-white sm:text-4xl lg:text-5xl">
-                Bắt đầu hành trình làm chủ <span className="bg-gradient-to-r from-red-500 via-orange-400 to-yellow-200 bg-clip-text text-transparent">Video AI</span>
+                Bắt đầu hành trình làm chủ <span className="bg-gradient-to-r from-red-400 via-orange-300 to-yellow-200 bg-clip-text text-transparent drop-shadow-[0_0_18px_rgba(249,115,22,.42)]">Video AI</span>
                 <br />
                 ngay hôm nay
               </h2>
 
-              <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-zinc-300">
+              <p className="mx-auto mt-5 max-w-xl text-sm leading-7 text-zinc-200">
                 Đừng để việc làm video tiếp tục là rào cản. Hãy bắt đầu từ một quy trình đơn giản, dễ làm theo và có thể ứng dụng ngay cho xây kênh, bán hàng hoặc Affiliate.
               </p>
 
               <div className="mt-8">
                 <div className="flex items-end justify-center gap-4">
-                  <span className="pb-2 text-sm font-bold text-zinc-500 line-through">899.000đ</span>
-                  <span className="bg-gradient-to-r from-red-400 via-orange-300 to-yellow-200 bg-clip-text text-5xl font-black tracking-[-.045em] text-transparent drop-shadow-[0_0_22px_rgba(249,115,22,.24)]">
+                  <span className="pb-2 text-sm font-bold text-zinc-300 line-through">899.000đ</span>
+                  <span className="text-5xl font-black tracking-[-.045em] text-yellow-200 drop-shadow-[0_0_28px_rgba(250,204,21,.48)]">
                     149.000đ
                   </span>
                 </div>
-                <p className="mt-3 text-sm font-black text-orange-300">Tiết kiệm 750.000đ</p>
+                <p className="mt-3 text-sm font-black text-yellow-100">Tiết kiệm 750.000đ</p>
               </div>
 
               <div className="mx-auto mt-6 flex max-w-2xl flex-wrap justify-center gap-x-5 gap-y-3">
                 {benefits.map((benefit) => (
-                  <span key={benefit} className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-300 sm:text-sm">
+                  <span key={benefit} className="inline-flex items-center gap-2 text-xs font-semibold text-zinc-100 sm:text-sm">
                     <CheckCircle2 className="h-4 w-4 text-emerald-400" />
                     {benefit}
                   </span>
@@ -1980,8 +2097,9 @@ export default function VideoAICoursePage() {
   const [activePart, setActivePart] = useState(0);
 
   return (
-    <main className="min-h-screen overflow-hidden bg-[#070707] text-white">
+    <main className="min-h-screen scroll-smooth overflow-hidden bg-[#070707] text-white">
       <Header />
+      <div className="h-[68px]" aria-hidden="true" />
 
       <section className="relative px-4 py-7 sm:px-6 lg:px-8">
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-red-700/18 to-transparent" />

@@ -51,6 +51,314 @@ type PromptItem = {
 
 const prompts: PromptItem[] = [
   {
+    id: 35,
+    title: "Poster Quảng Cáo Đồng Hồ Cao Cấp",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Sản Phẩm",
+    description: "Tạo poster quảng cáo đồng hồ cao cấp phong cách commercial product, ánh sáng studio kịch tính, bề mặt vật liệu chân thực và typography mạnh như chiến dịch luxury watch.",
+    image: "/images/prompts/poster-quang-cao-dong-ho-cao-cap-01.png",
+    images: ["/images/prompts/poster-quang-cao-dong-ho-cao-cap-01.png"],
+    gradient: "from-slate-400 via-zinc-700 to-zinc-950",
+    icon: ShoppingBag,
+    height: "h-80",
+    prompt: `TAG Heuer — Track Surface (REAL, NOT FAKE) High-end commercial watch advertisement, TAG Heuer chronograph, single watch leaning against its box, centered composition, slight front three-quarter angle environment: real wet asphalt surface inspired by race track texture, subtle tire marks, light moisture, NOT full scene background: soft dark depth with slight motion blur light streak hints, minimal, not literal track lighting: controlled studio lighting with strong key for dial clarity, subtle red rim light for racing identity, crisp reflections on metal and glass composition: tight grouping, grounded, realistic spacing perspective typography (primary): large “PRECISION” in background, soft perspective, slightly diffused, low opacity, blending into depth secondary typography: “CHRONOGRAPH SERIES” “SWISS MADE” branding: logo top center, “MURPHY AI” beneath surface: wet asphalt reflection, controlled, not exaggerated color palette: black, steel, red accents ultra-realistic materials (brushed metal, sapphire reflections, lume details) 1:1 square format
+
+Casio G-Shock — Rugged Ground (LIKE YOUR CHARCOAL SHOT) High-end commercial watch advertisement, G-Shock rugged watch, single watch leaning against its box, centered environment: controlled rough stone / cracked surface with dust particles, minimal debris (like your Nivea charcoal setup) background: dark soft gradient with slight haze, no literal landscape lighting: directional studio lighting, strong highlights on edges, controlled shadow depth composition: grounded, tight product grouping perspective typography (primary): bold “TOUGH” in background, slightly broken texture, soft perspective depth, low opacity secondary typography: “SHOCK RESISTANT” “BUILT TO LAST” branding: logo top center, “MURPHY AI” beneath surface: matte rough texture, minimal reflection color palette: charcoal, black, muted tones ultra-detailed rugged material finish 1:1 square format
+
+Garmin — Outdoor Tech (CONTROLLED, NOT LANDSCAPE) High-end commercial watch advertisement, Garmin GPS smartwatch, single watch leaning against its box, centered environment: textured rock surface with subtle moisture and fine dust, clean minimal outdoor feel (not full mountain scene) background: deep cool gradient with faint mist layers for depth lighting: soft controlled lighting, cool rim highlights, clean display visibility composition: tight, balanced, grounded perspective typography (primary): “ENDURANCE” large in background, geometric, fading into depth with soft haze secondary typography: “GPS MULTISPORT” “PERFORMANCE TRACKING” branding: logo top center, “MURPHY AI” beneath surface: natural rock with subtle reflection color palette: blue-grey, black ultra-clean product rendering 1:1 square format
+
+Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watch advertisement, Fastrack sports watch, single watch leaning against its box, centered environment: dark smooth surface with slight gloss and subtle texture, faint moisture or light reflection, urban tone background: soft gradient with slight haze, minimal depth lighting: contrast studio lighting with subtle colored accent reflections, controlled highlights composition: tight and clean perspective typography (primary): “MOVE FAST” large in background, soft perspective, slightly glowing edges, integrated subtly secondary typography: “SPORT MODE” “URBAN ACTIVE” branding: logo top center, “MURPHY AI” beneath surface: controlled reflection, not mirror-like color palette: black, grey, subtle accent color ultra-detailed modern finish`,
+  },
+  {
+    id: 34,
+    title: "Minh họa lịch sử: Công cụ cổ đại",
+    model: "GPT Image",
+    count: "3 ảnh",
+    category: "Infographic",
+    description: "Tạo minh họa lịch sử chân thực về công cụ cổ đại như rìu đá, mũi tên và gốm thô, phù hợp cho sách lịch sử, bài giảng hoặc bảo tàng ảo.",
+    image: "/images/prompts/minh-hoa-lich-su-cong-cu-co-dai-01.png",
+    images: [
+      "/images/prompts/minh-hoa-lich-su-cong-cu-co-dai-01.png",
+      "/images/prompts/minh-hoa-lich-su-cong-cu-co-dai-02.png",
+      "/images/prompts/minh-hoa-lich-su-cong-cu-co-dai-03.png",
+    ],
+    gradient: "from-amber-200 via-stone-500 to-zinc-950",
+    icon: ImageIcon,
+    height: "h-80",
+    prompt: `Một bộ công cụ cổ đại (ví dụ: rìu đá, mũi tên, đồ gốm thô sơ) được sắp xếp trên một bề mặt đất hoặc đá. Style: Historical illustration, realistic, detailed. Composition: Flat lay hoặc góc nhìn 3/4, tập trung vào kết cấu và chi tiết của từng món đồ. Lighting: Ánh sáng tự nhiên, làm nổi bật kết cấu thô sơ và dấu vết thời gian. Details: Các vết sứt mẻ trên đá, hoa văn đơn giản trên đồ gốm, sợi dây thô buộc. Background: Nền đất khô hoặc tảng đá lớn. Mood: Lịch sử, cổ kính, thô sơ. Intended Use: Sách lịch sử, bảo tàng ảo.`,
+  },
+  {
+    id: 33,
+    title: "Thời Trang Thể Thao Nike Siêu Thực",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Thời Trang",
+    description: "Tạo artwork quảng cáo thời trang thể thao Nike phong cách siêu thực, năng lượng tím bùng nổ, chuyển động mạnh và visual premium athletic advertising.",
+    image: "/images/prompts/thoi-trang-the-thao-nike-sieu-thuc-01.png",
+    images: ["/images/prompts/thoi-trang-the-thao-nike-sieu-thuc-01.png"],
+    gradient: "from-violet-500 via-slate-800 to-zinc-950",
+    icon: Shirt,
+    height: "h-[30rem]",
+    prompt: `A highly detailed digital artwork in a surreal, dynamic style inspired by premium athletic advertising for Nike, Inc. A young athletic woman with platinum blonde hair tied in a messy bun, fair skin, and a fiercely focused expression is captured mid-jump or leap, her body leaning slightly forward as if bursting with raw, untamed energy. She wears a loose, off-white Nike crewneck sweatshirt with subtle embossed Nike branding on the chest, paired with flowy, semi-transparent pants featuring a swirling marbled pattern in graphite grey and electric violet, billowing dramatically around her legs. On her feet are sleek, futuristic white Nike sneakers with glowing violet accents, visible Air-inspired sole details, and an aerodynamic design. Vibrant electric violet energy or ethereal smoke erupts dramatically from behind her, swirling and dissolving into abstract, cloud-like forms that interact with her clothing, creating a powerful sense of motion and release. The background is a deep, moody gradient transitioning from charcoal grey to luminous twilight violet, emphasizing a minimalist yet striking composition. Overlay large, bold metallic silver text reading “Just Do It” in a sharp, modern sans-serif font, partially integrated and obscured by the energy smoke and the figure, making it feel like an organic part of the scene. Include the iconic Nike Swoosh logo in the top-left corner in shimmering silver.`,
+  },
+  {
+    id: 32,
+    title: "Doodle Tương Tác Ảnh Gốc",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Chỉnh sửa ảnh",
+    description: "Thêm doodle vẽ tay vui nhộn tương tác trực tiếp với chủ thể trong ảnh, vẫn giữ nguyên bố cục, ánh sáng và nhận diện của ảnh gốc.",
+    image: "/images/prompts/doodle-tuong-tac-anh-goc-01.png",
+    images: ["/images/prompts/doodle-tuong-tac-anh-goc-01.png"],
+    gradient: "from-emerald-300 via-rose-400 to-zinc-950",
+    icon: ImageIcon,
+    height: "h-[30rem]",
+    prompt: `Analyze the uploaded image and preserve the original subject, composition, and lighting. Do not alter the identity or structure of the main subject. Add playful, hand-drawn doodles that interact directly with the subject in the image. The doodles should mimic, follow, or exaggerate the shapes, gestures, or motion present-such as outlining poses, extending limbs, adding motion lines, or creating imaginative elements that "respond" to the subject.`,
+  },
+  {
+    id: 31,
+    title: "Tạp Chí Thời Trang ORBIT",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Thời Trang",
+    description: "Tạo ảnh thời trang streetwear ORBIT phong cách tạp chí tương lai, phối cam tangerine nổi bật, chrome phản chiếu và năng lượng hypebeast Seoul cao cấp.",
+    image: "/images/prompts/tap-chi-thoi-trang-orbit-01.png",
+    images: ["/images/prompts/tap-chi-thoi-trang-orbit-01.png"],
+    gradient: "from-orange-500 via-zinc-800 to-zinc-950",
+    icon: Shirt,
+    height: "h-[30rem]",
+    prompt: `Semi-realistic anime-inspired portrait of a stylish young Korean woman based on the uploaded reference image, high-end streetwear campaign aesthetic for ORBIT, oversized matte tangerine and ivory utility bomber with layered technical details, relaxed charcoal cargo trousers, futuristic chunky sneakers with metallic accents, bold monochrome orange studio backdrop, reflective chrome structures and floating geometric ring elements, dynamic orbit-inspired composition, crisp direct flash photography with glossy highlights and soft skin realism, luxury urban fashion editorial mood, cutting-edge Seoul street style, premium hypebeast campaign energy, minimal yet futuristic art direction, cinematic fashion magazine quality.`,
+  },
+  {
+    id: 30,
+    title: "Nhân vật 3D Cường Điệu Hóa",
+    model: "GPT Image",
+    count: "4 ảnh",
+    category: "Nhân vật AI",
+    description: "Tạo chân dung nhân vật 3D caricature cường điệu từ ảnh tham chiếu, giữ nhận diện gương mặt nhưng biến tấu thành phong cách collectible street-luxury độc lạ.",
+    image: "/images/prompts/nhan-vat-3d-cuong-dieu-hoa-01.png",
+    images: [
+      "/images/prompts/nhan-vat-3d-cuong-dieu-hoa-01.png",
+      "/images/prompts/nhan-vat-3d-cuong-dieu-hoa-02.png",
+      "/images/prompts/nhan-vat-3d-cuong-dieu-hoa-03.png",
+      "/images/prompts/nhan-vat-3d-cuong-dieu-hoa-04.png",
+    ],
+    gradient: "from-zinc-200 via-slate-500 to-zinc-950",
+    icon: ImageIcon,
+    height: "h-[30rem]",
+    prompt: `Create an exaggerated stylized 3D caricature character portrait with strong intentional deformation and a clean, controlled surface finish. Use the person from the ATTACHED REFERENCE PHOTO. Preserve the subject’s identity, facial likeness, skin tone, and defining features, but reinterpret them into a bold caricatured 3D form with an elongated neck, oversized head-to-neck ratio, droopy eyelids, heavy lips, and slightly asymmetrical facial structure. Render as a human-like 3D character with smooth, studio-clean skin and intentionally designed detail, avoiding random texture or noise. Style with bold accessories such as round or oval glasses, hoop earrings, gold chains, headscarves or bandanas, and street-luxury clothing. Use neutral studio lighting with soft shadows and even illumination, no dramatic contrast, against a plain neutral grey or off-white background. The overall aesthetic should feel weird, fashion-forward, collectible, and character-driven rather than cute or realistic. Ultra high definition, premium cinematic 3D render quality, hyper realistic hyper realism, clean materials, no freckles, no dirt, no grain, no noise, no speckling, no text, no logos, no watermarks. Aspect ratio 4:5`,
+  },
+  {
+    id: 29,
+    title: "Nhân Vật Chó Streetwear 3D Thời Trang",
+    model: "GPT Image",
+    count: "3 ảnh",
+    category: "Nhân vật AI",
+    description: "Tạo nhân vật chó hoạt hình 3D phong cách streetwear hiện đại với hoodie neon, kính phản quang, sneaker chunky và bố cục studio editorial sạch đẹp.",
+    image: "/images/prompts/nhan-vat-cho-streetwear-3d-01.png",
+    images: [
+      "/images/prompts/nhan-vat-cho-streetwear-3d-01.png",
+      "/images/prompts/nhan-vat-cho-streetwear-3d-02.png",
+      "/images/prompts/nhan-vat-cho-streetwear-3d-03.png",
+    ],
+    gradient: "from-lime-300 via-emerald-500 to-zinc-950",
+    icon: ImageIcon,
+    height: "h-[30rem]",
+    prompt: `Full-body 3D stylized anthropomorphic cartoon dog character wearing modern streetwear, oversized neon green hoodie, cargo pants, chunky sneakers, reflective sunglasses, silver chain necklace. Confident relaxed pose with hands in pockets. Minimal studio background in solid lime green. Soft studio lighting, smooth shadows, high detail fabric texture, Pixar-quality 3D render, ultra-clean composition, centered framing, fashion editorial character design, 8K resolution.`,
+  },
+  {
+    id: 28,
+    title: "Bìa Tạp Chí Beauty Pop Art",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Thời Trang",
+    description: "Tạo bìa tạp chí beauty phong cách pop-art cao cấp, kết hợp chân dung thời trang siêu thực với màu đỏ, vàng, chấm halftone và typography magazine nổi bật.",
+    image: "/images/prompts/bia-tap-chi-beauty-pop-art-01.png",
+    images: ["/images/prompts/bia-tap-chi-beauty-pop-art-01.png"],
+    gradient: "from-yellow-300 via-red-500 to-zinc-950",
+    icon: Shirt,
+    height: "h-[30rem]",
+    prompt: `Ultra-realistic pop-art luxury beauty magazine cover featuring a striking Korean woman in a bold Roy Lichtenstein-meets-real-life aesthetic: a primary-red structured sleeveless column dress with white graphic polka dot waist belt, yellow geometric clutch. Hair in a sleek high ponytail with a vivid cobalt-blue dye fade at the tips. Graphic pop-art makeup — thick black liner dots under eyes, exaggerated cartoon-smooth blush circles, cherry-red glossy lips. Chrome sphere earrings, yellow gold bangles. Background: comic-book halftone dot pattern in bold primary yellow bleeding into clean white, Ben-Day dot grain overlay. "DAZED BEAUTY" in thick outlined bold graphic masthead. Ultra-detailed fabric sheen, photorealistic pop-art skin, 8K cinematic, sharp focus. Negative: soft pastel, realistic background, cartoon fully, blurry, watermark. 1744x2336`,
+  },
+  {
+    id: 27,
+    title: "Ảnh Sản Phẩm Doodle Tối Giản",
+    model: "Nano Banana Pro",
+    count: "1 ảnh",
+    category: "Sản Phẩm",
+    description: "Tạo ảnh sản phẩm tối giản trên nền studio ấm, ánh nắng dài, bố cục playful và doodle vẽ tay tương tác với sản phẩm theo phong cách mixed media cao cấp.",
+    image: "/images/prompts/anh-san-pham-doodle-toi-gian-01.png",
+    images: ["/images/prompts/anh-san-pham-doodle-toi-gian-01.png"],
+    gradient: "from-amber-100 via-stone-400 to-zinc-950",
+    icon: ShoppingBag,
+    height: "h-80",
+    prompt: `[product setup], minimalist product photo, clean warm studio scene, textured beige wall background, soft directional sunlight creating long shadows, simple tabletop surface, product arranged in a playful concept composition, hand drawn white line doodle overlay of [character] interacting with the product, mixed media look combining real photography and sketch illustration, high end branding feel, shallow depth of field, ultra realistic, no extra text, no watermark`,
+  },
+  {
+    id: 26,
+    title: "Poster Quảng Cáo Mỹ Phẩm Phong Cách Mềm Mại",
+    model: "GPT Image",
+    count: "3 ảnh",
+    category: "Sản Phẩm",
+    description: "Tạo poster quảng cáo mỹ phẩm/skincare phong cách mềm mại, pastel nữ tính, ánh nắng vàng, doodle dễ thương và bố cục beauty ad phù hợp Instagram, TikTok, X.",
+    image: "/images/prompts/poster-quang-cao-my-pham-phong-cach-mem-mai-01.png",
+    images: [
+      "/images/prompts/poster-quang-cao-my-pham-phong-cach-mem-mai-01.png",
+      "/images/prompts/poster-quang-cao-my-pham-phong-cach-mem-mai-02.png",
+      "/images/prompts/poster-quang-cao-my-pham-phong-cach-mem-mai-03.png",
+    ],
+    gradient: "from-violet-200 via-rose-300 to-violet-950",
+    icon: ShoppingBag,
+    height: "h-[30rem]",
+    prompt: `Luxury aesthetic skincare advertisement, soft pastel background, warm golden sunlight, dreamy soft focus, feminine vanity setup with mirror, pearls, candle and baby breath flowers. Cozy purple fluffy surface, high-end beauty branding style, ultra realistic, 4k, studio lighting, glossy reflection, soft shadows, bokeh background. Add cute doodle elements (white and purple hand-drawn arrows, sparkles, hearts), handwritten notes and stickers. Text overlay: "Glowy Skin In A Bottle" (big hand writing font) "Nourish • Hydrate • Glow" "For Soft, Smooth & Glowing Skin", "Self care Everyday" clean composition, aesthetic, viral beauty ad style, Instagram / TikTok / X friendly (but no UI), premium soft feminine branding`,
+  },
+  {
+    id: 25,
+    title: "Tạo KOL Thời Trang Trẻ Trung Sang Trọng",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Thời Trang",
+    description: "Tạo ảnh KOL thời trang nữ trẻ trung, sang trọng trong bối cảnh sân khấu/studio cao cấp với ánh sáng điện ảnh, váy đen avant-garde và khí chất editorial luxury.",
+    image: "/images/prompts/tao-kol-thoi-trang-tre-trung-sang-trong-01.png",
+    images: ["/images/prompts/tao-kol-thoi-trang-tre-trung-sang-trong-01.png"],
+    gradient: "from-zinc-900 via-slate-700 to-violet-950",
+    icon: Shirt,
+    height: "h-[30rem]",
+    prompt: `Generate a visually young and elegant East Asian woman with tight, smooth, and elastic skin, with a subtle natural texture, a bright and transparent complexion, and no signs of sagging, fine lines, eye bags, or middle-aged feelings. Her facial contours are clear and layered, with a sharp and natural jawline, soft and delicate features, and clear and calm eyes with a distant and sophisticated intellectual depth. Her hair is a light brown, natural, and long, with a rich and smooth texture. Her overall demeanor is quiet and restrained, with a balance between youthful energy and elegant composure, and a sense of high-end detachment. She sits elegantly on the edge of the stage, with her body straight and dignified, one hand resting naturally on her side, and her legs crossed naturally to one side, with her head slightly raised and her gaze looking beyond the camera. Her posture is calm and full of dramatic tension, showcasing a high-end, quiet atmosphere of stage art. She wears a high-end, avant-garde, and dark-colored long dress with a sleek and geometric cut and a three-dimensional design, with a luxurious and dark fabric texture, presenting a dark and luxurious avant-garde fashion style. Her body is naturally proportional, with a relaxed and elegant shoulder and neck line. The scene is a professional dark-colored stage or a high-end photography studio with a deep-colored backdrop, a lightly blurred foreground with professional photography equipment, and a sense of high-end behind-the-scenes recording. Soft and focused lighting is used to highlight the subject, creating a dramatic and contrasty effect, with a deep and dark background. The overall style is a high-end, dark, and luxurious editorial style, with a shallow depth of field that emphasizes the subject's and clothing's texture, with a realistic and natural skin texture, and a clear and high-end clothing detail, with a overall sense of quietness, restraint, and artistic performance and dramatic tension. The image style is high-quality realism, with a natural and realistic transition of light and shadow, a balance of warm and cool tones, high-definition details, and a masterpiece-level quality, like a high-end fashion magazine's dark and avant-garde big piece.`,
+  },
+  {
+    id: 24,
+    title: "Storyboard Skincare",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Storyboard",
+    description: "Tạo storyboard quảng cáo skincare 9 khung phong cách tối giản, ánh sáng tự nhiên, mood trong trẻo và câu chuyện chuyển đổi làn da từ mệt mỏi sang căng bóng rạng rỡ.",
+    image: "/images/prompts/storyboard-skincare-01.png",
+    images: ["/images/prompts/storyboard-skincare-01.png"],
+    gradient: "from-white via-sky-200 to-violet-900",
+    icon: ImageIcon,
+    height: "h-80",
+    prompt: `Create a clean, bright skincare commercial storyboard in a 16:9 layout with 9 panels. Use soft natural lighting, minimal aesthetic, and a fresh, airy mood with white and pastel tones. The main character is a young woman with soft makeup and styled hair, wearing light, elegant clothing. The setting is a modern, sunlit interior with large windows and a calm atmosphere. No text or subtitles anywhere. Show a clear story flow: she starts at her desk looking slightly tired or concerned, then a close-up of her face showing dry or dull skin. She discovers a clear skincare bottle and gently presents it. Show a close-up of the liquid pouring onto her hand, followed by her applying it to her face. After use, her skin looks hydrated, glowing, and smooth. Transition to her feeling confident and refreshed, walking in a bright, clean space with soft breeze and flowing elements. End with a calm product beauty shot on a minimal surface, then a final frame of her smiling softly at the camera while holding the product. Focus on natural expressions, glowing skin, and a transformation from dull to fresh. Include cinematic close-ups, soft focus, light reflections, and subtle sparkles to enhance the clean beauty feel. Keep everything elegant, minimal, and visually soothing with no branding text.`,
+  },
+  {
+    id: 23,
+    title: "Poster Quảng Cáo Thời Trang Cao Cấp",
+    model: "GPT Image",
+    count: "1 ảnh",
+    category: "Thời Trang",
+    description: "Tạo poster quảng cáo thời trang cao cấp phong cách editorial luxury với bố cục magazine, typography sang trọng, ảnh người mẫu chân thực và card chi tiết sản phẩm tinh tế.",
+    image: "/images/prompts/poster-quang-cao-thoi-trang-cao-cap-01.png",
+    images: ["/images/prompts/poster-quang-cao-thoi-trang-cao-cap-01.png"],
+    gradient: "from-stone-200 via-amber-500 to-zinc-950",
+    icon: Shirt,
+    height: "h-[30rem]",
+    prompt: `Luxury fashion advertisement poster, ultra-premium editorial style (Gucci aesthetic), soft warm beige gradient background with subtle shadows and depth. A confident elegant young woman posing naturally beside a minimal stool, wearing flowy high-waist wide-leg trousers (rich warm brown) and a silky cream blouse, soft curls, minimal gold jewelry, cinematic soft lighting, realistic skin texture, high-end fashion photography. Clean modern layout with strong hierarchy and spacing: Left side: Large vertical text “TROUSERS” in premium serif font (Didot / Bodoni style), high letter spacing, slightly faded brown tone. Small vertical subtext: “EFFORTLESS STYLE. PERFECT FIT.” in thin sans-serif, minimal and elegant. Right side product card: Rounded soft card showing zoomed-in waist detail (same outfit as model) Title: “HIGH WAIST” in serif font Subtext: Flattering Fit, All-Day Comfort in light sans-serif Soft shadow and subtle border Below: Color swatches (navy, beige, taupe, black), perfectly aligned, evenly spaced Sizes row (XS S M L) styled as premium pill buttons “S” filled others outlined Remove unnecessary text like heights, keep layout minimal and breathable. Overall look: High fashion magazine aesthetic Clean spacing, grid aligned Soft shadows, subtle gradients Ultra realistic, sharp, 4K, luxury branding feel`,
+  },
+  {
+    id: 22,
+    title: "Quảng Cáo Nước Hoa Điện Ảnh Cao Cấp",
+    model: "GPT Image",
+    count: "3 ảnh",
+    category: "Sản Phẩm",
+    description: "Tạo ảnh quảng cáo nước hoa cao cấp phong cách điện ảnh với chai thủy tinh sang trọng, ánh sáng kịch tính, khói, nước, gia vị và bối cảnh luxury giàu cảm xúc.",
+    image: "/images/prompts/quang-cao-nuoc-hoa-dien-anh-cao-cap-01.png",
+    images: [
+      "/images/prompts/quang-cao-nuoc-hoa-dien-anh-cao-cap-01.png",
+      "/images/prompts/quang-cao-nuoc-hoa-dien-anh-cao-cap-02.png",
+      "/images/prompts/quang-cao-nuoc-hoa-dien-anh-cao-cap-03.png",
+    ],
+    gradient: "from-amber-300 via-sky-900 to-zinc-950",
+    icon: ShoppingBag,
+    height: "h-[30rem]",
+    prompt: `Create a hyper-realistic cinematic luxury perfume product photograph featuring [PERFUME BOTTLE DESIGN] positioned in [COMPOSITION / ANGLE] within a dramatic elemental environment of [ELEMENTAL SETTING: water, smoke, ice, firelight, forest, florals, spices, gemstones]. The bottle should feel premium and tactile, with [MATERIAL DETAILS: glossy glass, metallic cap, gold label, transparent liquid, frosted surface, engraved text], sharp reflections, realistic refractions, and crisp readable branding: [BRAND / LABEL TEXT]. Surround the product with carefully arranged sensory ingredients such as [BOTANICALS / SPICES / FRUITS / OBJECTS], using strong contrast between [PRIMARY COLOR PALETTE] and [ACCENT COLORS]. Lighting should be cinematic and high-contrast, with [LIGHTING STYLE], deep shadows, sparkling highlights, volumetric atmosphere, and a luxurious commercial advertising finish. Background: [BACKGROUND DESCRIPTION], shallow depth of field, premium editorial composition, ultra-detailed textures, 8k resolution, photorealistic studio quality.
+
+Cheat Sheet:
+[PERFUME BOTTLE DESIGN]: shape, color, cap, label style
+[COMPOSITION / ANGLE]: tilted crash, centered still life, close-up tray, hand interaction
+[ELEMENTAL SETTING]: splash, smoke, candlelight, ice, forest, aurora
+[MATERIAL DETAILS]: glass, metal, liquid, frost, reflections
+[BRAND / LABEL TEXT]: exact readable perfume text
+[BOTANICALS / SPICES / FRUITS / OBJECTS]: lemons, vanilla pods, roses, pinecones, gemstones
+[PRIMARY COLOR PALETTE]: navy, amber, silver, black, icy blue
+[ACCENT COLORS]: gold, red, lime green, magenta, teal
+[LIGHTING STYLE]: dramatic spotlight, candle glow, cool moonlight, golden rim light
+[BACKGROUND DESCRIPTION]: moody studio, dark forest, blurred luxury interior, smoky backdrop`,
+  },
+  {
+    id: 21,
+    title: "Prompt Video Sức Khỏe Hoạt Hình 3D",
+    model: "Veo 3",
+    count: "4 ảnh",
+    category: "Video AI",
+    description: "Tạo kịch bản và prompt video 8 giây/cảnh cho các món ăn tốt cho sức khỏe được nhân hóa thành nhân vật hoạt hình 3D hài hước, biểu cảm mạnh, dễ viral trên TikTok.",
+    image: "/images/prompts/prompt-video-suc-khoe-hoat-hinh-3d-01.png",
+    images: [
+      "/images/prompts/prompt-video-suc-khoe-hoat-hinh-3d-01.png",
+      "/images/prompts/prompt-video-suc-khoe-hoat-hinh-3d-02.png",
+      "/images/prompts/prompt-video-suc-khoe-hoat-hinh-3d-03.png",
+      "/images/prompts/prompt-video-suc-khoe-hoat-hinh-3d-04.png",
+    ],
+    gradient: "from-lime-400 via-orange-500 to-zinc-950",
+    icon: Video,
+    height: "h-[30rem]",
+    prompt: `Câu lệnh kịch bản:
+
+Viết kịch bản 30s về 4 loại đồ ăn tốt cho sức khỏe theo phong cách hoạt hình hài hước – lố – biểu cảm mạnh giống trend đồ ăn biết nói trên TikTok.
+
+Mỗi món có voice 8s.
+
+Yêu cầu kịch bản:
+- Nhân vật: Món ăn được nhân hóa thành nhân vật hoạt hình 3D
+- Khuôn mặt biểu cảm cực mạnh: mắt trợn, cau mày, cười đểu, gân cổ
+- Tính cách: bá đạo, tự tin, nói chuyện thẳng mặt
+- Xưng “Tao”, gọi người xem là “Mày”
+- Nội dung:
+  + Nêu 1 lợi ích sức khỏe cụ thể (tăng cơ, đẹp da, tốt tim, tiêu hóa...)
+  + Nói theo kiểu cà khịa, hài hước, dễ viral
+  + Dùng ví von đời thường, gần gũi
+- Có 1 câu nói vần điệu (rhyme) cho mỗi nhân vật
+- Kết thúc bằng câu đắc thắng kiểu:
+  “Ăn tao vào, mày lên đời liền!”
+  hoặc tiếng cười khoái chí “Ha ha ha!”
+
+Câu lệnh Viết prompt video:
+Tôi có một kịch bản về 4 loại đồ ăn tốt cho sức khỏe. Kịch bản của tôi [Dán kịch bản vào đây]
+Hãy giúp tôi viết các Prompt để tạo video chi tiết cho công cụ AI (như Veo 3) theo phong cách hoạt hình hài hước giống trend đồ ăn biết nói trên TikTok.
+
+Yêu cầu mỗi Prompt:
+Thời lượng: 8 giây / cảnh
+Có voice tiếng việt như trong kịch bản
+Các prompt là các prompt hoàn chỉnh dùng được ngay
+
+Phong cách hình ảnh:
++ Hoạt hình 3D
++ Đồ ăn được nhân hóa
++ Khuôn mặt biểu cảm cực gắt: trợn mắt, nhe răng, cau mày, cười gian
++ Tư thế cử động mạnh: chỉ tay, đập bàn, vung tay
+
+Bối cảnh:
++ Nhà bếp, chợ, quầy thực phẩm, nồi chảo, lò nướng...
+
+Hình ảnh:
++ 9:16 dọc
++ Chất lượng cao
++ Màu sắc nổi, tương phản mạnh
++ Không chữ trên màn hình
+
+Cấu trúc Prompt (viết bằng tiếng Anh):
+[Anthropomorphic healthy food character, exaggerated facial expression]
++ [Funny aggressive action in 8s]
++ [Kitchen / market background]
++ [Strong contrast lighting, vibrant colors]
++ [Dynamic camera movement: zoom in, shake, cinematic pan]
+
+Voice:
+- Giọng nam
+- Trầm, gắt, hơi “hổ báo”
+- Nói chuyện kiểu cà khịa, tự tin`,
+  },
+  {
     id: 20,
     title: "Tạo Ảnh Quảng Cáo Đồ Lót",
     model: "GPT Image",
