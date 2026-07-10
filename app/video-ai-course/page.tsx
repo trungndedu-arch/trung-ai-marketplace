@@ -139,7 +139,7 @@ function Header() {
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-red-600 via-orange-500 to-amber-300 shadow-[0_0_32px_rgba(249,115,22,.45)]">
             <Sparkles className="h-5 w-5 text-white" />
           </span>
-          <span className="text-base font-black tracking-tight text-white sm:text-lg">Trung AI Studio</span>
+          <span className="text-base font-black tracking-tight text-white sm:text-lg">Trung AI <span className="text-orange-400">Media</span></span>
         </Link>
 
         <nav className="mx-auto hidden items-center gap-9 lg:flex">
@@ -262,7 +262,7 @@ function HeroGraphic() {
         <div className="absolute left-1/2 top-[15%] h-[230px] w-[230px] -translate-x-1/2 rounded-full bg-black/55 blur-2xl sm:h-[310px] sm:w-[310px]" />
         <Image
           src="/images/video-ai-course-hero-portrait-hair-fixed-v2.png"
-          alt="Giảng viên Trung AI Studio"
+          alt="Giảng viên Trung AI Media"
           fill
           priority
           sizes="(max-width: 640px) 280px, (max-width: 1024px) 360px, 400px"
@@ -795,7 +795,7 @@ function ComparisonTable() {
               <div className="flex gap-3 rounded-xl border border-orange-300/20 bg-orange-500/10 p-3 text-sm text-orange-50">
                 <CheckCircle2 className="mt-0.5 h-5 w-5 flex-none text-orange-300" />
                 <div>
-                  <p className="text-[10px] font-black uppercase tracking-widest text-orange-300">Trung AI Studio</p>
+                  <p className="text-[10px] font-black uppercase tracking-widest text-orange-300">Trung AI Media</p>
                   <p className="mt-1">{trung}</p>
                 </div>
               </div>
@@ -1449,7 +1449,7 @@ function SampleVideoCard({ item, index }: { item: SampleVideo; index: number }) 
             <span className="h-8 w-8 rounded-full border border-white/25 bg-white/12" />
             <div>
               <h3 className="text-sm font-black leading-tight text-white">{item.title}</h3>
-              <p className="text-[10px] font-bold text-white/72">Trung AI Studio</p>
+              <p className="text-[10px] font-bold text-white/72">Trung AI Media</p>
             </div>
           </div>
         </div>

@@ -3,8 +3,8 @@ import "./globals.css";
 
 export const metadata: Metadata = {
   title: {
-    default: "Trung AI Studio — AI Marketplace",
-    template: "%s | Trung AI Studio",
+    default: "Trung AI Media — AI Marketplace",
+    template: "%s | Trung AI Media",
   },
   description: "Khám phá prompt, chatbot, workflow và ứng dụng AI chất lượng cao.",
 };

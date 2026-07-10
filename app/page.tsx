@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
+import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
   Bell,
@@ -14,6 +17,7 @@ import {
   GraduationCap,
   Heart,
   Home,
+  Image as ImageIcon,
   Menu,
   MessageSquareMore,
   Search,
@@ -27,25 +31,98 @@ import {
 } from "lucide-react";
 
 const navItems = [
-  { label: "Khám phá", icon: Home, active: true, href: "/" },
+  { label: "Trang chủ", icon: Home, active: true, href: "/" },
   { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts" },
-  { label: "Chatbot", icon: Bot, href: "#products" },
+  { label: "Chatbot", icon: Bot, href: "#chatbot" },
   { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-  { label: "Workflow", icon: Workflow, href: "#products" },
-  { label: "AI Apps", icon: Boxes, href: "#products" },
+  { label: "Workflow", icon: Workflow, href: "#workflow" },
+  { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "#ai-apps" },
 ];
 
-const categories = ["Tất cả", "Nổi bật", "Marketing", "Sáng tạo", "Năng suất", "Lập trình"];
+type ProductItem = {
+  title: string;
+  creator: string;
+  type: string;
+  price: string;
+  old: string;
+  rating: string;
+  sales: string;
+  color: string;
+  icon: LucideIcon;
+  tag: string;
+};
 
-const products = [
+const products: ProductItem[] = [
   { title: "Viral Content Machine", creator: "Linh AI Studio", type: "Workflow", price: "349.000đ", old: "499.000đ", rating: "4.9", sales: "1.2k", color: "from-red-500 via-orange-700 to-zinc-950", icon: Zap, tag: "Bestseller" },
   { title: "SEO Blog Architect", creator: "Growth Lab", type: "Prompt Pack", price: "189.000đ", old: "259.000đ", rating: "4.8", sales: "856", color: "from-orange-500 via-red-700 to-zinc-950", icon: Sparkles, tag: "Hot" },
   { title: "Sales Copilot Pro", creator: "Minh Digital", type: "Chatbot", price: "599.000đ", old: "799.000đ", rating: "5.0", sales: "642", color: "from-red-500 via-orange-600 to-slate-950", icon: Bot, tag: "Mới" },
-  { title: "Brand Visual Factory", creator: "Neon Creative", type: "AI App", price: "429.000đ", old: "", rating: "4.7", sales: "530", color: "from-orange-400 via-red-600 to-orange-950", icon: Boxes, tag: "Featured" },
+  { title: "Brand Visual Factory", creator: "Neon Creative", type: "Công cụ AI", price: "429.000đ", old: "", rating: "4.7", sales: "530", color: "from-orange-400 via-red-600 to-orange-950", icon: Boxes, tag: "Featured" },
   { title: "YouTube Script Genius", creator: "Creator OS", type: "Prompt Pack", price: "229.000đ", old: "319.000đ", rating: "4.9", sales: "918", color: "from-red-500 via-rose-700 to-zinc-950", icon: MessageSquareMore, tag: "-28%" },
   { title: "Customer Care 24/7", creator: "AutoBiz", type: "Chatbot", price: "699.000đ", old: "899.000đ", rating: "4.8", sales: "447", color: "from-amber-400 via-red-700 to-zinc-950", icon: ShieldCheck, tag: "Pro" },
   { title: "Research Agent Kit", creator: "Future Work", type: "Workflow", price: "389.000đ", old: "", rating: "4.9", sales: "721", color: "from-orange-400 via-red-700 to-slate-950", icon: Compass, tag: "Top rated" },
-  { title: "Code Review Master", creator: "DevCraft", type: "AI App", price: "279.000đ", old: "369.000đ", rating: "4.8", sales: "384", color: "from-yellow-400 via-orange-600 to-slate-950", icon: Grid2X2, tag: "-24%" },
+  { title: "Code Review Master", creator: "DevCraft", type: "Công cụ AI", price: "279.000đ", old: "369.000đ", rating: "4.8", sales: "384", color: "from-yellow-400 via-orange-600 to-slate-950", icon: Grid2X2, tag: "-24%" },
+];
+
+type CategorySection = {
+  id: string;
+  title: string;
+  description: string;
+  href: string;
+  cta: string;
+} & (
+  | { kind: "prompts"; prompts: FreePromptItem[] }
+  | { kind: "products"; items: ProductItem[] }
+);
+
+const categorySections: CategorySection[] = [
+  {
+    id: "free-prompts",
+    title: "Prompt AI Miễn Phí",
+    description: "Các prompt nổi bật dùng ngay cho ảnh, video, quảng cáo, bán hàng và xây kênh nội dung.",
+    href: "/free-prompts",
+    cta: "Xem thêm prompt",
+    kind: "prompts",
+    prompts: orderedPrompts.slice(0, 4),
+  },
+  {
+    id: "chatbot",
+    title: "Chatbot",
+    description: "Những chatbot AI nổi bật giúp chăm sóc khách hàng, bán hàng và tự động hóa hội thoại.",
+    href: "#chatbot",
+    cta: "Xem thêm chatbot",
+    kind: "products",
+    items: [products[2], products[5]],
+  },
+  {
+    id: "video-ai-course",
+    title: "Khóa Học Video AI",
+    description: "Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.",
+    href: "/video-ai-course",
+    cta: "Xem khóa học",
+    kind: "products",
+    items: [
+      { title: "Video AI Thực Chiến", creator: "Trung AI Media", type: "Khóa học", price: "149.000đ", old: "899.000đ", rating: "5.0", sales: "Ưu đãi", color: "from-red-500 via-orange-600 to-zinc-950", icon: GraduationCap, tag: "Giảm 83%" },
+      { title: "Xây Kênh & Kiếm Tiền Affiliate", creator: "Trung AI Media", type: "Video AI", price: "149.000đ", old: "899.000đ", rating: "5.0", sales: "20 bài", color: "from-orange-400 via-red-600 to-black", icon: Zap, tag: "Thực chiến" },
+    ],
+  },
+  {
+    id: "workflow",
+    title: "Workflow",
+    description: "Bộ quy trình AI giúp bạn đi từ ý tưởng đến nội dung hoàn chỉnh nhanh hơn và dễ lặp lại.",
+    href: "#workflow",
+    cta: "Xem thêm workflow",
+    kind: "products",
+    items: [products[0], products[6]],
+  },
+  {
+    id: "ai-apps",
+    title: "Công Cụ AI Nên Dùng",
+    description: "Các công cụ AI nổi bật nên dùng cho thiết kế, nội dung, lập trình và tự động hóa công việc.",
+    href: "#ai-apps",
+    cta: "Xem thêm công cụ AI",
+    kind: "products",
+    items: [products[3], products[7]],
+  },
 ];
 
 function Logo() {
@@ -54,7 +131,7 @@ function Logo() {
       <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-orange-500 to-red-500 shadow-glow">
         <Sparkles className="h-5 w-5 text-white" />
       </div>
-      <div className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <span className="text-orange-400">Studio</span></div>
+      <div className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <span className="text-orange-400">Media</span></div>
     </div>
   );
 }
@@ -68,7 +145,7 @@ function Sidebar({ open, close }: { open: boolean; close: () => void }) {
           <Logo />
           <button aria-label="Đóng menu" onClick={close} className="text-zinc-400 lg:hidden"><X className="h-5 w-5" /></button>
         </div>
-        <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-600">Khám phá</p>
+        <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-600">Trang chủ</p>
         <nav className="space-y-1">
           {navItems.map(({ label, icon: Icon, active, href }) => (
             <a key={label} href={href} onClick={close} className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-orange-500/15 text-orange-300" : "text-zinc-400 hover:bg-white/[0.04] hover:text-white"}`}>
@@ -97,7 +174,7 @@ function Header({ openMenu }: { openMenu: () => void }) {
   return (
     <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-white/[0.06] bg-ink/75 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
       <button onClick={openMenu} aria-label="Mở menu" className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-300 lg:hidden"><Menu className="h-5 w-5" /></button>
-      <span className="whitespace-nowrap text-xs font-extrabold text-white sm:text-sm lg:hidden">Trung AI <span className="text-orange-400">Studio</span></span>
+      <span className="whitespace-nowrap text-xs font-extrabold text-white sm:text-sm lg:hidden">Trung AI <span className="text-orange-400">Media</span></span>
       <div className="relative max-w-xl flex-1">
         <Search className="absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-zinc-600" />
         <input aria-label="Tìm kiếm" placeholder="Tìm prompt, chatbot, workflow..." className="h-11 w-full rounded-xl border border-white/[0.07] bg-white/[0.035] pl-11 pr-4 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-orange-500/50 focus:ring-2 focus:ring-orange-500/10" />
@@ -174,7 +251,83 @@ function FlashSale() {
   );
 }
 
-function ProductCard({ product }: { product: (typeof products)[number] }) {
+function HomePromptVisual({ item }: { item: FreePromptItem }) {
+  const Icon = item.icon;
+  return (
+    <div className={`relative overflow-hidden bg-gradient-to-br ${item.gradient} ${item.height}`}>
+      {item.image ? (
+        <Image
+          src={item.image}
+          alt={item.title}
+          fill
+          priority={item.id === orderedPrompts[0]?.id}
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+          className="object-cover transition duration-500 group-hover:scale-[1.025]"
+        />
+      ) : (
+        <>
+          <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full border-[28px] border-white/10" />
+          <div className="absolute -bottom-16 -left-12 h-56 w-56 rounded-full bg-black/25 blur-sm" />
+          <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.12)_1px,transparent_1px)] [background-size:34px_34px]" />
+          <div className="absolute left-1/2 top-1/2 grid h-24 w-24 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[30px] border border-white/20 bg-black/20 shadow-2xl backdrop-blur-md">
+            <Icon className="h-11 w-11 text-white" />
+          </div>
+        </>
+      )}
+      {item.image && <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent" />}
+      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+        <span className="rounded-full border border-white/15 bg-black/30 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-white backdrop-blur-md">{item.category}</span>
+        <ImageIcon className="h-4 w-4 text-white/60" />
+      </div>
+    </div>
+  );
+}
+
+function HomePromptCard({ item }: { item: FreePromptItem }) {
+  return (
+    <a href="/free-prompts" className="prompt-card group block w-full overflow-hidden rounded-2xl border border-white/[0.08] bg-[#140707] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)]">
+      <HomePromptVisual item={item} />
+      <div className="p-4">
+        <div className="mb-2 flex items-center gap-2">
+          <span className="rounded-full bg-orange-500/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-orange-300">{item.category}</span>
+        </div>
+        <h2 className="text-[15px] font-extrabold leading-6 text-white transition group-hover:text-orange-300">{item.title}</h2>
+        {item.description && <p className="mt-2 line-clamp-3 text-xs leading-5 text-zinc-500">{item.description}</p>}
+        <div className="mt-3 flex items-center justify-between gap-3">
+          <span className="truncate text-xs font-semibold text-orange-400">{item.model}</span>
+          <span className="whitespace-nowrap rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-zinc-400">{item.count}</span>
+        </div>
+      </div>
+    </a>
+  );
+}
+
+function CategoryPreviewSection({ section }: { section: CategorySection }) {
+  return (
+    <section id={section.id} className="scroll-mt-24">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-orange-400/15 bg-orange-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-orange-300">
+            <Sparkles className="h-3.5 w-3.5" /> {section.title}
+          </div>
+          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{section.title}</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-500">{section.description}</p>
+        </div>
+        <a href={section.href} className="group inline-flex w-fit items-center gap-2 rounded-xl border border-orange-400/25 bg-orange-400/10 px-4 py-3 text-sm font-extrabold text-orange-200 transition hover:border-orange-300/50 hover:bg-orange-400/15 hover:text-white">
+          {section.cta}
+          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        </a>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
+        {section.kind === "prompts"
+          ? section.prompts.map((item) => <HomePromptCard key={`${section.id}-${item.id}`} item={item} />)
+          : section.items.map((product) => <ProductCard key={`${section.id}-${product.title}`} product={product} />)}
+      </div>
+    </section>
+  );
+}
+
+function ProductCard({ product }: { product: ProductItem }) {
   const Icon = product.icon;
   return (
     <article className="card-hover group overflow-hidden rounded-2xl border border-white/[0.07] bg-panel">
@@ -197,7 +350,6 @@ function ProductCard({ product }: { product: (typeof products)[number] }) {
 
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeCategory, setActiveCategory] = useState("Tất cả");
 
   return (
     <div className="min-h-screen bg-ink text-zinc-200">
@@ -208,18 +360,17 @@ export default function HomePage() {
           <Hero />
           <FlashSale />
           <section id="products" className="mt-14 scroll-mt-24">
-            <div className="mb-6 flex flex-col justify-between gap-5 xl:flex-row xl:items-end">
-              <div><h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">Khám phá sản phẩm</h2><p className="mt-1 text-sm text-zinc-500">Công cụ AI chọn lọc dành cho công việc của bạn</p></div>
-              <div className="no-scrollbar flex gap-2 overflow-x-auto pb-1">
-                {categories.map((category) => <button key={category} onClick={() => setActiveCategory(category)} className={`whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition ${activeCategory === category ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-[0_0_22px_rgba(249,115,22,.24)]" : "border border-white/[0.07] bg-white/[0.03] text-zinc-500 hover:border-orange-400/30 hover:text-white"}`}>{category}</button>)}
+            <div className="mb-8 flex flex-col justify-between gap-4 xl:flex-row xl:items-end">
+              <div>
+                <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Trang chủ theo danh mục</h2>
+                <p className="mt-2 max-w-2xl text-sm leading-6 text-zinc-500">Các mục bên dưới được sắp xếp theo đúng menu bên trái, mỗi mục có một vài card nổi bật và nút xem thêm để đi thẳng tới danh mục đó.</p>
               </div>
             </div>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
-              {products.map((product) => <ProductCard key={product.title} product={product} />)}
+            <div className="space-y-12">
+              {categorySections.map((section) => <CategoryPreviewSection key={section.id} section={section} />)}
             </div>
-            <div className="mt-8 flex justify-center"><button className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/[0.03] px-5 py-3 text-sm font-bold text-zinc-300 hover:bg-white/[0.07]">Xem thêm sản phẩm <ArrowRight className="h-4 w-4" /></button></div>
           </section>
-          <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-zinc-600 sm:flex-row"><Logo /><p>© 2026 Trung AI Studio. Crafted for the AI era.</p></footer>
+          <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-zinc-600 sm:flex-row"><Logo /><p>© 2026 Trung AI Media. Crafted for the AI era.</p></footer>
         </main>
       </div>
     </div>
