@@ -251,10 +251,22 @@ function FlashSale() {
   );
 }
 
+function promptVisualHeightStyle(heightClass: string) {
+  const arbitraryHeight = heightClass.match(/h-\[(.+?)\]/)?.[1];
+  if (arbitraryHeight) return { height: arbitraryHeight };
+
+  const fixedHeights: Record<string, string> = {
+    "h-80": "20rem",
+    "h-96": "24rem",
+  };
+
+  return { height: fixedHeights[heightClass] ?? "24rem" };
+}
+
 function HomePromptVisual({ item }: { item: FreePromptItem }) {
   const Icon = item.icon;
   return (
-    <div className={`relative overflow-hidden bg-gradient-to-br ${item.gradient} ${item.height}`}>
+    <div style={promptVisualHeightStyle(item.height)} className={`relative overflow-hidden bg-gradient-to-br ${item.gradient}`}>
       {item.image ? (
         <Image
           src={item.image}

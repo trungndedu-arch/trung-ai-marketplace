@@ -66,9 +66,21 @@ function Header({ openMenu }: { openMenu: () => void }) {
   return <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-white/[0.06] bg-ink/80 px-4 backdrop-blur-xl sm:px-6 lg:px-8"><button onClick={openMenu} aria-label="Mở menu" className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-300 lg:hidden"><Menu className="h-5 w-5" /></button><span className="hidden md:block lg:hidden"><Brand /></span><div className="flex-1" /><span className="hidden text-xs font-semibold text-zinc-500 sm:block">Prompt mới mỗi tuần</span><button aria-label="Thông báo" className="relative grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-white/[0.035] text-zinc-400 hover:text-white"><Bell className="h-[18px] w-[18px]" /><span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-red-500" /></button><Link href="/" className="hidden rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-4 py-2.5 text-sm font-extrabold text-white shadow-glow transition hover:brightness-110 sm:block">Marketplace</Link></header>;
 }
 
+function promptVisualHeightStyle(heightClass: string) {
+  const arbitraryHeight = heightClass.match(/h-\[(.+?)\]/)?.[1];
+  if (arbitraryHeight) return { height: arbitraryHeight };
+
+  const fixedHeights: Record<string, string> = {
+    "h-80": "20rem",
+    "h-96": "24rem",
+  };
+
+  return { height: fixedHeights[heightClass] ?? "24rem" };
+}
+
 function PromptVisual({ item, modal = false }: { item: PromptItem; modal?: boolean }) {
   const Icon = item.icon;
-  return <div className={`relative overflow-hidden bg-gradient-to-br ${item.gradient} ${modal ? "h-64 sm:h-full sm:min-h-[460px]" : item.height}`}>
+  return <div style={modal ? undefined : promptVisualHeightStyle(item.height)} className={`relative overflow-hidden bg-gradient-to-br ${item.gradient} ${modal ? "h-64 sm:h-full sm:min-h-[460px]" : ""}`}>
     {item.image ? <Image src={item.image} alt={item.title} fill priority={item.id === 13} sizes={modal ? "(max-width: 640px) 100vw, 45vw" : "(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"} className={`${modal ? "object-contain bg-black" : "object-cover"} transition duration-500 group-hover:scale-[1.025]`} /> : <>
       <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full border-[28px] border-white/10" />
       <div className="absolute -bottom-16 -left-12 h-56 w-56 rounded-full bg-black/25 blur-sm" />
