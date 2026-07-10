@@ -134,7 +134,7 @@ function Header() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-red-500/15 bg-[#09090b]/95 shadow-[0_10px_45px_rgba(239,68,68,.13)] backdrop-blur-xl">
-      <div className="mx-auto flex h-[68px] max-w-[1360px] items-center gap-4 px-4 sm:px-6 lg:px-8">
+      <div className="mx-auto flex h-[64px] max-w-[1360px] items-center gap-3 px-3 sm:h-[68px] sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-red-600 via-orange-500 to-amber-300 shadow-[0_0_32px_rgba(249,115,22,.45)]">
             <Sparkles className="h-5 w-5 text-white" />
@@ -163,10 +163,22 @@ function Header() {
             <p className="text-xs font-bold text-zinc-500 line-through">899.000đ</p>
             <p className="text-sm font-black text-white">149.000đ</p>
           </div>
-          <button type="button" onClick={() => scrollToSection("dang-ky-thanh-toan")} className="rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-red-500 px-4 py-2.5 text-xs font-black text-white shadow-[0_0_30px_rgba(239,68,68,.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(249,115,22,.55)] sm:px-6">
+          <button type="button" onClick={() => scrollToSection("dang-ky-thanh-toan")} className="rounded-full bg-gradient-to-r from-red-600 via-orange-500 to-red-500 px-3 py-2.5 text-[11px] font-black text-white shadow-[0_0_30px_rgba(239,68,68,.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(249,115,22,.55)] sm:px-6 sm:text-xs">
             Đăng ký ngay
           </button>
         </div>
+      </div>
+      <div className="no-scrollbar flex gap-2 overflow-x-auto border-t border-white/5 px-3 pb-3 md:hidden">
+        {menuItems.map((item) => (
+          <button
+            key={item.target}
+            type="button"
+            onClick={() => scrollToSection(item.target)}
+            className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-bold text-zinc-300 transition hover:border-orange-300/40 hover:text-white"
+          >
+            {item.label}
+          </button>
+        ))}
       </div>
       <style jsx global>{`
         #van-de,
@@ -175,7 +187,17 @@ function Header() {
         #nguoi-huong-dan,
         #faq,
         #dang-ky-thanh-toan {
-          scroll-margin-top: 88px;
+          scroll-margin-top: 124px;
+        }
+        @media (min-width: 768px) {
+          #van-de,
+          #doi-tuong,
+          #noi-dung-khoa-hoc,
+          #nguoi-huong-dan,
+          #faq,
+          #dang-ky-thanh-toan {
+            scroll-margin-top: 88px;
+          }
         }
       `}</style>
     </header>
@@ -225,24 +247,25 @@ function TimelinePanel() {
 
 function HeroGraphic() {
   return (
-    <div className="relative min-h-[560px] lg:min-h-[610px]">
+    <div className="relative min-h-[360px] sm:min-h-[500px] lg:min-h-[610px]">
       <div className="absolute left-[7%] top-[8%] h-[500px] w-[500px] rounded-full bg-red-600/20 blur-[90px]" />
       <div className="absolute right-[2%] top-[18%] h-[360px] w-[360px] rounded-full bg-orange-500/16 blur-[80px]" />
       <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_44%,rgba(255,80,0,.16),transparent_34%)]" />
 
-      <VideoPanel label="TikTok AI" className="left-[3%] top-[10%] z-10 w-[132px] -rotate-6 sm:w-[156px] lg:left-[1%] xl:left-[6%]" />
-      <VideoPanel label="YouTube Preview" wide className="right-[3%] top-[12%] z-10 w-[210px] rotate-6 sm:w-[260px] xl:right-[5%]" />
+      <VideoPanel label="TikTok AI" className="left-[3%] top-[10%] z-10 hidden w-[132px] -rotate-6 sm:block sm:w-[156px] lg:left-[1%] xl:left-[6%]" />
+      <VideoPanel label="YouTube Preview" wide className="right-[3%] top-[12%] z-10 hidden w-[210px] rotate-6 sm:block sm:w-[260px] xl:right-[5%]" />
       <TimelinePanel />
 
-      <div className="absolute left-1/2 top-[52%] z-20 h-[520px] w-[400px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-b-[3rem]">
-        <div className="absolute bottom-2 left-1/2 h-[380px] w-[320px] -translate-x-1/2 rounded-full bg-gradient-to-t from-red-600/45 to-transparent blur-3xl" />
-        <div className="absolute left-1/2 top-[18%] h-[290px] w-[290px] -translate-x-1/2 rounded-full border border-orange-300/18 bg-gradient-to-b from-orange-500/10 to-red-700/10 shadow-[0_0_70px_rgba(249,115,22,.25)]" />
+      <div className="absolute left-1/2 top-[52%] z-20 h-[350px] w-[280px] -translate-x-1/2 -translate-y-1/2 overflow-hidden rounded-b-[3rem] sm:h-[480px] sm:w-[360px] lg:h-[520px] lg:w-[400px]">
+        <div className="absolute bottom-2 left-1/2 h-[250px] w-[250px] -translate-x-1/2 rounded-full bg-gradient-to-t from-red-600/45 to-transparent blur-3xl sm:h-[380px] sm:w-[320px]" />
+        <div className="absolute left-1/2 top-[18%] h-[220px] w-[220px] -translate-x-1/2 rounded-full border border-orange-300/18 bg-gradient-to-b from-orange-500/10 to-red-700/10 shadow-[0_0_70px_rgba(249,115,22,.25)] sm:h-[290px] sm:w-[290px]" />
+        <div className="absolute left-1/2 top-[15%] h-[230px] w-[230px] -translate-x-1/2 rounded-full bg-black/55 blur-2xl sm:h-[310px] sm:w-[310px]" />
         <Image
-          src="/images/video-ai-course-hero-portrait-clean-transparent-v5.png"
+          src="/images/video-ai-course-hero-portrait-hair-fixed-v2.png"
           alt="Giảng viên Trung AI Studio"
           fill
           priority
-          sizes="(max-width: 768px) 82vw, 400px"
+          sizes="(max-width: 640px) 280px, (max-width: 1024px) 360px, 400px"
           className="object-contain object-bottom mix-blend-normal drop-shadow-[0_0_42px_rgba(249,115,22,.46)]"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent" />
@@ -311,12 +334,12 @@ function ProblemCard({ item }: { item: (typeof problemCards)[number] }) {
 
 function ProblemSection() {
   return (
-    <section id="van-de" className="relative px-4 pb-14 pt-8 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
+    <section id="van-de" className="relative px-3 pb-12 pt-6 sm:px-6 sm:pb-20 sm:pt-10 lg:px-8">
       <div className="absolute inset-x-0 top-0 h-80 bg-gradient-to-b from-red-950/15 to-transparent" />
       <div className="absolute left-[7%] top-16 h-64 w-64 rounded-full bg-red-600/16 blur-[90px]" />
       <div className="absolute right-[6%] top-20 h-72 w-72 rounded-full bg-orange-500/14 blur-[95px]" />
 
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-white/[0.07] bg-[#080809] px-5 py-10 shadow-[0_38px_120px_rgba(0,0,0,.55)] sm:px-8 sm:py-12 lg:px-16 lg:py-14">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-white/[0.07] bg-[#080809] px-4 py-8 shadow-[0_38px_120px_rgba(0,0,0,.55)] sm:px-8 sm:py-12 lg:px-16 lg:py-14">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_10%,rgba(249,115,22,.2),transparent_20%),radial-gradient(circle_at_10%_85%,rgba(34,197,94,.08),transparent_22%),linear-gradient(135deg,rgba(127,29,29,.18),transparent_38%)]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.16)_1px,transparent_1px)] [background-size:36px_36px]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_22%,rgba(255,255,255,.12),transparent_1.5px)] [background-size:24px_24px] opacity-45" />
@@ -385,42 +408,42 @@ const audienceCards = [
     before: "Mất quá nhiều thời gian để sản xuất video quảng cáo.",
     after: "Tạo video quảng cáo AI nhanh hơn với quy trình có sẵn.",
     icon: Megaphone,
-    image: "/images/video-ai-course/audience-marketer.svg",
+    image: "/images/video-ai-course/audience-marketer.jpg",
   },
   {
     title: "AFFILIATE",
     before: "Có link Affiliate nhưng không biết làm video để bán.",
     after: "Biết tạo video review, video ngắn và xây kênh bán hàng.",
     icon: Link2,
-    image: "/images/video-ai-course/audience-affiliate.svg",
+    image: "/images/video-ai-course/audience-affiliate.jpg",
   },
   {
     title: "CONTENT CREATOR",
     before: "Không duy trì được lịch đăng video.",
     after: "Có quy trình sản xuất nội dung đều đặn bằng AI.",
     icon: Video,
-    image: "/images/video-ai-course/audience-creator.svg",
+    image: "/images/video-ai-course/audience-creator.jpg",
   },
   {
     title: "CHỦ SHOP / DOANH NGHIỆP",
     before: "Thuê ngoài quá tốn chi phí.",
     after: "Tự tạo video giới thiệu sản phẩm ngay trong cửa hàng.",
     icon: ShoppingBag,
-    image: "/images/video-ai-course/audience-shop.svg",
+    image: "/images/video-ai-course/audience-shop.jpg",
   },
   {
     title: "FREELANCER",
     before: "Muốn nhận thêm dịch vụ nhưng chưa biết AI.",
     after: "Có thể cung cấp dịch vụ tạo video AI cho khách hàng.",
     icon: Laptop,
-    image: "/images/video-ai-course/audience-freelancer.svg",
+    image: "/images/video-ai-course/audience-freelancer.jpg",
   },
   {
     title: "NGƯỜI MỚI",
     before: "Chưa từng dựng video hoặc dùng AI.",
     after: "Có thể tạo video đầu tiên chỉ sau vài bài học.",
     icon: GraduationCap,
-    image: "/images/video-ai-course/audience-beginner.svg",
+    image: "/images/video-ai-course/audience-beginner.jpg",
   },
 ];
 
@@ -662,8 +685,8 @@ function AfterCard() {
 
 function BeforeAfterSection() {
   return (
-    <section id="truoc-sau" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/15 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="truoc-sau" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/15 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_86%_8%,rgba(239,68,68,.28),transparent_25%),radial-gradient(circle_at_50%_52%,rgba(249,115,22,.22),transparent_22%),linear-gradient(135deg,rgba(47,5,8,.9),rgba(4,4,5,.98)_46%,rgba(28,8,3,.86))]" />
         <div className="absolute inset-0 opacity-[.14] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-x-8 top-[45%] h-px bg-gradient-to-r from-transparent via-orange-300/70 to-transparent shadow-[0_0_30px_rgba(249,115,22,.7)]" />
@@ -816,8 +839,8 @@ function FeaturedCourseCard() {
 
 function CourseComparisonSection() {
   return (
-    <section id="so-sanh" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/14 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="so-sanh" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/14 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_14%,rgba(249,115,22,.28),transparent_24%),radial-gradient(circle_at_62%_55%,rgba(239,68,68,.18),transparent_28%),linear-gradient(135deg,rgba(42,5,8,.92),rgba(4,4,6,.98)_42%,rgba(24,8,3,.9))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.13)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute -right-28 top-0 h-96 w-96 rounded-full bg-orange-500/20 blur-[90px]" />
@@ -934,43 +957,19 @@ function AudienceCardBackground({ item }: { item: (typeof audienceCards)[number]
 }
 
 function AudienceCard({ item, index }: { item: (typeof audienceCards)[number]; index: number }) {
-  const Icon = item.icon;
-
   return (
-    <div className="group relative min-h-[245px] overflow-hidden rounded-[1.35rem] border border-red-400/35 bg-black/45 p-5 shadow-[0_0_34px_rgba(239,68,68,.16)] backdrop-blur-xl transition duration-500 hover:-translate-y-2 hover:border-orange-300/60 hover:shadow-[0_0_58px_rgba(249,115,22,.26)]">
-      <AudienceCardBackground item={item} />
-      <div className="absolute right-5 top-5 text-4xl font-black text-white/5">{index + 1}</div>
-
-      <div className="relative flex items-center gap-4">
-        <span className="grid h-14 w-14 place-items-center rounded-2xl border border-red-400/45 bg-red-500/10 text-orange-200 shadow-[0_0_26px_rgba(239,68,68,.22)] transition duration-500 group-hover:scale-105">
-          <Icon className="h-7 w-7" />
-        </span>
-        <h3 className="max-w-[220px] text-lg font-black uppercase leading-tight text-red-300 sm:text-xl">{item.title}</h3>
-      </div>
-
-      <div className="relative mt-5 max-w-[82%] space-y-4 sm:max-w-[70%]">
-        <p className="text-sm leading-6 text-zinc-300">
-          <span className="font-black text-white">Trước: </span>
-          {item.before}
-        </p>
-        <p className="text-sm leading-6 text-zinc-300">
-          <span className="font-black text-orange-200">Sau: </span>
-          {item.after}
-        </p>
-      </div>
-
-      <div className="relative mt-5 flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-orange-300/80">
-        <span className="h-1.5 w-1.5 rounded-full bg-red-400" />
-        AI Workflow Ready
-      </div>
-    </div>
+    <figure className="group relative aspect-[5/3] overflow-hidden rounded-[1.35rem] border border-red-400/40 bg-black shadow-[0_0_34px_rgba(239,68,68,.18)] transition duration-500 hover:-translate-y-2 hover:border-orange-300/70 hover:shadow-[0_0_68px_rgba(249,115,22,.34)]">
+      <img src={item.image} alt={`Section 5 card ${index + 1}: ${item.title}`} className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.025]" />
+      <div className="pointer-events-none absolute inset-0 rounded-[1.35rem] ring-1 ring-inset ring-white/10" />
+      <div className="pointer-events-none absolute inset-x-4 top-0 h-px bg-gradient-to-r from-transparent via-orange-200/80 to-transparent opacity-0 shadow-[0_0_18px_rgba(249,115,22,.85)] transition duration-500 group-hover:opacity-100" />
+    </figure>
   );
 }
 
 function AudienceSection() {
   return (
-    <section id="doi-tuong" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/14 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="doi-tuong" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/14 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_76%_10%,rgba(168,85,247,.18),transparent_22%),radial-gradient(circle_at_82%_28%,rgba(249,115,22,.22),transparent_24%),linear-gradient(135deg,rgba(42,5,8,.9),rgba(4,4,6,.98)_42%,rgba(24,8,3,.88))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.15)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.13)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute -right-24 top-0 h-96 w-96 rounded-full bg-orange-500/18 blur-[90px]" />
@@ -1085,8 +1084,8 @@ function VideoUseCaseSection({ activeCase, setActiveCase }: { activeCase: number
   const current = videoUseCases[activeCase];
 
   return (
-    <section id="vi-du-thuc-te" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="vi-du-thuc-te" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_10%,rgba(249,115,22,.22),transparent_24%),radial-gradient(circle_at_20%_18%,rgba(168,85,247,.2),transparent_28%),linear-gradient(125deg,rgba(88,19,82,.74),rgba(25,8,35,.88)_38%,rgba(56,12,7,.78)_72%,rgba(96,35,9,.72))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(120deg,transparent_0,transparent_46%,rgba(255,255,255,.13)_47%,transparent_48%,transparent_100%)] [background-size:80px_80px]" />
@@ -1212,8 +1211,8 @@ function CurriculumSection({ activePart, setActivePart }: { activePart: number; 
   const current = courseParts[activePart];
 
   return (
-    <section id="noi-dung-khoa-hoc" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="noi-dung-khoa-hoc" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_8%,rgba(249,115,22,.22),transparent_24%),radial-gradient(circle_at_18%_8%,rgba(168,85,247,.22),transparent_28%),linear-gradient(125deg,rgba(88,19,82,.68),rgba(25,8,35,.84)_38%,rgba(48,11,7,.82)_74%,rgba(95,38,10,.7))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(120deg,transparent_0,transparent_46%,rgba(255,255,255,.12)_47%,transparent_48%,transparent_100%)] [background-size:80px_80px]" />
@@ -1310,7 +1309,7 @@ const mentorBoxes = [
 
 function MentorSection() {
   return (
-    <section id="nguoi-huong-dan" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+    <section id="nguoi-huong-dan" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
       <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] shadow-[0_42px_130px_rgba(0,0,0,.62)]">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_86%_12%,rgba(249,115,22,.23),transparent_24%),radial-gradient(circle_at_18%_10%,rgba(168,85,247,.2),transparent_28%),linear-gradient(125deg,rgba(78,16,68,.64),rgba(24,8,32,.86)_38%,rgba(45,11,7,.82)_74%,rgba(94,37,9,.7))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
@@ -1325,11 +1324,11 @@ function MentorSection() {
               <div className="absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 rounded-full border border-orange-300/18 bg-gradient-to-b from-orange-500/10 to-transparent shadow-[0_0_80px_rgba(249,115,22,.22)]" />
               <div className="absolute bottom-0 left-1/2 h-72 w-[92%] -translate-x-1/2 rounded-t-full bg-gradient-to-t from-red-600/24 to-transparent blur-2xl" />
               <Image
-                src="/images/video-ai-course-instructor-20260709-cutout.png"
+                src="/images/video-ai-course-mentor-section-cutout-hair-soft.png"
                 alt="Trung AI"
                 fill
                 sizes="(max-width: 1024px) 100vw, 420px"
-                className="object-contain object-bottom drop-shadow-[0_0_36px_rgba(249,115,22,.32)]"
+                className="object-contain object-bottom -translate-y-8 scale-[1.12] drop-shadow-[0_0_36px_rgba(249,115,22,.32)] sm:-translate-y-10 lg:-translate-y-12 lg:scale-[1.18]"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-transparent to-transparent" />
               <div className="absolute left-5 top-5 rounded-full border border-emerald-300/20 bg-black/70 px-4 py-2 text-xs font-black text-white backdrop-blur-md">
@@ -1495,8 +1494,8 @@ function VideoResultsSection() {
   };
 
   return (
-    <section id="ket-qua-thuc-te" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="ket-qua-thuc-te" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_8%,rgba(249,115,22,.22),transparent_24%),radial-gradient(circle_at_20%_10%,rgba(168,85,247,.22),transparent_28%),linear-gradient(125deg,rgba(88,19,82,.72),rgba(25,8,35,.86)_38%,rgba(48,11,7,.82)_74%,rgba(95,38,10,.7))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_14%_26%,rgba(255,255,255,.12),transparent_1.4px)] [background-size:24px_24px] opacity-40" />
@@ -1559,8 +1558,8 @@ function WhyNowSection() {
   const scrollToCurriculum = () => document.getElementById("noi-dung-khoa-hoc")?.scrollIntoView({ behavior: "smooth" });
 
   return (
-    <section id="vi-sao-hoc-ngay" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="vi-sao-hoc-ngay" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_82%_8%,rgba(249,115,22,.2),transparent_24%),radial-gradient(circle_at_18%_10%,rgba(168,85,247,.22),transparent_28%),linear-gradient(125deg,rgba(88,19,82,.72),rgba(25,8,35,.86)_38%,rgba(48,11,7,.82)_74%,rgba(95,38,10,.7))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(120deg,transparent_0,transparent_46%,rgba(255,255,255,.12)_47%,transparent_48%,transparent_100%)] [background-size:80px_80px]" />
@@ -1724,8 +1723,8 @@ function RegistrationSection() {
   ];
 
   return (
-    <section id="dang-ky-thanh-toan" className="relative px-4 pb-14 pt-0 sm:px-6 sm:pb-20 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="dang-ky-thanh-toan" className="relative px-3 pb-12 pt-0 sm:px-6 sm:pb-20 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_12%,rgba(249,115,22,.24),transparent_24%),radial-gradient(circle_at_20%_4%,rgba(168,85,247,.24),transparent_30%),linear-gradient(125deg,rgba(91,18,82,.74),rgba(25,8,35,.88)_38%,rgba(48,11,7,.82)_74%,rgba(102,39,10,.72))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(120deg,transparent_0,transparent_46%,rgba(255,255,255,.12)_47%,transparent_48%,transparent_100%)] [background-size:82px_82px]" />
@@ -1959,8 +1958,8 @@ function FAQSection() {
   ];
 
   return (
-    <section id="faq" className="relative px-4 pb-16 pt-0 sm:px-6 sm:pb-24 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="faq" className="relative px-3 pb-14 pt-0 sm:px-6 sm:pb-24 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_20%,rgba(249,115,22,.2),transparent_24%),radial-gradient(circle_at_18%_8%,rgba(168,85,247,.25),transparent_30%),linear-gradient(125deg,rgba(91,18,82,.76),rgba(25,8,35,.88)_38%,rgba(45,12,8,.84)_72%,rgba(99,39,10,.7))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(120deg,transparent_0,transparent_46%,rgba(255,255,255,.12)_47%,transparent_48%,transparent_100%)] [background-size:82px_82px]" />
@@ -2022,8 +2021,8 @@ function FinalCTASection() {
   const benefits = ["20 bài học", "Học trọn đời", "Prompt & workflow", "Cập nhật miễn phí", "Hỗ trợ qua nhóm/Zalo"];
 
   return (
-    <section id="cta-cuoi-trang" className="relative px-4 pb-16 pt-0 sm:px-6 sm:pb-24 lg:px-8">
-      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-5 py-10 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
+    <section id="cta-cuoi-trang" className="relative px-3 pb-14 pt-0 sm:px-6 sm:pb-24 lg:px-8">
+      <div className="relative mx-auto max-w-[1280px] overflow-hidden rounded-[1.65rem] border border-red-500/16 bg-[#070707] px-4 py-8 shadow-[0_42px_130px_rgba(0,0,0,.62)] sm:px-8 sm:py-12 lg:px-12">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_12%,rgba(249,115,22,.22),transparent_24%),radial-gradient(circle_at_18%_12%,rgba(168,85,247,.24),transparent_30%),linear-gradient(125deg,rgba(91,18,82,.76),rgba(25,8,35,.88)_38%,rgba(48,11,7,.84)_72%,rgba(100,38,9,.72))]" />
         <div className="absolute inset-0 opacity-[.13] [background-image:linear-gradient(rgba(255,255,255,.16)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.14)_1px,transparent_1px)] [background-size:38px_38px]" />
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(120deg,transparent_0,transparent_46%,rgba(255,255,255,.12)_47%,transparent_48%,transparent_100%)] [background-size:82px_82px]" />
@@ -2031,7 +2030,7 @@ function FinalCTASection() {
         <div className="absolute right-10 top-20 h-80 w-80 rounded-full bg-orange-500/16 blur-[95px]" />
 
         <div className="relative mx-auto max-w-3xl animate-[finalCtaIn_.75s_ease_both] rounded-[1.65rem] bg-gradient-to-br from-red-400 via-orange-300 to-yellow-200 p-[2px] shadow-[0_0_72px_rgba(249,115,22,.42)]">
-          <div className="relative overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-[#080207] via-[#16060b] to-[#2a0704] px-5 py-10 text-center shadow-[inset_0_0_0_1px_rgba(255,255,255,.04)] sm:px-10 sm:py-12">
+          <div className="relative overflow-hidden rounded-[1.55rem] bg-gradient-to-br from-[#080207] via-[#16060b] to-[#2a0704] px-4 py-8 text-center shadow-[inset_0_0_0_1px_rgba(255,255,255,.04)] sm:px-10 sm:py-12">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_100%,rgba(239,68,68,.16),transparent_30%),radial-gradient(circle_at_90%_15%,rgba(249,115,22,.22),transparent_24%)]" />
             <div className="absolute inset-0 bg-black/58" />
             <div className="absolute -bottom-20 left-1/2 h-44 w-80 -translate-x-1/2 rounded-full bg-red-500/20 blur-[55px]" />
@@ -2099,9 +2098,9 @@ export default function VideoAICoursePage() {
   return (
     <main className="min-h-screen scroll-smooth overflow-hidden bg-[#070707] text-white">
       <Header />
-      <div className="h-[68px]" aria-hidden="true" />
+      <div className="h-[112px] md:h-[68px]" aria-hidden="true" />
 
-      <section className="relative px-4 py-7 sm:px-6 lg:px-8">
+      <section className="relative px-3 py-4 sm:px-6 sm:py-7 lg:px-8">
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-red-700/18 to-transparent" />
         <div className="absolute left-0 top-1/4 h-[520px] w-[220px] bg-red-700/16 blur-[90px]" />
         <div className="absolute right-0 top-1/3 h-[520px] w-[220px] bg-orange-500/14 blur-[90px]" />
@@ -2113,14 +2112,14 @@ export default function VideoAICoursePage() {
           <div className="absolute -bottom-20 right-[12%] h-[390px] w-[640px] -rotate-12 rounded-full border-[2px] border-orange-400/35 blur-[1px]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_25%_30%,rgba(255,255,255,.12),transparent_1.5px)] [background-size:22px_22px]" />
 
-          <div className="relative grid min-h-[650px] items-center gap-2 px-5 py-10 sm:px-9 lg:grid-cols-[.48fr_.52fr] lg:px-14 lg:py-12">
+          <div className="relative grid min-h-0 items-center gap-6 px-4 py-8 sm:px-9 sm:py-10 lg:min-h-[650px] lg:grid-cols-[.48fr_.52fr] lg:gap-2 lg:px-14 lg:py-12">
             <div className="z-20 max-w-xl text-center lg:text-left">
-              <p className="mb-3 text-xl font-black uppercase tracking-[.5em] text-white/90 sm:text-2xl">Khóa học</p>
-              <h1 className="text-[4.6rem] font-black uppercase leading-[.82] tracking-[-.08em] sm:text-[7rem] lg:text-[7.8rem] xl:text-[8.7rem]">
+              <p className="mb-3 text-base font-black uppercase tracking-[.38em] text-white/90 sm:text-2xl sm:tracking-[.5em]">Khóa học</p>
+              <h1 className="text-[3.65rem] font-black uppercase leading-[.82] tracking-[-.08em] min-[380px]:text-[4.25rem] sm:text-[7rem] lg:text-[7.8rem] xl:text-[8.7rem]">
                 <span className="bg-gradient-to-b from-red-500 via-orange-500 to-amber-300 bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(239,68,68,.48)]">Video AI</span>
               </h1>
               <div className="mx-auto mt-3 inline-flex skew-x-[-10deg] border-2 border-orange-400/90 px-7 py-1.5 shadow-[0_0_24px_rgba(249,115,22,.34)] lg:mx-0">
-                <span className="skew-x-[10deg] text-2xl font-black uppercase tracking-tight text-white sm:text-3xl">Xây kênh & Kiếm Tiền Affiliate</span>
+                <span className="skew-x-[10deg] text-lg font-black uppercase tracking-tight text-white min-[380px]:text-xl sm:text-3xl">Xây kênh & Kiếm Tiền Affiliate</span>
               </div>
 
               <p className="mx-auto mt-5 max-w-lg text-sm leading-7 text-zinc-200 sm:text-base lg:mx-0">

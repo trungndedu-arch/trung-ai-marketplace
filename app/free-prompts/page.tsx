@@ -51,6 +51,25 @@ type PromptItem = {
 
 const prompts: PromptItem[] = [
   {
+    id: 36,
+    title: "Quảng Cáo Đồ Uống Splash Siêu Thực",
+    model: "GPT Image",
+    count: "4 ảnh",
+    category: "Sản Phẩm",
+    description: "Tạo ảnh quảng cáo đồ uống/chai lon bay giữa không trung với splash nước, đá lạnh, ánh sáng thương mại, chuyển động đóng băng và chiều sâu hình ảnh cao cấp.",
+    image: "/images/prompts/quang-cao-do-uong-splash-sieu-thuc-01.png",
+    images: [
+      "/images/prompts/quang-cao-do-uong-splash-sieu-thuc-01.png",
+      "/images/prompts/quang-cao-do-uong-splash-sieu-thuc-02.png",
+      "/images/prompts/quang-cao-do-uong-splash-sieu-thuc-03.png",
+      "/images/prompts/quang-cao-do-uong-splash-sieu-thuc-04.png",
+    ],
+    gradient: "from-yellow-300 via-orange-500 to-red-950",
+    icon: ShoppingBag,
+    height: "h-[32rem]",
+    prompt: `Create scroll-stopping product shots for ads, posters, and brand visuals with this ultra-realistic bottle promo prompt. Highlight any beverage or bottle in mid-air surrounded by dynamic splash effects, realistic lighting, frozen motion, and rich, clean commercial depth. Perfect for commercial clients, advertising mockups, or brand design visuals.`,
+  },
+  {
     id: 35,
     title: "Poster Quảng Cáo Đồng Hồ Cao Cấp",
     model: "GPT Image",
@@ -97,7 +116,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
     description: "Tạo artwork quảng cáo thời trang thể thao Nike phong cách siêu thực, năng lượng tím bùng nổ, chuyển động mạnh và visual premium athletic advertising.",
     image: "/images/prompts/thoi-trang-the-thao-nike-sieu-thuc-01.png",
     images: ["/images/prompts/thoi-trang-the-thao-nike-sieu-thuc-01.png"],
-    gradient: "from-violet-500 via-slate-800 to-zinc-950",
+    gradient: "from-orange-500 via-red-800 to-zinc-950",
     icon: Shirt,
     height: "h-[30rem]",
     prompt: `A highly detailed digital artwork in a surreal, dynamic style inspired by premium athletic advertising for Nike, Inc. A young athletic woman with platinum blonde hair tied in a messy bun, fair skin, and a fiercely focused expression is captured mid-jump or leap, her body leaning slightly forward as if bursting with raw, untamed energy. She wears a loose, off-white Nike crewneck sweatshirt with subtle embossed Nike branding on the chest, paired with flowy, semi-transparent pants featuring a swirling marbled pattern in graphite grey and electric violet, billowing dramatically around her legs. On her feet are sleek, futuristic white Nike sneakers with glowing violet accents, visible Air-inspired sole details, and an aerodynamic design. Vibrant electric violet energy or ethereal smoke erupts dramatically from behind her, swirling and dissolving into abstract, cloud-like forms that interact with her clothing, creating a powerful sense of motion and release. The background is a deep, moody gradient transitioning from charcoal grey to luminous twilight violet, emphasizing a minimalist yet striking composition. Overlay large, bold metallic silver text reading “Just Do It” in a sharp, modern sans-serif font, partially integrated and obscured by the energy smoke and the figure, making it feel like an organic part of the scene. Include the iconic Nike Swoosh logo in the top-left corner in shimmering silver.`,
@@ -111,7 +130,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
     description: "Thêm doodle vẽ tay vui nhộn tương tác trực tiếp với chủ thể trong ảnh, vẫn giữ nguyên bố cục, ánh sáng và nhận diện của ảnh gốc.",
     image: "/images/prompts/doodle-tuong-tac-anh-goc-01.png",
     images: ["/images/prompts/doodle-tuong-tac-anh-goc-01.png"],
-    gradient: "from-emerald-300 via-rose-400 to-zinc-950",
+    gradient: "from-orange-300 via-rose-400 to-zinc-950",
     icon: ImageIcon,
     height: "h-[30rem]",
     prompt: `Analyze the uploaded image and preserve the original subject, composition, and lighting. Do not alter the identity or structure of the main subject. Add playful, hand-drawn doodles that interact directly with the subject in the image. The doodles should mimic, follow, or exaggerate the shapes, gestures, or motion present-such as outlining poses, extending limbs, adding motion lines, or creating imaginative elements that "respond" to the subject.`,
@@ -162,7 +181,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
       "/images/prompts/nhan-vat-cho-streetwear-3d-02.png",
       "/images/prompts/nhan-vat-cho-streetwear-3d-03.png",
     ],
-    gradient: "from-lime-300 via-emerald-500 to-zinc-950",
+    gradient: "from-amber-300 via-orange-500 to-zinc-950",
     icon: ImageIcon,
     height: "h-[30rem]",
     prompt: `Full-body 3D stylized anthropomorphic cartoon dog character wearing modern streetwear, oversized neon green hoodie, cargo pants, chunky sneakers, reflective sunglasses, silver chain necklace. Confident relaxed pose with hands in pockets. Minimal studio background in solid lime green. Soft studio lighting, smooth shadows, high detail fabric texture, Pixar-quality 3D render, ultra-clean composition, centered framing, fashion editorial character design, 8K resolution.`,
@@ -208,7 +227,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
       "/images/prompts/poster-quang-cao-my-pham-phong-cach-mem-mai-02.png",
       "/images/prompts/poster-quang-cao-my-pham-phong-cach-mem-mai-03.png",
     ],
-    gradient: "from-violet-200 via-rose-300 to-violet-950",
+    gradient: "from-orange-200 via-rose-300 to-red-950",
     icon: ShoppingBag,
     height: "h-[30rem]",
     prompt: `Luxury aesthetic skincare advertisement, soft pastel background, warm golden sunlight, dreamy soft focus, feminine vanity setup with mirror, pearls, candle and baby breath flowers. Cozy purple fluffy surface, high-end beauty branding style, ultra realistic, 4k, studio lighting, glossy reflection, soft shadows, bokeh background. Add cute doodle elements (white and purple hand-drawn arrows, sparkles, hearts), handwritten notes and stickers. Text overlay: "Glowy Skin In A Bottle" (big hand writing font) "Nourish • Hydrate • Glow" "For Soft, Smooth & Glowing Skin", "Self care Everyday" clean composition, aesthetic, viral beauty ad style, Instagram / TikTok / X friendly (but no UI), premium soft feminine branding`,
@@ -222,7 +241,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
     description: "Tạo ảnh KOL thời trang nữ trẻ trung, sang trọng trong bối cảnh sân khấu/studio cao cấp với ánh sáng điện ảnh, váy đen avant-garde và khí chất editorial luxury.",
     image: "/images/prompts/tao-kol-thoi-trang-tre-trung-sang-trong-01.png",
     images: ["/images/prompts/tao-kol-thoi-trang-tre-trung-sang-trong-01.png"],
-    gradient: "from-zinc-900 via-slate-700 to-violet-950",
+    gradient: "from-zinc-900 via-red-900 to-orange-950",
     icon: Shirt,
     height: "h-[30rem]",
     prompt: `Generate a visually young and elegant East Asian woman with tight, smooth, and elastic skin, with a subtle natural texture, a bright and transparent complexion, and no signs of sagging, fine lines, eye bags, or middle-aged feelings. Her facial contours are clear and layered, with a sharp and natural jawline, soft and delicate features, and clear and calm eyes with a distant and sophisticated intellectual depth. Her hair is a light brown, natural, and long, with a rich and smooth texture. Her overall demeanor is quiet and restrained, with a balance between youthful energy and elegant composure, and a sense of high-end detachment. She sits elegantly on the edge of the stage, with her body straight and dignified, one hand resting naturally on her side, and her legs crossed naturally to one side, with her head slightly raised and her gaze looking beyond the camera. Her posture is calm and full of dramatic tension, showcasing a high-end, quiet atmosphere of stage art. She wears a high-end, avant-garde, and dark-colored long dress with a sleek and geometric cut and a three-dimensional design, with a luxurious and dark fabric texture, presenting a dark and luxurious avant-garde fashion style. Her body is naturally proportional, with a relaxed and elegant shoulder and neck line. The scene is a professional dark-colored stage or a high-end photography studio with a deep-colored backdrop, a lightly blurred foreground with professional photography equipment, and a sense of high-end behind-the-scenes recording. Soft and focused lighting is used to highlight the subject, creating a dramatic and contrasty effect, with a deep and dark background. The overall style is a high-end, dark, and luxurious editorial style, with a shallow depth of field that emphasizes the subject's and clothing's texture, with a realistic and natural skin texture, and a clear and high-end clothing detail, with a overall sense of quietness, restraint, and artistic performance and dramatic tension. The image style is high-quality realism, with a natural and realistic transition of light and shadow, a balance of warm and cool tones, high-definition details, and a masterpiece-level quality, like a high-end fashion magazine's dark and avant-garde big piece.`,
@@ -236,7 +255,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
     description: "Tạo storyboard quảng cáo skincare 9 khung phong cách tối giản, ánh sáng tự nhiên, mood trong trẻo và câu chuyện chuyển đổi làn da từ mệt mỏi sang căng bóng rạng rỡ.",
     image: "/images/prompts/storyboard-skincare-01.png",
     images: ["/images/prompts/storyboard-skincare-01.png"],
-    gradient: "from-white via-sky-200 to-violet-900",
+    gradient: "from-white via-orange-200 to-red-900",
     icon: ImageIcon,
     height: "h-80",
     prompt: `Create a clean, bright skincare commercial storyboard in a 16:9 layout with 9 panels. Use soft natural lighting, minimal aesthetic, and a fresh, airy mood with white and pastel tones. The main character is a young woman with soft makeup and styled hair, wearing light, elegant clothing. The setting is a modern, sunlit interior with large windows and a calm atmosphere. No text or subtitles anywhere. Show a clear story flow: she starts at her desk looking slightly tired or concerned, then a close-up of her face showing dry or dull skin. She discovers a clear skincare bottle and gently presents it. Show a close-up of the liquid pouring onto her hand, followed by her applying it to her face. After use, her skin looks hydrated, glowing, and smooth. Transition to her feeling confident and refreshed, walking in a bright, clean space with soft breeze and flowing elements. End with a calm product beauty shot on a minimal surface, then a final frame of her smiling softly at the camera while holding the product. Focus on natural expressions, glowing skin, and a transformation from dull to fresh. Include cinematic close-ups, soft focus, light reflections, and subtle sparkles to enhance the clean beauty feel. Keep everything elegant, minimal, and visually soothing with no branding text.`,
@@ -367,7 +386,7 @@ Voice:
     description: "Tạo ảnh quảng cáo lingerie cao cấp phong cách beauty-fashion Nhật Bản, ánh sáng mềm, màu ivory sang trọng và bố cục e-commerce premium.",
     image: "/images/prompts/lingerie-nhat-ban-cao-cap-01.png",
     images: ["/images/prompts/lingerie-nhat-ban-cao-cap-01.png"],
-    gradient: "from-stone-100 via-amber-200 to-violet-950",
+    gradient: "from-stone-100 via-amber-200 to-red-950",
     icon: Shirt,
     height: "h-[30rem]",
     prompt: `Create a hyper-realistic luxury lingerie e-commerce detail-page visual inspired by premium Japanese beauty-fashion brands. IMPORTANT: Generate ONLY ONE SINGLE VERTICAL IMAGE. Do NOT create multiple posters. Do NOT create collages. STYLE: Luxury glossy beauty-commercial realism. Soft dreamy fashion aesthetics. Premium feminine branding. MAIN CONCEPT: A glowing soft-beauty lingerie campaign focused on: radiant feminine elegance, luxury comfort, soft body glow, and dreamy romantic styling. MODEL: Adult female model with glowing skin texture. Soft cinematic makeup. Elegant emotional beauty. Luxury fashion styling. PRODUCT: Luxury ivory-white lace lingerie with: soft reflective fabric, light floral lace details, premium smooth texture, and natural support fit. VISUAL STRUCTURE: cinematic beauty hero shot dreamy close-up details luxury typography overlays premium spacing hierarchy soft glowing beauty atmosphere BACKGROUND: Minimal ivory-beauty studio with dreamy sunlight diffusion and floating light particles. COLOR PALETTE: Ivory white, soft pearl, light champagne, warm blush glow, cream beige. MOOD: Dreamy. Luxury. Elegant. Soft romantic beauty. QUALITY: Ultra realistic HDR. 8K cinematic realism. Looks like a real premium Japanese lingerie e-commerce detail-page campaign.`,
@@ -381,7 +400,7 @@ Voice:
     description: "Tạo character sheet đồng nhất nhân vật từ ảnh tham chiếu, giữ nguyên khuôn mặt, phong cách, trang phục và nhiều góc biểu cảm để dùng cho AI image generation.",
     image: "/images/prompts/character-sheet-dong-nhat-nhan-vat-01.png",
     images: ["/images/prompts/character-sheet-dong-nhat-nhan-vat-01.png"],
-    gradient: "from-slate-200 via-zinc-400 to-violet-950",
+    gradient: "from-slate-200 via-orange-400 to-red-950",
     icon: ImageIcon,
     height: "h-80",
     prompt: `Use the attached image as the highest-priority reference and create a character sheet that clearly depicts the same person or character.
@@ -438,7 +457,7 @@ Different person, different character, changed face, changed art style, unintend
       "/images/prompts/op-dien-thoai-xinh-02.png",
       "/images/prompts/op-dien-thoai-xinh-03.png",
     ],
-    gradient: "from-pink-300 via-rose-400 to-violet-900",
+    gradient: "from-orange-300 via-rose-400 to-red-900",
     icon: ShoppingBag,
     height: "h-[30rem]",
     prompt: `Ultra-cute kawaii aesthetic close-up photo of a feminine hand holding a fully assembled smartphone with the transparent iPhone Pro case already installed on the phone, clearly showing the actual iPhone inside the glossy transparent case instead of the case alone. The smartphone remains visible through the crystal-clear transparent materials, with realistic metallic iPhone edges, camera lenses, subtle Apple-style premium details, and soft reflections visible beneath the case design.
@@ -463,7 +482,7 @@ Soft diffused studio lighting focused on the phone and installed case, subtle ba
       "/images/prompts/thoi-trang-ao-dai-trung-nien-01.png",
       "/images/prompts/thoi-trang-ao-dai-trung-nien-02.png",
     ],
-    gradient: "from-emerald-500 via-teal-800 to-zinc-950",
+    gradient: "from-orange-500 via-red-800 to-zinc-950",
     icon: Shirt,
     height: "h-[30rem]",
     prompt: "Full-body photograph of a middle-aged Vietnamese woman, around 50 years old, standing confidently and full of grace, with a warm, natural smile in a luxurious Indochine-style living room. She is captured completely from head to toe, with her entire figure including her feet on the floor visible. Her neat black hair is natural, and her makeup is refined and suitable for her age. She wears an elegant, high-quality emerald green silk ao dai tunic over black silk trousers, with subtle embroidery, and stylish low-heeled pearl sandals. She stands in a richly decorated living room featuring dark, polished teak wood furniture, classic Vietnamese blue and white ceramics, and soft lantern lighting. Behind her is a plush velvet sofa and a large arched window looking out onto a lush green courtyard. The lighting is soft, warm, and natural. The view captures the entire space, maintaining vertical focus. Shot at eye level. High resolution. 9:16",
@@ -565,7 +584,7 @@ const orderedPrompts = prompts
   .map(({ item }) => item);
 
 function Brand() {
-  return <Link href="/" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-violet-500 to-fuchsia-500 shadow-glow"><Sparkles className="h-5 w-5 text-white" /></span><span className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <b className="text-violet-400">Studio</b></span></Link>;
+  return <Link href="/" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-orange-500 to-red-500 shadow-glow"><Sparkles className="h-5 w-5 text-white" /></span><span className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <b className="text-orange-400">Studio</b></span></Link>;
 }
 
 function Sidebar({ open, close }: { open: boolean; close: () => void }) {
@@ -579,20 +598,20 @@ function Sidebar({ open, close }: { open: boolean; close: () => void }) {
   ];
   return <>
     {open && <button aria-label="Đóng menu" className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden" onClick={close} />}
-    <aside className={`fixed inset-y-0 left-0 z-50 flex w-[252px] flex-col border-r border-white/[0.07] bg-[#0c0b12]/95 px-4 py-5 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
+    <aside className={`fixed inset-y-0 left-0 z-50 flex w-[252px] flex-col border-r border-white/[0.07] bg-[#080202]/95 px-4 py-5 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
       <div className="mb-8 flex items-center justify-between px-2"><Brand /><button aria-label="Đóng menu" onClick={close} className="text-zinc-400 lg:hidden"><X className="h-5 w-5" /></button></div>
       <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-600">Khám phá</p>
-      <nav className="space-y-1">{links.map(({ label, icon: Icon, href, active }) => <Link key={label} href={href} onClick={close} className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-violet-500/15 text-violet-300" : "text-zinc-400 hover:bg-white/[0.04] hover:text-white"}`}><Icon className={`h-[18px] w-[18px] ${active ? "text-violet-400" : "text-zinc-500 group-hover:text-zinc-300"}`} />{label}{active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-violet-400 shadow-[0_0_10px_#a78bfa]" />}</Link>)}</nav>
+      <nav className="space-y-1">{links.map(({ label, icon: Icon, href, active }) => <Link key={label} href={href} onClick={close} className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-orange-500/15 text-orange-300" : "text-zinc-400 hover:bg-white/[0.04] hover:text-white"}`}><Icon className={`h-[18px] w-[18px] ${active ? "text-orange-400" : "text-zinc-500 group-hover:text-zinc-300"}`} />{label}{active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-orange-400 shadow-[0_0_10px_#fb923c]" />}</Link>)}</nav>
       <div className="my-6 h-px bg-white/[0.06]" />
       <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-zinc-600">Cá nhân</p>
       <button className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-zinc-400 hover:bg-white/[0.04] hover:text-white"><Heart className="h-[18px] w-[18px] text-zinc-500" /> Yêu thích</button>
-      <div className="mt-auto rounded-2xl border border-violet-400/15 bg-gradient-to-br from-violet-500/15 to-fuchsia-500/[0.04] p-4"><div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-violet-500/20"><Store className="h-[18px] w-[18px] text-violet-300" /></div><p className="text-sm font-bold text-white">Trở thành creator</p><p className="mt-1 text-xs leading-5 text-zinc-500">Chia sẻ sản phẩm AI với cộng đồng.</p><button className="mt-3 flex items-center gap-1 text-xs font-bold text-violet-300">Bắt đầu ngay <ChevronRight className="h-3.5 w-3.5" /></button></div>
+      <div className="mt-auto rounded-2xl border border-orange-400/15 bg-gradient-to-br from-orange-500/15 to-red-500/[0.04] p-4"><div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-orange-500/20"><Store className="h-[18px] w-[18px] text-orange-300" /></div><p className="text-sm font-bold text-white">Trở thành creator</p><p className="mt-1 text-xs leading-5 text-zinc-500">Chia sẻ sản phẩm AI với cộng đồng.</p><button className="mt-3 flex items-center gap-1 text-xs font-bold text-orange-300">Bắt đầu ngay <ChevronRight className="h-3.5 w-3.5" /></button></div>
     </aside>
   </>;
 }
 
 function Header({ openMenu }: { openMenu: () => void }) {
-  return <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-white/[0.06] bg-ink/80 px-4 backdrop-blur-xl sm:px-6 lg:px-8"><button onClick={openMenu} aria-label="Mở menu" className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-300 lg:hidden"><Menu className="h-5 w-5" /></button><span className="hidden md:block lg:hidden"><Brand /></span><div className="flex-1" /><span className="hidden text-xs font-semibold text-zinc-500 sm:block">Prompt mới mỗi tuần</span><button aria-label="Thông báo" className="relative grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-white/[0.035] text-zinc-400 hover:text-white"><Bell className="h-[18px] w-[18px]" /><span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-fuchsia-500" /></button><Link href="/" className="hidden rounded-xl bg-white px-4 py-2.5 text-sm font-extrabold text-zinc-950 transition hover:bg-violet-100 sm:block">Marketplace</Link></header>;
+  return <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-white/[0.06] bg-ink/80 px-4 backdrop-blur-xl sm:px-6 lg:px-8"><button onClick={openMenu} aria-label="Mở menu" className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-zinc-300 lg:hidden"><Menu className="h-5 w-5" /></button><span className="hidden md:block lg:hidden"><Brand /></span><div className="flex-1" /><span className="hidden text-xs font-semibold text-zinc-500 sm:block">Prompt mới mỗi tuần</span><button aria-label="Thông báo" className="relative grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-white/[0.035] text-zinc-400 hover:text-white"><Bell className="h-[18px] w-[18px]" /><span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-red-500" /></button><Link href="/" className="hidden rounded-xl bg-gradient-to-r from-red-500 to-orange-500 px-4 py-2.5 text-sm font-extrabold text-white shadow-glow transition hover:brightness-110 sm:block">Marketplace</Link></header>;
 }
 
 function PromptVisual({ item, modal = false }: { item: PromptItem; modal?: boolean }) {
@@ -610,7 +629,7 @@ function PromptVisual({ item, modal = false }: { item: PromptItem; modal?: boole
 }
 
 function PromptCard({ item, open }: { item: PromptItem; open: () => void }) {
-  return <button onClick={open} className="prompt-card group mb-5 w-full break-inside-avoid overflow-hidden rounded-2xl border border-white/[0.08] bg-[#111019] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)]"><PromptVisual item={item} /><div className="p-4"><div className="mb-2 flex items-center gap-2"><span className="rounded-full bg-violet-500/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-violet-300">{item.category}</span></div><h2 className="text-[15px] font-extrabold leading-6 text-white transition group-hover:text-violet-300">{item.title}</h2>{item.description && <p className="mt-2 line-clamp-3 text-xs leading-5 text-zinc-500">{item.description}</p>}<div className="mt-3 flex items-center justify-between gap-3"><span className="truncate text-xs font-semibold text-violet-400">{item.model}</span><span className="whitespace-nowrap rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-zinc-400">{item.count}</span></div></div></button>;
+  return <button onClick={open} className="prompt-card group mb-5 w-full break-inside-avoid overflow-hidden rounded-2xl border border-white/[0.08] bg-[#140707] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)]"><PromptVisual item={item} /><div className="p-4"><div className="mb-2 flex items-center gap-2"><span className="rounded-full bg-orange-500/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-orange-300">{item.category}</span></div><h2 className="text-[15px] font-extrabold leading-6 text-white transition group-hover:text-orange-300">{item.title}</h2>{item.description && <p className="mt-2 line-clamp-3 text-xs leading-5 text-zinc-500">{item.description}</p>}<div className="mt-3 flex items-center justify-between gap-3"><span className="truncate text-xs font-semibold text-orange-400">{item.model}</span><span className="whitespace-nowrap rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-zinc-400">{item.count}</span></div></div></button>;
 }
 
 function PromptGallery({ item }: { item: PromptItem }) {
@@ -622,12 +641,12 @@ function PromptGallery({ item }: { item: PromptItem }) {
   return <div className="flex min-h-[520px] flex-col bg-black p-3 sm:min-h-[620px] sm:p-4">
     <div className="relative min-h-0 flex-1 overflow-hidden rounded-2xl bg-[#08070d]">
       <Image src={images[activeIndex]} alt={`${item.title} — ảnh ${activeIndex + 1}`} fill priority sizes="(max-width: 640px) 100vw, 45vw" className="object-contain" />
-      <button type="button" aria-label="Ảnh trước" onClick={previous} className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/55 text-white shadow-xl backdrop-blur-md transition hover:scale-105 hover:bg-violet-600"><ChevronLeft className="h-5 w-5" /></button>
-      <button type="button" aria-label="Ảnh tiếp theo" onClick={next} className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/55 text-white shadow-xl backdrop-blur-md transition hover:scale-105 hover:bg-violet-600"><ChevronRight className="h-5 w-5" /></button>
+      <button type="button" aria-label="Ảnh trước" onClick={previous} className="absolute left-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/55 text-white shadow-xl backdrop-blur-md transition hover:scale-105 hover:bg-orange-600"><ChevronLeft className="h-5 w-5" /></button>
+      <button type="button" aria-label="Ảnh tiếp theo" onClick={next} className="absolute right-3 top-1/2 grid h-10 w-10 -translate-y-1/2 place-items-center rounded-full border border-white/15 bg-black/55 text-white shadow-xl backdrop-blur-md transition hover:scale-105 hover:bg-orange-600"><ChevronRight className="h-5 w-5" /></button>
       <span className="absolute right-3 top-3 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 text-xs font-bold text-white backdrop-blur-md">{activeIndex + 1}/{images.length}</span>
     </div>
     <div className="mt-3 flex justify-center gap-2 overflow-x-auto pb-1">
-      {images.map((image, index) => <button type="button" key={image} onClick={() => setActiveIndex(index)} aria-label={`Chọn ảnh ${index + 1}`} className={`relative h-16 w-12 flex-none overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-14 ${activeIndex === index ? "border-violet-400 shadow-[0_0_18px_rgba(139,92,246,.55)]" : "border-transparent opacity-55 hover:opacity-100"}`}><Image src={image} alt="" fill sizes="56px" className="object-cover" /><span className={`absolute inset-x-0 bottom-0 h-1 ${activeIndex === index ? "bg-violet-400" : "bg-transparent"}`} /></button>)}
+      {images.map((image, index) => <button type="button" key={image} onClick={() => setActiveIndex(index)} aria-label={`Chọn ảnh ${index + 1}`} className={`relative h-16 w-12 flex-none overflow-hidden rounded-lg border-2 transition sm:h-20 sm:w-14 ${activeIndex === index ? "border-orange-400 shadow-[0_0_18px_rgba(249,115,22,.55)]" : "border-transparent opacity-55 hover:opacity-100"}`}><Image src={image} alt="" fill sizes="56px" className="object-cover" /><span className={`absolute inset-x-0 bottom-0 h-1 ${activeIndex === index ? "bg-orange-400" : "bg-transparent"}`} /></button>)}
     </div>
   </div>;
 }
@@ -635,16 +654,16 @@ function PromptGallery({ item }: { item: PromptItem }) {
 function PromptModal({ item, close, copied, copy }: { item: PromptItem; close: () => void; copied: boolean; copy: () => void }) {
   useEffect(() => { const onKey = (event: KeyboardEvent) => event.key === "Escape" && close(); window.addEventListener("keydown", onKey); document.body.style.overflow = "hidden"; return () => { window.removeEventListener("keydown", onKey); document.body.style.overflow = ""; }; }, [close]);
   return <div className="fixed inset-0 z-[80] grid place-items-center bg-black/80 p-3 backdrop-blur-md sm:p-6" onMouseDown={close}>
-    <div role="dialog" aria-modal="true" aria-label={item.title} onMouseDown={(event) => event.stopPropagation()} className="grid max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-[24px] border border-white/10 bg-[#111019] shadow-[0_0_80px_rgba(124,58,237,.22)] sm:grid-cols-[.9fr_1.1fr]">
+    <div role="dialog" aria-modal="true" aria-label={item.title} onMouseDown={(event) => event.stopPropagation()} className="grid max-h-[92vh] w-full max-w-5xl overflow-y-auto rounded-[24px] border border-white/10 bg-[#140707] shadow-[0_0_80px_rgba(249,115,22,.22)] sm:grid-cols-[.9fr_1.1fr]">
       {item.images && item.images.length > 1 ? <PromptGallery item={item} /> : <PromptVisual item={item} modal />}
       <div className="flex flex-col p-5 sm:p-8">
         <button aria-label="Đóng" onClick={close} className="ml-auto grid h-9 w-9 place-items-center rounded-full border border-white/10 text-zinc-500 hover:bg-white/[0.06] hover:text-white"><X className="h-4 w-4" /></button>
-        <span className="mt-2 text-[10px] font-black uppercase tracking-[.18em] text-violet-400">{item.category}</span>
+        <span className="mt-2 text-[10px] font-black uppercase tracking-[.18em] text-orange-400">{item.category}</span>
         <h2 className="mt-2 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{item.title}</h2>
         {item.description && <p className="mt-3 text-sm leading-6 text-zinc-400">{item.description}</p>}
-        <div className="mt-4 flex items-center gap-2 text-xs text-zinc-400"><Sparkles className="h-4 w-4 text-violet-400" /> Model AI <b className="text-zinc-200">{item.model}</b></div>
+        <div className="mt-4 flex items-center gap-2 text-xs text-zinc-400"><Sparkles className="h-4 w-4 text-orange-400" /> Model AI <b className="text-zinc-200">{item.model}</b></div>
         <div className="mt-6 rounded-2xl border border-white/[0.07] bg-black/25 p-4"><p className="mb-3 text-[10px] font-black uppercase tracking-[.17em] text-zinc-600">Nội dung prompt</p><p className="max-h-48 whitespace-pre-line overflow-y-auto text-sm leading-7 text-zinc-300">{item.prompt}</p></div>
-        <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row"><button onClick={copy} className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-extrabold text-white transition ${copied ? "bg-emerald-600" : "bg-gradient-to-r from-violet-600 to-fuchsia-600 hover:brightness-110"}`}>{copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}{copied ? "Đã sao chép Prompt" : "Sao chép Prompt"}</button><button onClick={close} className="rounded-xl border border-white/10 px-5 py-3.5 text-sm font-bold text-zinc-400 hover:bg-white/[0.05] hover:text-white">Đóng</button></div>
+        <div className="mt-auto flex flex-col gap-3 pt-6 sm:flex-row"><button onClick={copy} className={`flex flex-1 items-center justify-center gap-2 rounded-xl px-5 py-3.5 text-sm font-extrabold text-white transition ${copied ? "bg-emerald-600" : "bg-gradient-to-r from-orange-600 to-red-600 hover:brightness-110"}`}>{copied ? <Check className="h-4 w-4" /> : <Copy className="h-4 w-4" />}{copied ? "Đã sao chép Prompt" : "Sao chép Prompt"}</button><button onClick={close} className="rounded-xl border border-white/10 px-5 py-3.5 text-sm font-bold text-zinc-400 hover:bg-white/[0.05] hover:text-white">Đóng</button></div>
       </div>
     </div>
   </div>;
@@ -662,5 +681,5 @@ export default function FreePromptsPage() {
   const closeModal = () => { setSelected(null); setCopied(false); };
   const copyPrompt = async () => { if (!selected) return; await navigator.clipboard.writeText(selected.prompt); setCopied(true); setToast(true); window.setTimeout(() => setToast(false), 2200); };
 
-  return <div className="min-h-screen bg-ink text-zinc-200"><Sidebar open={menuOpen} close={() => setMenuOpen(false)} /><div className="lg:pl-[252px]"><Header openMenu={() => setMenuOpen(true)} /><main className="mx-auto max-w-[1500px] px-4 py-9 sm:px-6 lg:px-8 lg:py-12"><section className="relative overflow-hidden rounded-[28px] border border-white/[0.07] bg-[#100d1a] px-6 py-10 sm:px-10 lg:px-12"><div className="absolute -right-20 -top-32 h-80 w-80 rounded-full bg-violet-600/20 blur-[90px]" /><div className="relative"><span className="inline-flex items-center gap-2 rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-[.18em] text-violet-300"><Sparkles className="h-3.5 w-3.5" /> Miễn phí · Cập nhật mỗi tuần</span><h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-tight tracking-[-.04em] text-white sm:text-5xl">Thư viện Prompt AI <span className="gradient-text">miễn phí</span></h1><p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400 sm:text-base">Sao chép và sử dụng ngay với ChatGPT, Gemini, Midjourney, Nano Banana, Veo 3 và các công cụ AI phổ biến.</p></div></section><section className="mt-8"><div className="relative"><Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-600" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Tìm prompt theo chủ đề, model..." className="h-14 w-full rounded-2xl border border-white/[0.08] bg-white/[0.035] pl-12 pr-4 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10" /></div><div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-2">{filters.map((filter) => <button key={filter} onClick={() => setActiveFilter(filter)} className={`whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-bold transition ${activeFilter === filter ? "bg-violet-600 text-white shadow-[0_0_24px_rgba(124,58,237,.28)]" : "border border-white/[0.08] bg-white/[0.03] text-zinc-500 hover:border-violet-400/30 hover:text-white"}`}>{filter}</button>)}</div></section><div className="mb-5 mt-9 flex items-center justify-between"><p className="text-sm text-zinc-500"><b className="text-white">{visible.length}</b> prompt phù hợp</p><span className="text-xs text-zinc-600">Nhấn vào thẻ để xem chi tiết</span></div>{visible.length > 0 ? <section className="columns-1 gap-5 sm:columns-2 xl:columns-3 2xl:columns-4">{visible.map((item) => <PromptCard key={item.id} item={item} open={() => { setSelected(item); setCopied(false); }} />)}</section> : <div className="grid min-h-64 place-items-center rounded-2xl border border-dashed border-white/10 text-center"><div><Search className="mx-auto h-8 w-8 text-zinc-700" /><p className="mt-3 font-bold text-zinc-400">Không tìm thấy prompt phù hợp</p><button onClick={() => { setQuery(""); setActiveFilter(filters[0]); }} className="mt-3 text-sm font-bold text-violet-400">Xóa bộ lọc</button></div></div>}<footer className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-zinc-600 sm:flex-row"><Brand /><p>© 2026 Trung AI Studio. Prompt tốt, ý tưởng lớn.</p></footer></main></div>{selected && <PromptModal item={selected} close={closeModal} copied={copied} copy={copyPrompt} />}{toast && <div className="fixed bottom-5 left-1/2 z-[100] flex -translate-x-1/2 items-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-950/95 px-4 py-3 text-sm font-bold text-emerald-200 shadow-2xl backdrop-blur-md"><Check className="h-4 w-4" /> Đã sao chép Prompt</div>}</div>;
+  return <div className="min-h-screen bg-ink text-zinc-200"><Sidebar open={menuOpen} close={() => setMenuOpen(false)} /><div className="lg:pl-[252px]"><Header openMenu={() => setMenuOpen(true)} /><main className="mx-auto max-w-[1500px] px-4 py-9 sm:px-6 lg:px-8 lg:py-12"><section className="relative overflow-hidden rounded-[28px] border border-white/[0.07] bg-[#120606] px-6 py-10 sm:px-10 lg:px-12"><div className="absolute -right-20 -top-32 h-80 w-80 rounded-full bg-orange-600/20 blur-[90px]" /><div className="relative"><span className="inline-flex items-center gap-2 rounded-full border border-orange-400/20 bg-orange-500/10 px-3 py-1.5 text-[10px] font-black uppercase tracking-[.18em] text-orange-300"><Sparkles className="h-3.5 w-3.5" /> Miễn phí · Cập nhật mỗi tuần</span><h1 className="mt-5 max-w-3xl text-4xl font-extrabold leading-tight tracking-[-.04em] text-white sm:text-5xl">Thư viện Prompt AI <span className="gradient-text">miễn phí</span></h1><p className="mt-4 max-w-3xl text-sm leading-7 text-zinc-400 sm:text-base">Sao chép và sử dụng ngay với ChatGPT, Gemini, Midjourney, Nano Banana, Veo 3 và các công cụ AI phổ biến.</p></div></section><section className="mt-8"><div className="relative"><Search className="absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 text-zinc-600" /><input value={query} onChange={(event) => setQuery(event.target.value)} placeholder="Tìm prompt theo chủ đề, model..." className="h-14 w-full rounded-2xl border border-white/[0.08] bg-white/[0.035] pl-12 pr-4 text-sm text-white outline-none placeholder:text-zinc-600 focus:border-orange-500/50 focus:ring-4 focus:ring-orange-500/10" /></div><div className="no-scrollbar mt-4 flex gap-2 overflow-x-auto pb-2">{filters.map((filter) => <button key={filter} onClick={() => setActiveFilter(filter)} className={`whitespace-nowrap rounded-full px-4 py-2.5 text-xs font-bold transition ${activeFilter === filter ? "bg-gradient-to-r from-red-500 to-orange-500 text-white shadow-[0_0_24px_rgba(249,115,22,.30)]" : "border border-white/[0.08] bg-white/[0.03] text-zinc-500 hover:border-orange-400/30 hover:text-white"}`}>{filter}</button>)}</div></section><div className="mb-5 mt-9 flex items-center justify-between"><p className="text-sm text-zinc-500"><b className="text-white">{visible.length}</b> prompt phù hợp</p><span className="text-xs text-zinc-600">Nhấn vào thẻ để xem chi tiết</span></div>{visible.length > 0 ? <section className="columns-1 gap-5 sm:columns-2 xl:columns-3 2xl:columns-4">{visible.map((item) => <PromptCard key={item.id} item={item} open={() => { setSelected(item); setCopied(false); }} />)}</section> : <div className="grid min-h-64 place-items-center rounded-2xl border border-dashed border-white/10 text-center"><div><Search className="mx-auto h-8 w-8 text-zinc-700" /><p className="mt-3 font-bold text-zinc-400">Không tìm thấy prompt phù hợp</p><button onClick={() => { setQuery(""); setActiveFilter(filters[0]); }} className="mt-3 text-sm font-bold text-orange-400">Xóa bộ lọc</button></div></div>}<footer className="mt-14 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-zinc-600 sm:flex-row"><Brand /><p>© 2026 Trung AI Studio. Prompt tốt, ý tưởng lớn.</p></footer></main></div>{selected && <PromptModal item={selected} close={closeModal} copied={copied} copy={copyPrompt} />}{toast && <div className="fixed bottom-5 left-1/2 z-[100] flex -translate-x-1/2 items-center gap-2 rounded-xl border border-emerald-400/20 bg-emerald-950/95 px-4 py-3 text-sm font-bold text-emerald-200 shadow-2xl backdrop-blur-md"><Check className="h-4 w-4" /> Đã sao chép Prompt</div>}</div>;
 }
