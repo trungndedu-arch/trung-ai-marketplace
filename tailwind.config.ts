@@ -9,14 +9,17 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#050000",
-        panel: "#140707",
+        ink: "var(--color-bg)",
+        section: "var(--color-section)",
+        panel: "var(--color-card)",
+        brand: "var(--color-primary)",
+        accent: "var(--color-accent)",
       },
       fontFamily: {
         sans: ["Inter", "ui-sans-serif", "system-ui", "-apple-system", "BlinkMacSystemFont", "Segoe UI", "sans-serif"],
       },
       boxShadow: {
-        glow: "0 0 42px rgba(249, 115, 22, 0.26)",
+        glow: "0 0 42px var(--color-glow)",
       },
     },
   },
