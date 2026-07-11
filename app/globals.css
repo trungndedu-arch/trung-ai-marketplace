@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
+/* Shared application theme and responsive base styles. */
+
 :root {
   --color-bg: #07111f;
   --color-section: #0b1728;

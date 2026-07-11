@@ -261,7 +261,7 @@ function HeroGraphic() {
         <div className="absolute left-1/2 top-[18%] h-[220px] w-[220px] -translate-x-1/2 rounded-full border border-sky-300/18 bg-gradient-to-b from-sky-500/10 to-blue-700/10 shadow-[0_0_70px_rgba(59,130,246,.25)] sm:h-[290px] sm:w-[290px]" />
         <div className="absolute left-1/2 top-[15%] h-[230px] w-[230px] -translate-x-1/2 rounded-full bg-black/55 blur-2xl sm:h-[310px] sm:w-[310px]" />
         <Image
-          src="/images/video-ai-course-hero-portrait-hair-fixed-v2.png"
+          src="/images/hero/person.png"
           alt="Giảng viên Trung AI Media"
           fill
           priority

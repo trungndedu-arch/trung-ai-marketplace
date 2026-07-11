@@ -1,8 +1,14 @@
 "use client";
 
+// Marketplace home page and featured AI tools.
+
 import { useState } from "react";
 import Image from "next/image";
 import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
+import { AiToolCard } from "@/components/ai-tools/AiToolCard";
+import { getFeaturedAiTools } from "@/lib/ai-tools";
+import { WorkflowCard } from "@/components/workflows/WorkflowCard";
+import { getFeaturedWorkflows } from "@/lib/workflows";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -10,6 +16,7 @@ import {
   Bot,
   Boxes,
   ChevronRight,
+  Clapperboard,
   Clock3,
   Compass,
   Flame,
@@ -35,8 +42,8 @@ const navItems = [
   { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts" },
   { label: "Chatbot", icon: Bot, href: "#chatbot" },
   { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-  { label: "Workflow", icon: Workflow, href: "#workflow" },
-  { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "#ai-apps" },
+  { label: "AI Video App", icon: Clapperboard, href: "/workflow" },
+  { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
 ];
 
 type ProductItem = {
@@ -63,6 +70,18 @@ const products: ProductItem[] = [
   { title: "Code Review Master", creator: "DevCraft", type: "Công cụ AI", price: "279.000đ", old: "369.000đ", rating: "4.8", sales: "384", color: "from-cyan-400 via-sky-600 to-slate-950", icon: Grid2X2, tag: "-24%" },
 ];
 
+const homeFeaturedPromptTitles = [
+  "Mẫu Nữ Ngồi Ô Tô",
+  "Prompt Video Sức Khỏe Hoạt Hình 3D",
+  "Quảng Cáo Đồ Uống Splash Siêu Thực",
+  "Ốp Điện Thoại Xinh",
+];
+
+const homeFeaturedPrompts = homeFeaturedPromptTitles.flatMap((title) => {
+  const prompt = orderedPrompts.find((item) => item.title === title);
+  return prompt ? [prompt] : [];
+});
+
 type CategorySection = {
   id: string;
   title: string;
@@ -82,7 +101,7 @@ const categorySections: CategorySection[] = [
     href: "/free-prompts",
     cta: "Xem thêm prompt",
     kind: "prompts",
-    prompts: orderedPrompts.slice(0, 4),
+    prompts: homeFeaturedPrompts,
   },
   {
     id: "chatbot",
@@ -109,7 +128,7 @@ const categorySections: CategorySection[] = [
     id: "workflow",
     title: "Workflow",
     description: "Bộ quy trình AI giúp bạn đi từ ý tưởng đến nội dung hoàn chỉnh nhanh hơn và dễ lặp lại.",
-    href: "#workflow",
+    href: "/workflow",
     cta: "Xem thêm workflow",
     kind: "products",
     items: [products[0], products[6]],
@@ -118,7 +137,7 @@ const categorySections: CategorySection[] = [
     id: "ai-apps",
     title: "Công Cụ AI Nên Dùng",
     description: "Các công cụ AI nổi bật nên dùng cho thiết kế, nội dung, lập trình và tự động hóa công việc.",
-    href: "#ai-apps",
+    href: "/cong-cu-ai",
     cta: "Xem thêm công cụ AI",
     kind: "products",
     items: [products[3], products[7]],
@@ -339,6 +358,64 @@ function CategoryPreviewSection({ section }: { section: CategorySection }) {
   );
 }
 
+function FeaturedAiToolsSection() {
+  const tools = getFeaturedAiTools().slice(0, 6);
+
+  return (
+    <section id="ai-apps" className="scroll-mt-24">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+            <Boxes className="h-3.5 w-3.5" /> Công Cụ AI Nên Dùng
+          </div>
+          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Công Cụ AI Nên Dùng</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Các công cụ AI được chọn lọc để hỗ trợ tạo nội dung, xây kênh và làm Affiliate hiệu quả hơn.</p>
+        </div>
+        <a href="/cong-cu-ai" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+          Xem thêm công cụ AI
+          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        </a>
+      </div>
+      {tools.length ? (
+        <div className="grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {tools.map((tool) => <AiToolCard key={tool.id} tool={tool} compact />)}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có công cụ AI nổi bật. Bạn có thể thêm công cụ từ trang quản trị.</div>
+      )}
+    </section>
+  );
+}
+
+function FeaturedWorkflowsSection() {
+  const workflows = getFeaturedWorkflows().slice(0, 3);
+
+  return (
+    <section id="workflow" className="scroll-mt-24">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+            <Workflow className="h-3.5 w-3.5" /> Workflow
+          </div>
+          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Workflow AI</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Các quy trình thực chiến giúp bạn tạo nội dung, xây kênh và làm Affiliate theo từng bước rõ ràng.</p>
+        </div>
+        <a href="/workflow" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+          Xem thêm Workflow
+          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        </a>
+      </div>
+      {workflows.length ? (
+        <div className="grid items-stretch gap-x-5 gap-y-0 sm:grid-cols-2 xl:grid-cols-4">
+          {workflows.map((workflow) => <WorkflowCard key={workflow.id} workflow={workflow} />)}
+        </div>
+      ) : (
+        <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Workflow nổi bật.</div>
+      )}
+    </section>
+  );
+}
+
 function ProductCard({ product }: { product: ProductItem }) {
   const Icon = product.icon;
   return (
@@ -371,15 +448,9 @@ export default function HomePage() {
         <main className="mx-auto max-w-[1500px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
           <Hero />
           <FlashSale />
-          <section id="products" className="mt-14 scroll-mt-24">
-            <div className="mb-8 flex flex-col justify-between gap-4 xl:flex-row xl:items-end">
-              <div>
-                <h2 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Trang chủ theo danh mục</h2>
-                <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Các mục bên dưới được sắp xếp theo đúng menu bên trái, mỗi mục có một vài card nổi bật và nút xem thêm để đi thẳng tới danh mục đó.</p>
-              </div>
-            </div>
+          <section id="products" className="mt-12 scroll-mt-24">
             <div className="space-y-12">
-              {categorySections.map((section) => <CategoryPreviewSection key={section.id} section={section} />)}
+              {categorySections.map((section) => section.id === "ai-apps" ? <FeaturedAiToolsSection key={section.id} /> : section.id === "workflow" ? <FeaturedWorkflowsSection key={section.id} /> : <CategoryPreviewSection key={section.id} section={section} />)}
             </div>
           </section>
           <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-slate-500 sm:flex-row"><Logo /><p>© 2026 Trung AI Media. Crafted for the AI era.</p></footer>

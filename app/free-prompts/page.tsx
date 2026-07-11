@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { PromptFreeBadge, PromptFreeCardShell } from "@/components/prompt-free/PromptFreeCardShell";
 import { orderedPrompts, type PromptItem } from "@/lib/free-prompts";
 import type { LucideIcon } from "lucide-react";
 import {
@@ -14,6 +15,7 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
+  Clapperboard,
   Clipboard,
   Copy,
   Heart,
@@ -29,7 +31,6 @@ import {
   Sparkles,
   Store,
   Video,
-  Workflow,
   X,
 } from "lucide-react";
 
@@ -41,18 +42,18 @@ function Brand() {
 
 function Sidebar({ open, close }: { open: boolean; close: () => void }) {
   const links = [
-    { label: "Khám phá", icon: Home, href: "/" },
+    { label: "Trang chủ", icon: Home, href: "/" },
     { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts", active: true },
     { label: "Chatbot", icon: Bot, href: "/#products" },
     { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-    { label: "Workflow", icon: Workflow, href: "/#products" },
-    { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/#ai-apps" },
+    { label: "AI Video App", icon: Clapperboard, href: "/workflow" },
+    { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
   ];
   return <>
     {open && <button aria-label="Đóng menu" className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden" onClick={close} />}
     <aside className={`fixed inset-y-0 left-0 z-50 flex w-[252px] flex-col border-r border-white/[0.07] bg-[#07111F]/95 px-4 py-5 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
       <div className="mb-8 flex items-center justify-between px-2"><Brand /><button aria-label="Đóng menu" onClick={close} className="text-slate-300 lg:hidden"><X className="h-5 w-5" /></button></div>
-      <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">Khám phá</p>
+      <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">Trang chủ</p>
       <nav className="space-y-1">{links.map(({ label, icon: Icon, href, active }) => <Link key={label} href={href} onClick={close} className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-sky-500/15 text-sky-300" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}><Icon className={`h-[18px] w-[18px] ${active ? "text-sky-400" : "text-slate-400 group-hover:text-slate-200"}`} />{label}{active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-sky-400 shadow-[0_0_10px_#38BDF8]" />}</Link>)}</nav>
       <div className="my-6 h-px bg-white/[0.06]" />
       <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">Cá nhân</p>
@@ -93,7 +94,7 @@ function PromptVisual({ item, modal = false }: { item: PromptItem; modal?: boole
 }
 
 function PromptCard({ item, open }: { item: PromptItem; open: () => void }) {
-  return <button onClick={open} className="prompt-card group mb-5 w-full break-inside-avoid overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1F33] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)]"><PromptVisual item={item} /><div className="p-4"><div className="mb-2 flex items-center gap-2"><span className="rounded-full bg-sky-500/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-sky-300">{item.category}</span></div><h2 className="text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">{item.title}</h2>{item.description && <p className="mt-2 line-clamp-3 text-xs leading-5 text-slate-400">{item.description}</p>}<div className="mt-3 flex items-center justify-between gap-3"><span className="truncate text-xs font-semibold text-sky-400">{item.model}</span><span className="whitespace-nowrap rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300">{item.count}</span></div></div></button>;
+  return <PromptFreeCardShell onClick={open}><PromptVisual item={item} /><div className="p-4"><div className="mb-2 flex items-center gap-2"><PromptFreeBadge>{item.category}</PromptFreeBadge></div><h2 className="text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">{item.title}</h2>{item.description && <p className="mt-2 line-clamp-3 text-xs leading-5 text-slate-400">{item.description}</p>}<div className="mt-3 flex items-center justify-between gap-3"><span className="truncate text-xs font-semibold text-sky-400">{item.model}</span><span className="whitespace-nowrap rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300">{item.count}</span></div></div></PromptFreeCardShell>;
 }
 
 function PromptGallery({ item }: { item: PromptItem }) {
