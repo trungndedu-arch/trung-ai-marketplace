@@ -11,11 +11,14 @@ export type Workflow = {
   originalPrice?: number;
   isFree: boolean;
   appUrl?: string;
+  purchaseUrl?: string;
+  license?: string;
   hidePrice?: boolean;
   features?: string[];
   suitableFor?: string[];
   ctaTitle?: string;
   ctaDescription?: string;
+  ctaLabel?: string;
   tools: string[];
   steps: string[];
   demoVideoUrl?: string;
@@ -73,6 +76,49 @@ export const workflows: Workflow[] = [
     createdAt: "2026-07-12T00:00:00.000Z",
   },
   {
+    id: "app-lam-net-anh",
+    name: "App Làm Nét Ảnh",
+    slug: "app-lam-net-anh",
+    shortDescription: "Ứng dụng AI giúp làm nét ảnh bị mờ, khôi phục chi tiết và tăng chất lượng hình ảnh mà vẫn giữ nguyên khuôn mặt, bố cục và màu sắc tự nhiên.",
+    fullDescription: "App Làm Nét Ảnh sử dụng công nghệ AI để khôi phục những bức ảnh bị mờ, thiếu nét hoặc có chất lượng thấp.\n\nHệ thống tự động tăng độ sắc nét, cải thiện chi tiết và chất lượng tổng thể nhưng vẫn cố gắng giữ nguyên khuôn mặt, màu da, bố cục và phong cách ban đầu.\n\nỨng dụng phù hợp để nâng cấp ảnh chân dung, ảnh sản phẩm, ảnh thời trang, ảnh quảng cáo, ảnh cũ hoặc hình ảnh dùng cho mạng xã hội.",
+    coverImage: "/images/workflows/app-lam-net-anh-cover.png",
+    category: "AI Hình Ảnh",
+    badge: "HOT",
+    price: 49000,
+    originalPrice: 159000,
+    isFree: false,
+    appUrl: "",
+    purchaseUrl: "",
+    license: "Mua một lần • Sử dụng vĩnh viễn",
+    features: [
+      "Làm nét ảnh bằng AI",
+      "Khôi phục chi tiết ảnh",
+      "Tăng độ phân giải",
+      "Giữ nguyên khuôn mặt",
+      "Giữ nguyên bố cục",
+      "Giữ màu sắc tự nhiên",
+      "Hạn chế biến dạng khuôn mặt",
+      "Xuất ảnh chất lượng cao",
+      "Phù hợp ảnh thời trang",
+      "Phù hợp ảnh sản phẩm",
+      "Phù hợp ảnh quảng cáo",
+      "Xử lý nhanh chỉ với vài thao tác",
+    ],
+    suitableFor: ["Người bán hàng Online", "Chủ Shop", "Affiliate Marketing", "Content Creator", "Freelancer", "Designer", "Marketer", "Người mới sử dụng AI"],
+    ctaTitle: "Nâng cấp chất lượng ảnh chỉ với vài thao tác",
+    ctaDescription: "Sử dụng App Làm Nét Ảnh để khôi phục ảnh mờ, tăng độ sắc nét và tạo hình ảnh chất lượng cao bằng AI.",
+    ctaLabel: "Mua ngay",
+    tools: ["AI Image Enhancement", "AI Super Resolution", "AI Detail Recovery"],
+    steps: ["Tải ảnh cần làm nét.", "Chọn chế độ nâng cao chất lượng.", "Nhấn xử lý.", "Đợi AI hoàn thành.", "Tải ảnh chất lượng cao về máy."],
+    tags: ["Làm nét ảnh", "Khôi phục ảnh", "AI Hình Ảnh", "Ảnh sản phẩm"],
+    seoTitle: "App Làm Nét Ảnh | Trung AI Media",
+    seoDescription: "Ứng dụng AI làm nét ảnh, khôi phục chi tiết và nâng cao chất lượng hình ảnh nhanh chóng.",
+    isFeatured: true,
+    isActive: true,
+    displayOrder: 2,
+    createdAt: "2026-07-12T00:00:00.000Z",
+  },
+  {
     id: "video-ai-affiliate-starter",
     name: "Workflow Video AI Affiliate Starter",
     slug: "video-ai-affiliate-starter",
@@ -90,7 +136,7 @@ export const workflows: Workflow[] = [
     seoDescription: "Workflow miễn phí giúp người mới tạo video AI để bắt đầu làm Affiliate.",
     isFeatured: true,
     isActive: true,
-    displayOrder: 2,
+    displayOrder: 3,
     createdAt: "2026-07-11T00:00:00.000Z",
   },
   {
@@ -112,7 +158,7 @@ export const workflows: Workflow[] = [
     seoDescription: "Quy trình tạo video review sản phẩm bằng AI, phù hợp bán hàng và Affiliate.",
     isFeatured: true,
     isActive: true,
-    displayOrder: 3,
+    displayOrder: 4,
     createdAt: "2026-07-10T00:00:00.000Z",
   },
   {
@@ -134,7 +180,7 @@ export const workflows: Workflow[] = [
     seoDescription: "Quy trình xây kênh video AI không lộ mặt dành cho người mới.",
     isFeatured: true,
     isActive: true,
-    displayOrder: 4,
+    displayOrder: 5,
     createdAt: "2026-07-09T00:00:00.000Z",
   },
   {
@@ -156,7 +202,7 @@ export const workflows: Workflow[] = [
     seoDescription: "Quy trình tạo ảnh lookbook và video thời trang bằng AI.",
     isFeatured: false,
     isActive: true,
-    displayOrder: 5,
+    displayOrder: 6,
     createdAt: "2026-07-08T00:00:00.000Z",
   },
 ];
