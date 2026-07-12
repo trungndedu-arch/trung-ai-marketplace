@@ -266,9 +266,8 @@ function HeroGraphic() {
           fill
           priority
           sizes="(max-width: 640px) 280px, (max-width: 1024px) 360px, 400px"
-          className="object-contain object-bottom mix-blend-normal drop-shadow-[0_0_42px_rgba(59,130,246,.46)]"
+          className="object-contain object-bottom"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-[#07111F] via-transparent to-transparent" />
       </div>
 
       <div className="absolute bottom-[19%] left-[13%] z-30 hidden rounded-[1.2rem] border border-sky-400/30 bg-black/55 p-3 shadow-[0_0_35px_rgba(59,130,246,.28)] backdrop-blur-md sm:block">
@@ -1317,32 +1316,8 @@ function MentorSection() {
         <div className="absolute left-0 top-0 h-full w-1/3 bg-gradient-to-r from-blue-950/25 to-transparent" />
         <div className="absolute -left-24 top-24 h-80 w-80 rounded-full bg-blue-500/16 blur-[90px]" />
 
-        <div className="relative grid gap-0 lg:grid-cols-[.82fr_1.18fr]">
-          <div className="animate-[mentorLeft_.85s_ease_both] p-5 sm:p-7 lg:p-0">
-            <div className="relative min-h-[520px] overflow-hidden rounded-[1.45rem] border border-sky-300/20 bg-gradient-to-br from-[#0B1728] via-[#0F1F33] to-[#07111F] shadow-[0_0_55px_rgba(37,99,235,.18)] lg:h-full lg:rounded-r-none">
-              <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_28%,rgba(59,130,246,.24),transparent_28%),radial-gradient(circle_at_50%_64%,rgba(37,99,235,.22),transparent_36%)]" />
-              <div className="absolute left-1/2 top-12 h-72 w-72 -translate-x-1/2 rounded-full border border-sky-300/18 bg-gradient-to-b from-sky-500/10 to-transparent shadow-[0_0_80px_rgba(59,130,246,.22)]" />
-              <div className="absolute bottom-0 left-1/2 h-72 w-[92%] -translate-x-1/2 rounded-t-full bg-gradient-to-t from-blue-600/24 to-transparent blur-2xl" />
-              <Image
-                src="/images/video-ai-course-mentor-section-cutout-hair-soft.png"
-                alt="Trung AI"
-                fill
-                sizes="(max-width: 1024px) 100vw, 420px"
-                className="object-contain object-bottom -translate-y-8 scale-[1.12] drop-shadow-[0_0_36px_rgba(59,130,246,.32)] sm:-translate-y-10 lg:-translate-y-12 lg:scale-[1.18]"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/82 via-transparent to-transparent" />
-              <div className="absolute left-5 top-5 rounded-full border border-cyan-300/20 bg-black/70 px-4 py-2 text-xs font-black text-white backdrop-blur-md">
-                <span className="mr-2 inline-block h-2 w-2 rounded-full bg-cyan-400" />
-                Đang xây dựng hệ sinh thái AI thực chiến
-              </div>
-              <div className="absolute bottom-5 left-5 right-5 rounded-2xl border border-white/10 bg-black/72 p-5 backdrop-blur-md">
-                <h3 className="text-xl font-black text-white">Trung AI</h3>
-                <p className="mt-1 text-sm leading-6 text-slate-200">Người làm MMO thực chiến • AI Content • Affiliate</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="animate-[mentorRight_.85s_.06s_ease_both] px-5 pb-8 pt-2 sm:px-8 sm:pb-10 lg:px-10 lg:py-12">
+        <div className="relative animate-[mentorRight_.85s_.06s_ease_both] px-5 py-9 sm:px-8 sm:py-11 lg:px-12 lg:py-14">
+          <div className="max-w-5xl">
             <p className="text-[11px] font-black uppercase tracking-[0.34em] text-blue-400 sm:text-xs">• NGƯỜI CHIA SẺ THỰC CHIẾN</p>
             <h2 className="mt-4 max-w-3xl text-3xl font-black leading-tight tracking-[-.045em] text-white sm:text-5xl">
               Học Video AI cùng người <span className="bg-gradient-to-r from-blue-500 via-sky-400 to-cyan-200 bg-clip-text text-transparent">đang làm thực tế</span> mỗi ngày
@@ -1390,10 +1365,6 @@ function MentorSection() {
       </div>
 
       <style jsx global>{`
-        @keyframes mentorLeft {
-          from { opacity: 0; transform: translateX(-24px); }
-          to { opacity: 1; transform: translateX(0); }
-        }
         @keyframes mentorRight {
           from { opacity: 0; transform: translateX(24px); }
           to { opacity: 1; transform: translateX(0); }
