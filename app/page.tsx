@@ -9,6 +9,8 @@ import { AiToolCard } from "@/components/ai-tools/AiToolCard";
 import { getFeaturedAiTools } from "@/lib/ai-tools";
 import { WorkflowCard } from "@/components/workflows/WorkflowCard";
 import { getFeaturedWorkflows } from "@/lib/workflows";
+import { ChatbotCard } from "@/components/chatbots/ChatbotCard";
+import { getFeaturedChatbots } from "@/lib/chatbots";
 import type { LucideIcon } from "lucide-react";
 import {
   ArrowRight,
@@ -40,9 +42,8 @@ import {
 const navItems = [
   { label: "Trang chủ", icon: Home, active: true, href: "/" },
   { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts" },
-  { label: "Chatbot", icon: Bot, href: "#chatbot" },
+  { label: "Chatbot & AI App", icon: Clapperboard, href: "/workflow" },
   { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-  { label: "AI Video App", icon: Clapperboard, href: "/workflow" },
   { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
 ];
 
@@ -104,15 +105,6 @@ const categorySections: CategorySection[] = [
     prompts: homeFeaturedPrompts,
   },
   {
-    id: "chatbot",
-    title: "Chatbot",
-    description: "Những chatbot AI nổi bật giúp chăm sóc khách hàng, bán hàng và tự động hóa hội thoại.",
-    href: "#chatbot",
-    cta: "Xem thêm chatbot",
-    kind: "products",
-    items: [products[2], products[5]],
-  },
-  {
     id: "video-ai-course",
     title: "Khóa Học Video AI",
     description: "Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.",
@@ -123,15 +115,6 @@ const categorySections: CategorySection[] = [
       { title: "Video AI Thực Chiến", creator: "Trung AI Media", type: "Khóa học", price: "149.000đ", old: "899.000đ", rating: "5.0", sales: "Ưu đãi", color: "from-blue-500 via-sky-600 to-zinc-950", icon: GraduationCap, tag: "Giảm 83%" },
       { title: "Xây Kênh & Kiếm Tiền Affiliate", creator: "Trung AI Media", type: "Video AI", price: "149.000đ", old: "899.000đ", rating: "5.0", sales: "20 bài", color: "from-sky-400 via-blue-600 to-black", icon: Zap, tag: "Thực chiến" },
     ],
-  },
-  {
-    id: "workflow",
-    title: "Workflow",
-    description: "Bộ quy trình AI giúp bạn đi từ ý tưởng đến nội dung hoàn chỉnh nhanh hơn và dễ lặp lại.",
-    href: "/workflow",
-    cta: "Xem thêm workflow",
-    kind: "products",
-    items: [products[0], products[6]],
   },
   {
     id: "ai-apps",
@@ -387,31 +370,26 @@ function FeaturedAiToolsSection() {
   );
 }
 
-function FeaturedWorkflowsSection() {
-  const workflows = getFeaturedWorkflows().slice(0, 3);
+function FeaturedChatbotAiAppsSection() {
+  const chatbots = getFeaturedChatbots().slice(0, 4);
+  const apps = getFeaturedWorkflows().slice(0, 4);
 
   return (
-    <section id="workflow" className="scroll-mt-24">
+    <section id="chatbot-ai-app" className="scroll-mt-24">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
           <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
-            <Workflow className="h-3.5 w-3.5" /> Workflow
+            <Clapperboard className="h-3.5 w-3.5" /> Chatbot & AI App
           </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Workflow AI</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Các quy trình thực chiến giúp bạn tạo nội dung, xây kênh và làm Affiliate theo từng bước rõ ràng.</p>
+          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Chatbot & AI App</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Khám phá các Chatbot và AI App hữu ích giúp tạo nội dung, bán hàng, chăm sóc khách hàng và tự động hóa công việc.</p>
         </div>
         <a href="/workflow" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
-          Xem thêm Workflow
+          Xem thêm
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      {workflows.length ? (
-        <div className="grid items-stretch gap-x-5 gap-y-0 sm:grid-cols-2 xl:grid-cols-4">
-          {workflows.map((workflow) => <WorkflowCard key={workflow.id} workflow={workflow} />)}
-        </div>
-      ) : (
-        <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Workflow nổi bật.</div>
-      )}
+      {chatbots.length || apps.length ? <div className="grid items-stretch gap-x-5 gap-y-5 sm:grid-cols-2 xl:grid-cols-4">{chatbots.map((chatbot) => <ChatbotCard key={`chatbot-${chatbot.id}`} chatbot={chatbot} />)}{apps.map((app) => <WorkflowCard key={`ai-app-${app.id}`} workflow={app} />)}</div> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Chatbot hoặc AI App nổi bật.</div>}
     </section>
   );
 }
@@ -450,7 +428,10 @@ export default function HomePage() {
           <FlashSale />
           <section id="products" className="mt-12 scroll-mt-24">
             <div className="space-y-12">
-              {categorySections.map((section) => section.id === "ai-apps" ? <FeaturedAiToolsSection key={section.id} /> : section.id === "workflow" ? <FeaturedWorkflowsSection key={section.id} /> : <CategoryPreviewSection key={section.id} section={section} />)}
+              <CategoryPreviewSection section={categorySections[0]} />
+              <FeaturedChatbotAiAppsSection />
+              <CategoryPreviewSection section={categorySections[1]} />
+              <FeaturedAiToolsSection />
             </div>
           </section>
           <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-slate-500 sm:flex-row"><Logo /><p>© 2026 Trung AI Media. Crafted for the AI era.</p></footer>

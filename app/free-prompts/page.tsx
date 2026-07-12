@@ -9,7 +9,6 @@ import type { LucideIcon } from "lucide-react";
 import {
   Baby,
   Bell,
-  Bot,
   Boxes,
   Building2,
   Check,
@@ -44,9 +43,8 @@ function Sidebar({ open, close }: { open: boolean; close: () => void }) {
   const links = [
     { label: "Trang chủ", icon: Home, href: "/" },
     { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts", active: true },
-    { label: "Chatbot", icon: Bot, href: "/#products" },
+    { label: "Chatbot & AI App", icon: Clapperboard, href: "/workflow" },
     { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-    { label: "AI Video App", icon: Clapperboard, href: "/workflow" },
     { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
   ];
   return <>

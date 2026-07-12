@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Bell, Bot, Boxes, ChevronRight, Clapperboard, GraduationCap, Heart, Home, Menu, MessageSquareMore, Sparkles, Store, X } from "lucide-react";
+import { Bell, Boxes, ChevronRight, Clapperboard, GraduationCap, Heart, Home, Menu, MessageSquareMore, Sparkles, Store, X } from "lucide-react";
 
 function Brand() {
   return <Link href="/" className="flex items-center gap-3"><span className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-500 shadow-glow"><Sparkles className="h-5 w-5 text-white" /></span><span className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <b className="text-sky-400">Media</b></span></Link>;
@@ -14,9 +14,8 @@ function Sidebar({ open, close, activeModule }: { open: boolean; close: () => vo
   const links = [
     { label: "Trang chủ", icon: Home, href: "/" },
     { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts" },
-    { label: "Chatbot", icon: Bot, href: "/#chatbot" },
+    { label: "Chatbot & AI App", icon: Clapperboard, href: "/workflow" },
     { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-    { label: "AI Video App", icon: Clapperboard, href: "/workflow" },
     { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
   ];
 
