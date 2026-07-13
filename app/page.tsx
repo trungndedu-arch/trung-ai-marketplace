@@ -11,7 +11,7 @@ import { WorkflowCard } from "@/components/workflows/WorkflowCard";
 import { getFeaturedWorkflows } from "@/lib/workflows";
 import { ChatbotCard } from "@/components/chatbots/ChatbotCard";
 import { getFeaturedChatbots } from "@/lib/chatbots";
-import type { LucideIcon } from "lucide-react";
+import { featuredCourses, type Course } from "@/data/courses";
 import {
   ArrowRight,
   Bell,
@@ -20,9 +20,7 @@ import {
   ChevronRight,
   Clapperboard,
   Clock3,
-  Compass,
   Flame,
-  Grid2X2,
   GraduationCap,
   Heart,
   Home,
@@ -30,13 +28,10 @@ import {
   Menu,
   MessageSquareMore,
   Search,
-  ShieldCheck,
   Sparkles,
-  Star,
   Store,
   Workflow,
   X,
-  Zap,
 } from "lucide-react";
 
 const navItems = [
@@ -45,30 +40,6 @@ const navItems = [
   { label: "Chatbot & AI App", icon: Clapperboard, href: "/workflow" },
   { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
   { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
-];
-
-type ProductItem = {
-  title: string;
-  creator: string;
-  type: string;
-  price: string;
-  old: string;
-  rating: string;
-  sales: string;
-  color: string;
-  icon: LucideIcon;
-  tag: string;
-};
-
-const products: ProductItem[] = [
-  { title: "Viral Content Machine", creator: "Linh AI Studio", type: "Workflow", price: "349.000đ", old: "499.000đ", rating: "4.9", sales: "1.2k", color: "from-blue-500 via-sky-700 to-zinc-950", icon: Zap, tag: "Bestseller" },
-  { title: "SEO Blog Architect", creator: "Growth Lab", type: "Prompt Pack", price: "189.000đ", old: "259.000đ", rating: "4.8", sales: "856", color: "from-sky-500 via-blue-700 to-zinc-950", icon: Sparkles, tag: "Hot" },
-  { title: "Sales Copilot Pro", creator: "Minh Digital", type: "Chatbot", price: "599.000đ", old: "799.000đ", rating: "5.0", sales: "642", color: "from-blue-500 via-sky-600 to-slate-950", icon: Bot, tag: "Mới" },
-  { title: "Brand Visual Factory", creator: "Neon Creative", type: "Công cụ AI", price: "429.000đ", old: "", rating: "4.7", sales: "530", color: "from-sky-400 via-blue-600 to-sky-950", icon: Boxes, tag: "Featured" },
-  { title: "YouTube Script Genius", creator: "Creator OS", type: "Prompt Pack", price: "229.000đ", old: "319.000đ", rating: "4.9", sales: "918", color: "from-blue-500 via-blue-700 to-zinc-950", icon: MessageSquareMore, tag: "-28%" },
-  { title: "Customer Care 24/7", creator: "AutoBiz", type: "Chatbot", price: "699.000đ", old: "899.000đ", rating: "4.8", sales: "447", color: "from-cyan-400 via-blue-700 to-zinc-950", icon: ShieldCheck, tag: "Pro" },
-  { title: "Research Agent Kit", creator: "Future Work", type: "Workflow", price: "389.000đ", old: "", rating: "4.9", sales: "721", color: "from-sky-400 via-blue-700 to-slate-950", icon: Compass, tag: "Top rated" },
-  { title: "Code Review Master", creator: "DevCraft", type: "Công cụ AI", price: "279.000đ", old: "369.000đ", rating: "4.8", sales: "384", color: "from-cyan-400 via-sky-600 to-slate-950", icon: Grid2X2, tag: "-24%" },
 ];
 
 const homeFeaturedPromptTitles = [
@@ -89,10 +60,9 @@ type CategorySection = {
   description: string;
   href: string;
   cta: string;
-} & (
-  | { kind: "prompts"; prompts: FreePromptItem[] }
-  | { kind: "products"; items: ProductItem[] }
-);
+  kind: "prompts";
+  prompts: FreePromptItem[];
+};
 
 const categorySections: CategorySection[] = [
   {
@@ -103,27 +73,6 @@ const categorySections: CategorySection[] = [
     cta: "Xem thêm prompt",
     kind: "prompts",
     prompts: homeFeaturedPrompts,
-  },
-  {
-    id: "video-ai-course",
-    title: "Khóa Học Video AI",
-    description: "Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.",
-    href: "/video-ai-course",
-    cta: "Xem khóa học",
-    kind: "products",
-    items: [
-      { title: "Video AI Thực Chiến", creator: "Trung AI Media", type: "Khóa học", price: "149.000đ", old: "899.000đ", rating: "5.0", sales: "Ưu đãi", color: "from-blue-500 via-sky-600 to-zinc-950", icon: GraduationCap, tag: "Giảm 83%" },
-      { title: "Xây Kênh & Kiếm Tiền Affiliate", creator: "Trung AI Media", type: "Video AI", price: "149.000đ", old: "899.000đ", rating: "5.0", sales: "20 bài", color: "from-sky-400 via-blue-600 to-black", icon: Zap, tag: "Thực chiến" },
-    ],
-  },
-  {
-    id: "ai-apps",
-    title: "Công Cụ AI Nên Dùng",
-    description: "Các công cụ AI nổi bật nên dùng cho thiết kế, nội dung, lập trình và tự động hóa công việc.",
-    href: "/cong-cu-ai",
-    cta: "Xem thêm công cụ AI",
-    kind: "products",
-    items: [products[3], products[7]],
   },
 ];
 
@@ -333,9 +282,83 @@ function CategoryPreviewSection({ section }: { section: CategorySection }) {
         </a>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {section.kind === "prompts"
-          ? section.prompts.map((item) => <HomePromptCard key={`${section.id}-${item.id}`} item={item} />)
-          : section.items.map((product) => <ProductCard key={`${section.id}-${product.title}`} product={product} />)}
+        {section.prompts.map((item) => <HomePromptCard key={`${section.id}-${item.id}`} item={item} />)}
+      </div>
+    </section>
+  );
+}
+
+function CourseCard({ course }: { course: Course }) {
+  const content = (
+    <>
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#0B1728]">
+        <Image
+          src={course.coverImage}
+          alt={course.name}
+          fill
+          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
+          className="object-contain transition duration-500 group-hover:scale-[1.025]"
+        />
+        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0B1728]/80 to-transparent" />
+        <span className="absolute left-3 top-3 rounded-md border border-white/10 bg-black/55 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-white backdrop-blur-md">
+          {course.badge}
+        </span>
+      </div>
+      <div className="flex flex-1 flex-col p-4">
+        <div className="mb-2 flex items-center justify-between gap-3">
+          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{course.category}</span>
+          <span className="whitespace-nowrap text-[11px] font-semibold text-slate-400">{course.status}</span>
+        </div>
+        <h3 className="line-clamp-2 text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">
+          {course.name}
+        </h3>
+        <p className="mt-2 line-clamp-3 text-xs leading-5 text-slate-400">{course.shortDescription}</p>
+        <div className="mt-auto flex items-end gap-2 border-t border-white/[0.06] pt-4">
+          {course.price ? (
+            <>
+              <span className="text-sm font-black text-white">{course.price}</span>
+              {course.originalPrice && <span className="text-[11px] text-slate-500 line-through">{course.originalPrice}</span>}
+            </>
+          ) : (
+            <span className="text-sm font-black text-sky-300">Sắp ra mắt</span>
+          )}
+          {course.landingPageUrl ? (
+            <span className="ml-auto text-slate-500 transition group-hover:text-sky-400"><ArrowRight className="h-4 w-4" /></span>
+          ) : (
+            <span className="ml-auto rounded-lg border border-sky-400/15 bg-sky-400/10 px-2.5 py-1 text-[10px] font-bold text-sky-200">Sắp ra mắt</span>
+          )}
+        </div>
+      </div>
+    </>
+  );
+
+  const className = "card-hover group flex min-h-[420px] w-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-panel text-left";
+
+  return course.landingPageUrl ? (
+    <a href={course.landingPageUrl} className={className}>{content}</a>
+  ) : (
+    <article aria-disabled="true" className={`${className} cursor-default`}>{content}</article>
+  );
+}
+
+function FeaturedCoursesSection() {
+  return (
+    <section id="video-ai-course" className="scroll-mt-24">
+      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+            <GraduationCap className="h-3.5 w-3.5" /> Khóa Học Video AI
+          </div>
+          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Khóa Học Video AI</h3>
+          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.</p>
+        </div>
+        <a href="/video-ai-course" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+          Xem khóa học
+          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
+        </a>
+      </div>
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {featuredCourses.map((course) => <CourseCard key={course.id} course={course} />)}
       </div>
     </section>
   );
@@ -394,27 +417,6 @@ function FeaturedChatbotAiAppsSection() {
   );
 }
 
-function ProductCard({ product }: { product: ProductItem }) {
-  const Icon = product.icon;
-  return (
-    <article className="card-hover group overflow-hidden rounded-2xl border border-white/[0.07] bg-panel">
-      <div className={`relative aspect-[4/2.75] overflow-hidden bg-gradient-to-br ${product.color}`}>
-        <div className="absolute inset-0 opacity-30 [background-image:radial-gradient(circle_at_30%_20%,white_0,transparent_35%)]" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent" />
-        <div className="absolute left-1/2 top-1/2 grid h-20 w-20 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-3xl border border-white/20 bg-black/20 backdrop-blur-md transition duration-300 group-hover:scale-110 group-hover:rotate-3"><Icon className="h-9 w-9 text-white" /></div>
-        <span className="absolute left-3 top-3 rounded-md border border-white/10 bg-black/35 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-white backdrop-blur-md">{product.tag}</span>
-        <button aria-label="Thêm vào yêu thích" className="absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-black/35 text-white/70 backdrop-blur-md hover:text-sky-300"><Heart className="h-4 w-4" /></button>
-      </div>
-      <div className="p-4">
-        <div className="mb-2 flex items-center justify-between"><span className="text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{product.type}</span><span className="flex items-center gap-1 text-[11px] text-slate-400"><Star className="h-3 w-3 fill-cyan-400 text-cyan-400" /> {product.rating} · {product.sales}</span></div>
-        <h3 className="truncate text-[15px] font-extrabold text-white">{product.title}</h3>
-        <p className="mt-1 text-xs text-slate-400">bởi {product.creator}</p>
-        <div className="mt-4 flex items-end gap-2 border-t border-white/[0.06] pt-4"><span className="text-sm font-black text-white">{product.price}</span>{product.old && <span className="text-[11px] text-slate-500 line-through">{product.old}</span>}<button className="ml-auto text-slate-500 transition group-hover:text-sky-400"><ArrowRight className="h-4 w-4" /></button></div>
-      </div>
-    </article>
-  );
-}
-
 export default function HomePage() {
   const [menuOpen, setMenuOpen] = useState(false);
 
@@ -432,7 +434,7 @@ export default function HomePage() {
             <div className="space-y-12">
               <CategoryPreviewSection section={categorySections[0]} />
               <FeaturedChatbotAiAppsSection />
-              <CategoryPreviewSection section={categorySections[1]} />
+              <FeaturedCoursesSection />
               <FeaturedAiToolsSection />
             </div>
           </section>
