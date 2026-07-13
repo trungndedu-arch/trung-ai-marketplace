@@ -3,6 +3,8 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { BankTransferModal } from "@/components/payment/BankTransferModal";
+import { videoAiCoursePaymentProduct } from "@/data/payment";
 import {
   BarChart3,
   Bot,
@@ -1817,65 +1819,7 @@ function RegistrationSection() {
         </div>
       </div>
 
-      {isPaymentOpen && (
-        <div className="fixed inset-0 z-[90] grid place-items-center bg-black/78 px-4 py-8 backdrop-blur-md" role="dialog" aria-modal="true">
-          <div className="relative w-full max-w-4xl animate-[modalIn_.22s_ease_both] overflow-hidden rounded-[1.65rem] border border-sky-300/30 bg-[#0B1728] shadow-[0_0_90px_rgba(59,130,246,.24)]">
-            <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_12%,rgba(37,99,235,.22),transparent_30%),radial-gradient(circle_at_86%_12%,rgba(59,130,246,.24),transparent_28%),linear-gradient(135deg,rgba(11,23,40,.96),rgba(7,17,31,.98)_48%,rgba(15,31,51,.92))]" />
-            <button
-              type="button"
-              onClick={() => setIsPaymentOpen(false)}
-              className="absolute right-4 top-4 z-10 grid h-10 w-10 place-items-center rounded-full border border-white/10 bg-white/5 text-slate-200 transition hover:border-sky-300/45 hover:text-white"
-              aria-label="Đóng popup thanh toán"
-            >
-              <X className="h-5 w-5" />
-            </button>
-
-            <div className="relative grid gap-6 p-5 sm:p-6 lg:grid-cols-[.95fr_1.05fr] lg:p-8">
-              <div className="rounded-[1.35rem] border border-white/12 bg-white/[0.04] p-4">
-                <Image
-                  src="/images/video-ai-course-payment-qr.png"
-                  alt="QR chuyển khoản khóa học Video AI"
-                  width={640}
-                  height={860}
-                  className="h-auto w-full rounded-2xl bg-white object-contain"
-                />
-              </div>
-
-              <div className="flex flex-col justify-center">
-                <p className="text-[11px] font-black uppercase tracking-[0.3em] text-blue-400">Thanh toán QR</p>
-                <h3 className="mt-3 text-3xl font-black tracking-[-.035em] text-white sm:text-4xl">Hoàn tất chuyển khoản</h3>
-                <p className="mt-3 text-sm leading-7 text-slate-200">
-                  Quét mã QR hoặc chuyển khoản theo thông tin bên dưới, sau đó bấm nút gửi xác nhận qua Zalo.
-                </p>
-
-                <div className="mt-6 overflow-hidden rounded-2xl border border-white/10 bg-black/35">
-                  {[
-                    ["Số tài khoản", "0865103062"],
-                    ["Ngân hàng", "NH Quốc Tế VIB"],
-                    ["Chủ tài khoản", "NGUYỄN ĐỨC TRUNG"],
-                    ["Nội dung chuyển khoản", "HOC VIDEO AI"],
-                    ["Số tiền", "149.000đ"],
-                  ].map(([label, value]) => (
-                    <div key={label} className="grid gap-1 border-b border-white/10 px-4 py-3 last:border-b-0 sm:grid-cols-[170px_1fr] sm:gap-4">
-                      <span className="text-xs font-bold uppercase tracking-[0.14em] text-slate-400">{label}</span>
-                      <span className="font-black text-white">{value}</span>
-                    </div>
-                  ))}
-                </div>
-
-                <a
-                  href="[THÊM_LINK_ZALO]"
-                  target="_blank"
-                  rel="noreferrer"
-                  className="mt-6 inline-flex items-center justify-center rounded-full bg-gradient-to-r from-blue-500 via-sky-500 to-blue-500 px-6 py-4 text-sm font-black text-white shadow-[0_16px_48px_rgba(37,99,235,.36)] transition hover:-translate-y-0.5 hover:shadow-[0_20px_62px_rgba(59,130,246,.5)]"
-                >
-                  Tôi đã chuyển khoản - Gửi xác nhận qua Zalo
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+      {isPaymentOpen ? <BankTransferModal product={videoAiCoursePaymentProduct} onClose={() => setIsPaymentOpen(false)} /> : null}
 
       <style jsx global>{`
         @keyframes registerLeft {

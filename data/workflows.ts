@@ -9,6 +9,7 @@ export type Workflow = {
   badge: string;
   price: number;
   originalPrice?: number;
+  transferContent?: string;
   isFree: boolean;
   appUrl?: string;
   purchaseUrl?: string;
@@ -86,6 +87,7 @@ export const workflows: Workflow[] = [
     badge: "HOT",
     price: 49000,
     originalPrice: 159000,
+    transferContent: "APP LAM NET ANH",
     isFree: false,
     appUrl: "",
     purchaseUrl: "",
