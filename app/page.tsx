@@ -11,6 +11,7 @@ import { WorkflowCard } from "@/components/workflows/WorkflowCard";
 import { getFeaturedWorkflows } from "@/lib/workflows";
 import { ChatbotCard } from "@/components/chatbots/ChatbotCard";
 import { getFeaturedChatbots } from "@/lib/chatbots";
+import { PromptFreeBadge, PromptFreeCardShell } from "@/components/prompt-free/PromptFreeCardShell";
 import { featuredCourses, type Course } from "@/data/courses";
 import {
   ArrowRight,
@@ -289,55 +290,44 @@ function CategoryPreviewSection({ section }: { section: CategorySection }) {
 }
 
 function CourseCard({ course }: { course: Course }) {
-  const content = (
-    <>
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#0B1728]">
-        <Image
-          src={course.coverImage}
-          alt={course.name}
-          fill
-          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
-          className="object-contain transition duration-500 group-hover:scale-[1.025]"
-        />
+  return (
+    <PromptFreeCardShell>
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#07111F]">
+        <img src={course.coverImage} alt={`Ảnh bìa ${course.name}`} className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.025]" />
         <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0B1728]/80 to-transparent" />
-        <span className="absolute left-3 top-3 rounded-md border border-white/10 bg-black/55 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-white backdrop-blur-md">
-          {course.badge}
-        </span>
-      </div>
-      <div className="flex flex-1 flex-col p-4">
-        <div className="mb-2 flex items-center justify-between gap-3">
-          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{course.category}</span>
-          <span className="whitespace-nowrap text-[11px] font-semibold text-slate-400">{course.status}</span>
+        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
+          <span className="rounded-full border border-white/15 bg-black/30 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-white backdrop-blur-md">{course.category}</span>
+          <ImageIcon className="h-4 w-4 text-white/60" />
         </div>
-        <h3 className="line-clamp-2 text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">
+      </div>
+      <div className="flex min-h-[13.5rem] flex-col p-4">
+        <div className="mb-2 flex items-center justify-between gap-2">
+          <PromptFreeBadge>{course.badge}</PromptFreeBadge>
+          <span className="line-clamp-1 text-[10px] font-semibold text-slate-400">{course.status}</span>
+        </div>
+        <h2 className="line-clamp-2 text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">
           {course.name}
-        </h3>
-        <p className="mt-2 line-clamp-3 text-xs leading-5 text-slate-400">{course.shortDescription}</p>
-        <div className="mt-auto flex items-end gap-2 border-t border-white/[0.06] pt-4">
+        </h2>
+        <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{course.shortDescription}</p>
+        <div className="mt-auto flex items-center justify-between gap-3 pt-3">
           {course.price ? (
-            <>
-              <span className="text-sm font-black text-white">{course.price}</span>
-              {course.originalPrice && <span className="text-[11px] text-slate-500 line-through">{course.originalPrice}</span>}
-            </>
+            <div className="flex min-w-0 items-center gap-2">
+              <span className="truncate text-xs font-semibold text-sky-400">{course.price}</span>
+              {course.originalPrice ? <span className="whitespace-nowrap text-[10px] font-semibold text-slate-500 line-through">{course.originalPrice}</span> : null}
+            </div>
           ) : (
-            <span className="text-sm font-black text-sky-300">Sắp ra mắt</span>
+            <span className="text-xs font-semibold text-cyan-300">Sắp ra mắt</span>
           )}
           {course.landingPageUrl ? (
-            <span className="ml-auto text-slate-500 transition group-hover:text-sky-400"><ArrowRight className="h-4 w-4" /></span>
+            <a href={course.landingPageUrl} className="inline-flex h-7 shrink-0 items-center gap-1 rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300 transition hover:bg-sky-500/15 hover:text-sky-200">
+              Xem chi tiết <ArrowRight className="h-3 w-3" />
+            </a>
           ) : (
-            <span className="ml-auto rounded-lg border border-sky-400/15 bg-sky-400/10 px-2.5 py-1 text-[10px] font-bold text-sky-200">Sắp ra mắt</span>
+            <span className="inline-flex h-7 shrink-0 items-center rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300">Sắp ra mắt</span>
           )}
         </div>
       </div>
-    </>
-  );
-
-  const className = "card-hover group flex min-h-[420px] w-full flex-col overflow-hidden rounded-2xl border border-white/[0.07] bg-panel text-left";
-
-  return course.landingPageUrl ? (
-    <a href={course.landingPageUrl} className={className}>{content}</a>
-  ) : (
-    <article aria-disabled="true" className={`${className} cursor-default`}>{content}</article>
+    </PromptFreeCardShell>
   );
 }
 
@@ -357,7 +347,7 @@ function FeaturedCoursesSection() {
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+      <div className="grid items-stretch gap-x-5 gap-y-5 sm:grid-cols-2 xl:grid-cols-4">
         {featuredCourses.map((course) => <CourseCard key={course.id} course={course} />)}
       </div>
     </section>
