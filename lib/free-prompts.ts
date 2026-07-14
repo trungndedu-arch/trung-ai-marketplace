@@ -18,6 +18,26 @@ export type PromptItem = {
 
 export const prompts: PromptItem[] = [
   {
+    id: 37,
+    title: "Mini Food World – Thế Giới Ẩm Thực Tí Hon 🍣🥑🥖",
+    model: "GPT Image",
+    count: "5 ảnh",
+    category: "Ẩm Thực",
+    description: "Tạo ảnh miniature food siêu chi tiết với những nhân vật tí hon tương tác cùng sushi, bánh mì, bơ và món ăn thường ngày, phù hợp cho quảng cáo ẩm thực và visual kể chuyện sáng tạo.",
+    image: "/images/prompts/mini-food-world-01.png",
+    images: [
+      "/images/prompts/mini-food-world-01.png",
+      "/images/prompts/mini-food-world-02.png",
+      "/images/prompts/mini-food-world-03.png",
+      "/images/prompts/mini-food-world-04.png",
+      "/images/prompts/mini-food-world-05.png",
+    ],
+    gradient: "from-emerald-300 via-sky-500 to-blue-950",
+    icon: ImageIcon,
+    height: "h-[30rem]",
+    prompt: `This prompt allows for the creation of intricate, high-definition miniature food photography scenes. The focus is on capturing the fine details of food, often with small figures or workers interacting with the food. The minimalistic, solid color backgrounds highlight the textures and create a unique, visually striking image that brings a sense of playfulness to everyday items. Ideal for artists and creators who enjoy combining food with a creative narrative in a virtually appealing way.`,
+  },
+  {
     id: 36,
     title: "Quảng Cáo Đồ Uống Splash Siêu Thực",
     model: "GPT Image",
