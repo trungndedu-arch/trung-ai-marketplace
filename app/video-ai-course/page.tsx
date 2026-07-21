@@ -139,7 +139,7 @@ function Header() {
       <div className="mx-auto flex h-[64px] max-w-[1360px] items-center gap-3 px-3 sm:h-[68px] sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-3">
           <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-600 via-sky-500 to-cyan-300 shadow-[0_0_32px_rgba(59,130,246,.45)]">
-            <Sparkles className="h-5 w-5 text-white" />
+            <img src="/images/brand/trung-ai-logo.png" alt="Trung AI Media" className="h-8 w-8 object-contain" />
           </span>
           <span className="text-base font-black tracking-tight text-white sm:text-lg">Trung AI <span className="text-sky-400">Media</span></span>
         </Link>

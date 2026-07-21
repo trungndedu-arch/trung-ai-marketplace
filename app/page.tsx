@@ -1,3 +1,4 @@
+// TEST WORK
 "use client";
 
 // Marketplace home page and featured AI tools.
@@ -81,7 +82,7 @@ function Logo() {
   return (
     <div className="flex items-center gap-3">
       <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-500 shadow-glow">
-        <Sparkles className="h-5 w-5 text-white" />
+        <img src="/images/brand/trung-ai-logo.png" alt="Trung AI Media" className="h-7 w-7 object-contain" />
       </div>
       <div className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <span className="text-sky-400">Media</span></div>
     </div>
@@ -126,7 +127,7 @@ function Header({ openMenu }: { openMenu: () => void }) {
   return (
     <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-white/[0.06] bg-ink/75 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
       <button onClick={openMenu} aria-label="Mở menu" className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-slate-200 lg:hidden"><Menu className="h-5 w-5" /></button>
-      <span className="whitespace-nowrap text-xs font-extrabold text-white sm:text-sm lg:hidden">Trung AI <span className="text-sky-400">Media</span></span>
+      <span className="flex items-center gap-2 whitespace-nowrap text-xs font-extrabold text-white sm:text-sm lg:hidden"><img src="/images/brand/trung-ai-logo.png" alt="Trung AI Media" className="h-7 w-7 object-contain" />Trung AI <span className="text-sky-400">Media</span></span>
       <div className="relative max-w-xl flex-1">
         <Search className="absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" />
         <input aria-label="Tìm kiếm" placeholder="Tìm prompt, chatbot, workflow..." className="h-11 w-full rounded-xl border border-white/[0.07] bg-white/[0.035] pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-sky-500/50 focus:ring-2 focus:ring-sky-500/10" />
