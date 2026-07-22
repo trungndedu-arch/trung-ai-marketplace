@@ -17,12 +17,9 @@ import { featuredCourses, type Course } from "@/data/courses";
 import {
   ArrowRight,
   Bell,
-  Bot,
   Boxes,
   ChevronRight,
   Clapperboard,
-  Clock3,
-  Flame,
   GraduationCap,
   Heart,
   Home,
@@ -32,7 +29,6 @@ import {
   Search,
   Sparkles,
   Store,
-  Workflow,
   X,
 } from "lucide-react";
 
@@ -135,72 +131,6 @@ function Header({ openMenu }: { openMenu: () => void }) {
       <button aria-label="Thông báo" className="relative grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-white/[0.035] text-slate-300 hover:text-white"><Bell className="h-[18px] w-[18px]" /><span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-blue-500" /></button>
       <button className="hidden rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 px-4 py-2.5 text-sm font-extrabold text-white shadow-glow transition hover:brightness-110 sm:block">Khám phá ngay</button>
     </header>
-  );
-}
-
-function Hero() {
-  return (
-    <section className="hero-grid relative h-full overflow-hidden rounded-[28px] border border-white/[0.08] bg-[#0B1728] px-6 py-10 sm:px-10 sm:py-14 lg:px-14 lg:py-16 xl:min-h-[620px] xl:px-8 xl:py-9 2xl:px-10 2xl:py-11">
-      <div className="absolute -right-28 -top-40 h-[460px] w-[460px] rounded-full bg-sky-600/25 blur-[100px]" />
-      <div className="absolute bottom-[-180px] left-[35%] h-[360px] w-[360px] rounded-full bg-blue-600/15 blur-[110px]" />
-      <div className="relative z-10 max-w-2xl">
-        <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-sky-400/20 bg-sky-400/10 px-3 py-1.5 text-[11px] font-bold uppercase tracking-[0.16em] text-sky-300">
-          <Sparkles className="h-3.5 w-3.5" /> AI Marketplace thế hệ mới
-        </div>
-        <h1 className="text-4xl font-extrabold leading-[1.08] tracking-[-0.045em] text-white sm:text-5xl lg:text-[64px] xl:text-[46px] 2xl:text-[54px]">
-          Biến ý tưởng thành<br /><span className="gradient-text">sức mạnh AI.</span>
-        </h1>
-        <p className="mt-5 max-w-xl text-sm leading-7 text-slate-300 sm:text-base">Khám phá những prompt, chatbot, workflow và ứng dụng AI được tạo bởi cộng đồng chuyên gia hàng đầu.</p>
-        <div className="mt-8 flex flex-wrap gap-3">
-          <a href="#products" className="group flex items-center gap-2 rounded-xl bg-gradient-to-r from-sky-600 to-blue-600 px-5 py-3 text-sm font-extrabold text-white shadow-glow transition hover:scale-[1.02]">Khám phá sản phẩm <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" /></a>
-          <button className="rounded-xl border border-white/10 bg-white/[0.04] px-5 py-3 text-sm font-bold text-slate-100 hover:bg-white/[0.08]">Trở thành người bán</button>
-        </div>
-        <div className="mt-10 flex flex-wrap items-center gap-6 text-xs text-slate-400">
-          <span><b className="text-base text-white">2,500+</b><br />Sản phẩm AI</span>
-          <span className="h-8 w-px bg-white/10" />
-          <span><b className="text-base text-white">12K+</b><br />Người sáng tạo</span>
-          <span className="h-8 w-px bg-white/10" />
-          <span><b className="text-base text-white">4.9/5</b><br />Đánh giá</span>
-        </div>
-      </div>
-      <div className="absolute right-10 top-1/2 hidden h-[280px] w-[280px] -translate-y-1/2 lg:block xl:-bottom-5 xl:-right-8 xl:top-auto xl:h-[230px] xl:w-[230px] xl:translate-y-0 xl:opacity-70 2xl:-right-3 2xl:h-[260px] 2xl:w-[260px]">
-        <div className="absolute inset-0 animate-pulse rounded-full border border-sky-400/20" />
-        <div className="absolute inset-10 rounded-full border border-blue-400/20" />
-        <div className="absolute inset-[82px] grid place-items-center rounded-[34px] border border-white/15 bg-gradient-to-br from-sky-500/60 to-blue-500/20 shadow-[0_0_80px_rgba(59,130,246,.4)] backdrop-blur-xl rotate-12"><Sparkles className="h-16 w-16 -rotate-12 text-white" /></div>
-        <div className="absolute left-3 top-16 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"><Bot className="h-6 w-6 text-sky-300" /></div>
-        <div className="absolute bottom-10 right-0 rounded-xl border border-white/10 bg-black/40 p-3 backdrop-blur-md"><Workflow className="h-6 w-6 text-blue-300" /></div>
-      </div>
-    </section>
-  );
-}
-
-function FlashSale() {
-  return (
-    <section className="mt-12 xl:mt-0 xl:flex xl:min-h-[620px] xl:flex-col">
-      <div className="mb-5 flex flex-wrap items-end justify-between gap-4">
-        <div>
-          <div className="flex items-center gap-2"><Flame className="h-5 w-5 fill-blue-500 text-blue-500" /><h2 className="text-xl font-extrabold tracking-tight text-white sm:text-2xl">Flash Sale</h2></div>
-          <p className="mt-1 text-sm text-slate-400">Ưu đãi nổi bật, chỉ trong thời gian ngắn</p>
-        </div>
-        <div className="flex items-center gap-2 text-xs font-bold text-slate-400"><Clock3 className="h-4 w-4" /> Kết thúc sau <span className="rounded-lg bg-white/[0.06] px-2.5 py-2 text-white">06</span>:<span className="rounded-lg bg-white/[0.06] px-2.5 py-2 text-white">24</span>:<span className="rounded-lg bg-white/[0.06] px-2.5 py-2 text-white">18</span></div>
-      </div>
-      <div className="grid gap-4 md:grid-cols-2 xl:min-h-0 xl:flex-1 xl:grid-cols-1 xl:grid-rows-2">
-        <div className="group relative overflow-hidden rounded-2xl border border-blue-500/20 bg-gradient-to-r from-[#0B1728] to-[#0F1F33] p-5 sm:p-6 xl:flex xl:flex-col">
-          <div className="absolute -right-10 -top-20 h-48 w-48 rounded-full bg-blue-500/20 blur-3xl" />
-          <span className="rounded-md bg-blue-500 px-2 py-1 text-[10px] font-black uppercase text-white">Giảm 40%</span>
-          <h3 className="mt-4 text-xl font-extrabold text-white">Ultimate Marketing Bundle</h3>
-          <p className="mt-1 text-sm text-slate-300">25+ workflow giúp tăng tốc đội ngũ marketing</p>
-          <div className="mt-5 flex items-center gap-3 xl:mt-auto xl:pt-5"><span className="text-lg font-black text-white">599.000đ</span><span className="text-sm text-slate-500 line-through">999.000đ</span><button className="ml-auto grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 text-white shadow-[0_0_22px_rgba(59,130,246,.22)] transition group-hover:translate-x-1"><ArrowRight className="h-4 w-4" /></button></div>
-        </div>
-        <div className="group relative overflow-hidden rounded-2xl border border-sky-500/20 bg-gradient-to-r from-[#0F1F33] to-[#0F1F33] p-5 sm:p-6 xl:flex xl:flex-col">
-          <div className="absolute -right-10 -top-20 h-48 w-48 rounded-full bg-sky-500/20 blur-3xl" />
-          <span className="rounded-md bg-sky-500 px-2 py-1 text-[10px] font-black uppercase text-white">Giảm 35%</span>
-          <h3 className="mt-4 text-xl font-extrabold text-white">AI Creator Starter Kit</h3>
-          <p className="mt-1 text-sm text-slate-300">Bộ công cụ khởi đầu cho nhà sáng tạo nội dung</p>
-          <div className="mt-5 flex items-center gap-3 xl:mt-auto xl:pt-5"><span className="text-lg font-black text-white">389.000đ</span><span className="text-sm text-slate-500 line-through">599.000đ</span><button className="ml-auto grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 text-white shadow-[0_0_22px_rgba(59,130,246,.25)] transition group-hover:translate-x-1"><ArrowRight className="h-4 w-4" /></button></div>
-        </div>
-      </div>
-    </section>
   );
 }
 
@@ -417,14 +347,10 @@ export default function HomePage() {
       <div className="lg:pl-[252px]">
         <Header openMenu={() => setMenuOpen(true)} />
         <main className="mx-auto max-w-[1500px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-          <div className="grid items-stretch gap-6 xl:grid-cols-[4fr_5fr]">
-            <Hero />
-            <FlashSale />
-          </div>
-          <section id="products" className="mt-12 scroll-mt-24">
+          <section id="products" className="scroll-mt-24">
             <div className="space-y-12">
-              <CategoryPreviewSection section={categorySections[0]} />
               <FeaturedChatbotAiAppsSection />
+              <CategoryPreviewSection section={categorySections[0]} />
               <FeaturedCoursesSection />
               <FeaturedAiToolsSection />
             </div>
@@ -435,3 +361,4 @@ export default function HomePage() {
     </div>
   );
 }
+
