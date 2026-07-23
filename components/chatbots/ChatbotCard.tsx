@@ -9,17 +9,18 @@ function formatPrice(price: number) {
 
 export function ChatbotCard({ chatbot }: { chatbot: Chatbot }) {
   const Icon = chatbot.icon === "shield" ? ShieldCheck : Bot;
+  const imageFrameClass = chatbot.coverAspect === "portrait" ? "h-[22rem] sm:h-[24rem] xl:h-[22rem]" : "aspect-[4/2.75]";
 
   return (
     <article className="card-hover group overflow-hidden rounded-2xl border border-white/[0.07] bg-panel">
-      <div className={`relative aspect-[4/2.75] overflow-hidden bg-gradient-to-br ${chatbot.color}`}>
+      <div className={`relative overflow-hidden bg-gradient-to-br ${chatbot.color} ${imageFrameClass}`}>
         {chatbot.coverImage ? (
           <Image
             src={chatbot.coverImage}
             alt={chatbot.name}
             fill
             sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
-            className="object-cover transition duration-500 group-hover:scale-105"
+            className="object-contain transition duration-500 group-hover:scale-[1.025]"
           />
         ) : (
           <>
@@ -42,7 +43,7 @@ export function ChatbotCard({ chatbot }: { chatbot: Chatbot }) {
       </div>
       <div className="p-4">
         <div className="mb-2 flex items-center justify-between">
-          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">Chatbot</span>
+          <span className="text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{chatbot.category}</span>
           <span className="flex items-center gap-1 text-[11px] text-slate-400">
             <Star className="h-3 w-3 fill-cyan-400 text-cyan-400" /> {chatbot.rating} · {chatbot.sales}
           </span>
