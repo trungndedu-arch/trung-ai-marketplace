@@ -38,7 +38,7 @@ type ProductCardProps = {
 
 export function ProductCardGrid({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <section className={`grid items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ${className}`}>
+    <section className={`grid auto-rows-fr items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ${className}`}>
       {children}
     </section>
   );
@@ -88,25 +88,31 @@ export function ProductCard({
   showFavorite = false,
   className = "",
 }: ProductCardProps) {
+  const hasPrice = Boolean(price || originalPrice);
+  const hasFooter = hasPrice || meta.length > 0 || actions.length > 0 || href;
+  const imageBadges = Array.from(new Set([badge, status].filter(Boolean))).slice(0, 2);
   const content = (
     <>
       {href && !onClick ? <Link href={href} aria-label={`Xem chi tiết ${title}`} className="absolute inset-0 z-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300" /> : null}
-      <div className="pointer-events-none relative z-10 h-[70%] shrink-0 overflow-hidden bg-[#07111F]">
+      <div className="pointer-events-none relative z-10 aspect-[9/16] w-full shrink-0 overflow-hidden rounded-t-2xl bg-[#07111F]">
         {image ? (
           <Image
             src={image}
             alt={imageAlt ?? title}
             fill
             sizes="(min-width: 1536px) 25vw, (min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
-            className="object-contain transition duration-500 group-hover:scale-[1.025]"
+            className="object-cover object-center transition duration-500 group-hover:scale-[1.025]"
           />
         ) : (
           <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-blue-700/20 to-cyan-500/10" />
         )}
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0F1F33] to-transparent" />
-        <div className="absolute left-3 top-3 flex flex-wrap gap-2">
-          {badge ? <span className="rounded-full border border-sky-200/25 bg-[#07111F]/75 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-sky-100 backdrop-blur-md">{badge}</span> : null}
-          {status ? <span className="rounded-full border border-white/15 bg-black/35 px-2.5 py-1 text-[10px] font-black uppercase tracking-wider text-white backdrop-blur-md">{status}</span> : null}
+        <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0F1F33]/95 to-transparent" />
+        <div className="absolute left-3 top-3 flex max-w-[calc(100%-4rem)] flex-wrap gap-2">
+          {imageBadges.map((item, index) => (
+            <span key={item} className={`max-w-full truncate rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-wider backdrop-blur-md ${index === 0 ? "border-sky-200/25 bg-[#07111F]/75 text-sky-100" : "border-white/15 bg-black/35 text-white"}`}>
+              {item}
+            </span>
+          ))}
         </div>
         {showFavorite ? (
           <button
@@ -119,41 +125,46 @@ export function ProductCard({
         ) : null}
       </div>
 
-      <div className="pointer-events-none relative z-10 flex min-h-0 flex-1 flex-col p-4">
-        <div className="mb-2 flex min-h-6 items-center justify-between gap-3">
-          {category ? <span className="truncate text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{category}</span> : <span />}
-          {(price || originalPrice) ? (
-            <span className="flex min-w-0 shrink-0 items-center gap-2 text-right">
-              {price ? <span className="max-w-[7rem] truncate text-xs font-black text-white">{price}</span> : null}
-              {originalPrice ? <span className="max-w-[5rem] truncate text-[10px] font-semibold text-slate-500 line-through">{originalPrice}</span> : null}
-            </span>
-          ) : null}
+      <div className="pointer-events-none relative z-10 flex min-h-0 flex-1 flex-col p-3.5 sm:p-4">
+        {category ? <span className="block min-h-4 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{category}</span> : null}
+        <div className="mt-1.5 shrink-0">
+          <h3 className="line-clamp-2 min-h-11 text-[15px] font-extrabold leading-[1.45] text-white transition group-hover:text-sky-300">{title}</h3>
+          {description ? <p className="mt-1.5 line-clamp-2 min-h-10 text-xs leading-5 text-slate-400">{description}</p> : <div className="mt-1.5 min-h-10" />}
         </div>
-        <h3 className="line-clamp-2 text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">{title}</h3>
-        {description ? <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{description}</p> : null}
-        {meta.length ? (
-          <div className="mt-3 flex flex-wrap gap-1.5">
-            {meta.slice(0, 3).map((item) => (
-              <span key={item.label} className={`rounded-md px-2 py-1 text-[10px] font-bold ${metaToneClass(item.tone)}`}>
-                {item.label}
-              </span>
-            ))}
-          </div>
-        ) : null}
-        {actions.length ? (
-          <div className="pointer-events-auto relative z-20 mt-auto grid grid-cols-2 gap-2 pt-4">
-            {actions.slice(0, 2).map((action) => <ActionItem key={`${action.label}-${action.href ?? "disabled"}`} action={action} />)}
-          </div>
-        ) : href ? (
-          <div className="mt-auto flex justify-end pt-4">
-            <span className="text-slate-500 transition group-hover:text-sky-400"><ArrowRight className="h-4 w-4" /></span>
+
+        {hasFooter ? (
+          <div className="mt-auto shrink-0 space-y-2.5 pt-2.5">
+            {hasPrice ? (
+              <div className="flex min-h-5 min-w-0 items-center gap-2">
+                {price ? <span className="max-w-[9rem] truncate text-xs font-black text-white">{price}</span> : null}
+                {originalPrice ? <span className="max-w-[6rem] truncate text-[10px] font-semibold text-slate-500 line-through">{originalPrice}</span> : null}
+              </div>
+            ) : null}
+            {meta.length ? (
+              <div className="flex min-h-6 flex-nowrap gap-1.5 overflow-hidden">
+                {meta.slice(0, 3).map((item) => (
+                  <span key={item.label} className={`min-w-0 flex-1 truncate rounded-md px-2 py-0.5 text-[10px] font-bold leading-4 ${metaToneClass(item.tone)}`}>
+                    {item.label}
+                  </span>
+                ))}
+              </div>
+            ) : null}
+            {actions.length ? (
+              <div className="pointer-events-auto relative z-20 grid grid-cols-2 gap-2">
+                {actions.slice(0, 2).map((action) => <ActionItem key={`${action.label}-${action.href ?? "disabled"}`} action={action} />)}
+              </div>
+            ) : href ? (
+              <div className="flex justify-end">
+                <span className="text-slate-500 transition group-hover:text-sky-400"><ArrowRight className="h-4 w-4" /></span>
+              </div>
+            ) : null}
           </div>
         ) : null}
       </div>
     </>
   );
 
-  const classes = `group relative flex h-[38rem] w-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1F33] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)] transition duration-300 hover:-translate-y-1 hover:border-sky-300/45 hover:shadow-[0_24px_62px_rgba(59,130,246,.18)] ${className}`;
+  const classes = `group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1F33] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)] transition duration-300 hover:-translate-y-1 hover:border-sky-300/45 hover:shadow-[0_24px_62px_rgba(59,130,246,.18)] ${className}`;
 
   if (onClick) return <button type="button" onClick={onClick} className={classes}>{content}</button>;
   return <article className={classes}>{content}</article>;
