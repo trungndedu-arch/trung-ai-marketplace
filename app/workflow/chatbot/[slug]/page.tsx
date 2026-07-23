@@ -55,14 +55,14 @@ export default async function ChatbotDetailPage({ params }: { params: Promise<{ 
             </button>
           </div>
 
-          <div className={`relative grid aspect-[4/3] place-items-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${chatbot.color}`}>
+          <div className={`relative mx-auto grid aspect-[9/16] max-h-[640px] w-full max-w-[380px] place-items-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${chatbot.color}`}>
             {chatbot.coverImage ? (
               <Image
                 src={chatbot.coverImage}
                 alt={chatbot.name}
                 fill
                 sizes="(min-width: 1024px) 45vw, 100vw"
-                className="object-cover"
+                className="object-contain"
                 priority
               />
             ) : (

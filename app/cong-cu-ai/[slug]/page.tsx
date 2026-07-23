@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft, CheckCircle2, ExternalLink, Globe2, PlayCircle, Sparkles, Tag, Users, Video, type LucideIcon } from "lucide-react";
-import { AiToolCard } from "@/components/ai-tools/AiToolCard";
+import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 import { getActiveAiTools, getAiToolBySlug, getRelatedAiTools } from "@/lib/ai-tools";
 
 // Public detail route for each active AI tool.
@@ -66,7 +66,7 @@ export default async function AiToolDetailPage({ params }: ToolPageProps) {
 
     {tool.galleryImages.length || tool.demoVideoUrl ? <section className="mt-12"><SectionTitle icon={PlayCircle} title="Hình ảnh và video demo" />{tool.galleryImages.length ? <div className="mt-5 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{tool.galleryImages.map((image) => <div key={image} className="overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1F33]"><img src={image} alt={`Hình ảnh ${tool.name}`} className="aspect-video w-full object-cover" /></div>)}</div> : null}{tool.demoVideoUrl ? <video controls preload="metadata" className="mt-5 w-full rounded-2xl border border-white/[0.08] bg-black"><source src={tool.demoVideoUrl} /></video> : null}</section> : null}
 
-    {relatedTools.length ? <section className="mt-14"><SectionTitle icon={Sparkles} title="Công cụ liên quan" /><div className="mt-5 grid gap-5 sm:grid-cols-2 xl:grid-cols-4">{relatedTools.map((relatedTool) => <AiToolCard key={relatedTool.id} tool={relatedTool} compact />)}</div></section> : null}
+    {relatedTools.length ? <section className="mt-14"><SectionTitle icon={Sparkles} title="Công cụ liên quan" /><ProductCardGrid className="mt-5">{relatedTools.map((relatedTool) => <ProductCard key={relatedTool.id} title={relatedTool.name} description={relatedTool.shortDescription} image={relatedTool.coverImage} imageAlt={`Ảnh bìa ${relatedTool.name}`} category={relatedTool.category} badge={relatedTool.badge} status={relatedTool.toolType} href={`/cong-cu-ai/${relatedTool.slug}`} meta={relatedTool.tags.slice(0, 3).map((tag) => ({ label: tag, tone: "blue" }))} actions={[{ label: "Xem chi tiết", href: `/cong-cu-ai/${relatedTool.slug}` }, relatedTool.affiliateUrl ? { label: "Truy cập", href: relatedTool.affiliateUrl, external: true, variant: "primary" } : { label: "Sắp cập nhật", disabled: true, variant: "muted" }]} />)}</ProductCardGrid></section> : null}
 
     <section className="relative mt-14 overflow-hidden rounded-[28px] border border-sky-300/20 bg-gradient-to-br from-[#0F1F33] via-[#0B1728] to-sky-950/45 p-7 sm:p-10"><div className="absolute -right-14 -top-14 h-48 w-48 rounded-full bg-sky-400/15 blur-[70px]" /><div className="relative max-w-2xl"><p className="text-xs font-black uppercase tracking-[.2em] text-sky-300">Sẵn sàng bắt đầu?</p><h2 className="mt-3 text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Trải nghiệm {tool.name}</h2><p className="mt-3 text-sm leading-7 text-slate-300 sm:text-base">Khám phá các tính năng của {tool.name} và bắt đầu tạo nội dung AI ngay hôm nay.</p><div className="mt-6"><AffiliateButton href={tool.affiliateUrl} /></div></div></section>
     <footer className="mt-12 border-t border-white/[0.06] py-8 text-sm leading-6 text-slate-400">Một số liên kết trên trang là liên kết tiếp thị liên kết. Mình có thể nhận được hoa hồng khi bạn đăng ký qua các liên kết này mà không làm tăng chi phí của bạn.</footer>

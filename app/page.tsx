@@ -4,16 +4,12 @@
 // Marketplace home page and featured AI tools.
 
 import { useState } from "react";
-import Image from "next/image";
 import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
-import { AiToolCard } from "@/components/ai-tools/AiToolCard";
 import { getFeaturedAiTools } from "@/lib/ai-tools";
-import { WorkflowCard } from "@/components/workflows/WorkflowCard";
-import { getFeaturedWorkflows } from "@/lib/workflows";
-import { ChatbotCard } from "@/components/chatbots/ChatbotCard";
-import { getFeaturedChatbots } from "@/lib/chatbots";
-import { PromptFreeBadge, PromptFreeCardShell } from "@/components/prompt-free/PromptFreeCardShell";
+import { getFeaturedWorkflows, type Workflow } from "@/lib/workflows";
+import { getFeaturedChatbots, type Chatbot } from "@/lib/chatbots";
 import { featuredCourses, type Course } from "@/data/courses";
+import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 import {
   ArrowRight,
   Bell,
@@ -23,7 +19,6 @@ import {
   GraduationCap,
   Heart,
   Home,
-  Image as ImageIcon,
   Menu,
   MessageSquareMore,
   Search,
@@ -73,6 +68,30 @@ const categorySections: CategorySection[] = [
     prompts: homeFeaturedPrompts,
   },
 ];
+
+function formatPrice(price: number) {
+  return new Intl.NumberFormat("vi-VN").format(price) + "đ";
+}
+
+function workflowActions(workflow: Workflow) {
+  const detailHref = `/workflow/${workflow.slug}`;
+
+  if (workflow.appUrl) {
+    return [
+      { label: "Xem chi tiết", href: detailHref },
+      { label: "Sử dụng miễn phí", href: workflow.appUrl, external: true, variant: "primary" as const },
+    ];
+  }
+
+  if (!workflow.isFree && workflow.price > 0 && !workflow.appUrl) {
+    return [
+      { label: "Xem chi tiết", href: detailHref },
+      { label: "Mua ngay", href: detailHref, variant: "primary" as const },
+    ];
+  }
+
+  return [{ label: "Xem chi tiết", href: detailHref }];
+}
 
 function Logo() {
   return (
@@ -134,66 +153,101 @@ function Header({ openMenu }: { openMenu: () => void }) {
   );
 }
 
-function promptVisualHeightStyle(heightClass: string) {
-  const arbitraryHeight = heightClass.match(/h-\[(.+?)\]/)?.[1];
-  if (arbitraryHeight) return { height: arbitraryHeight };
-
-  const fixedHeights: Record<string, string> = {
-    "h-80": "20rem",
-    "h-96": "24rem",
-  };
-
-  return { height: fixedHeights[heightClass] ?? "24rem" };
-}
-
-function HomePromptVisual({ item }: { item: FreePromptItem }) {
-  const Icon = item.icon;
+function renderPromptCard(item: FreePromptItem) {
   return (
-    <div style={promptVisualHeightStyle(item.height)} className={`relative overflow-hidden bg-gradient-to-br ${item.gradient}`}>
-      {item.image ? (
-        <Image
-          src={item.image}
-          alt={item.title}
-          fill
-          priority={item.id === orderedPrompts[0]?.id}
-          sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 25vw"
-          className="object-cover transition duration-500 group-hover:scale-[1.025]"
-        />
-      ) : (
-        <>
-          <div className="absolute -right-12 -top-12 h-48 w-48 rounded-full border-[28px] border-white/10" />
-          <div className="absolute -bottom-16 -left-12 h-56 w-56 rounded-full bg-black/25 blur-sm" />
-          <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,.12)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,.12)_1px,transparent_1px)] [background-size:34px_34px]" />
-          <div className="absolute left-1/2 top-1/2 grid h-24 w-24 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-[30px] border border-white/20 bg-black/20 shadow-2xl backdrop-blur-md">
-            <Icon className="h-11 w-11 text-white" />
-          </div>
-        </>
-      )}
-      {item.image && <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-black/80 to-transparent" />}
-      <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-        <span className="rounded-full border border-white/15 bg-black/30 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-white backdrop-blur-md">{item.category}</span>
-        <ImageIcon className="h-4 w-4 text-white/60" />
-      </div>
-    </div>
+    <ProductCard
+      key={item.id}
+      title={item.title}
+      description={item.description}
+      image={item.image}
+      category={item.category}
+      badge="Prompt"
+      href="/free-prompts"
+      meta={[
+        { label: item.model, tone: "blue" },
+        { label: item.count },
+      ]}
+    />
   );
 }
 
-function HomePromptCard({ item }: { item: FreePromptItem }) {
+function renderCourseCard(course: Course) {
   return (
-    <a href="/free-prompts" className="prompt-card group block w-full overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1F33] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)]">
-      <HomePromptVisual item={item} />
-      <div className="p-4">
-        <div className="mb-2 flex items-center gap-2">
-          <span className="rounded-full bg-sky-500/10 px-2 py-1 text-[9px] font-black uppercase tracking-wider text-sky-300">{item.category}</span>
-        </div>
-        <h2 className="text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">{item.title}</h2>
-        {item.description && <p className="mt-2 line-clamp-3 text-xs leading-5 text-slate-400">{item.description}</p>}
-        <div className="mt-3 flex items-center justify-between gap-3">
-          <span className="truncate text-xs font-semibold text-sky-400">{item.model}</span>
-          <span className="whitespace-nowrap rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300">{item.count}</span>
-        </div>
-      </div>
-    </a>
+    <ProductCard
+      key={course.id}
+      title={course.name}
+      description={course.shortDescription}
+      image={course.coverImage}
+      imageAlt={`Ảnh bìa ${course.name}`}
+      category={course.category}
+      badge={course.badge}
+      status={course.status}
+      price={course.price ?? "Sắp ra mắt"}
+      originalPrice={course.originalPrice}
+      href={course.landingPageUrl}
+      actions={[course.landingPageUrl ? { label: "Xem chi tiết", href: course.landingPageUrl } : { label: "Sắp ra mắt", disabled: true, variant: "muted" }]}
+    />
+  );
+}
+
+function renderChatbotCard(chatbot: Chatbot) {
+  return (
+    <ProductCard
+      key={`chatbot-${chatbot.id}`}
+      title={chatbot.name}
+      description={chatbot.shortDescription}
+      image={chatbot.coverImage}
+      category={chatbot.category}
+      badge={chatbot.badge}
+      status={chatbot.sales}
+      price={chatbot.price === 0 ? "Sắp ra mắt" : formatPrice(chatbot.price)}
+      originalPrice={chatbot.originalPrice ? formatPrice(chatbot.originalPrice) : undefined}
+      href={`/workflow/chatbot/${chatbot.slug}`}
+      meta={[{ label: chatbot.rating, tone: "cyan" }]}
+      showFavorite
+    />
+  );
+}
+
+function renderWorkflowCard(workflow: Workflow) {
+  return (
+    <ProductCard
+      key={`ai-app-${workflow.id}`}
+      title={workflow.name}
+      description={workflow.shortDescription}
+      image={workflow.coverImage}
+      imageAlt={`Ảnh bìa ${workflow.name}`}
+      category={workflow.category}
+      badge={workflow.isFree ? "FREE" : workflow.badge}
+      price={!workflow.hidePrice ? (workflow.isFree ? "Miễn phí" : formatPrice(workflow.price)) : undefined}
+      originalPrice={!workflow.isFree && workflow.originalPrice ? formatPrice(workflow.originalPrice) : undefined}
+      href={`/workflow/${workflow.slug}`}
+      meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
+      actions={workflowActions(workflow)}
+    />
+  );
+}
+
+function renderAiToolCard(tool: ReturnType<typeof getFeaturedAiTools>[number]) {
+  return (
+    <ProductCard
+      key={tool.id}
+      title={tool.name}
+      description={tool.shortDescription}
+      image={tool.coverImage}
+      imageAlt={`Ảnh bìa ${tool.name}`}
+      category={tool.category}
+      badge={tool.badge}
+      status={tool.toolType}
+      href={`/cong-cu-ai/${tool.slug}`}
+      meta={tool.tags.slice(0, 3).map((tag) => ({ label: tag, tone: "blue" }))}
+      actions={[
+        { label: "Xem chi tiết", href: `/cong-cu-ai/${tool.slug}` },
+        tool.affiliateUrl
+          ? { label: "Truy cập", href: tool.affiliateUrl, external: true, variant: "primary" }
+          : { label: "Sắp cập nhật", disabled: true, variant: "muted" },
+      ]}
+    />
   );
 }
 
@@ -213,52 +267,10 @@ function CategoryPreviewSection({ section }: { section: CategorySection }) {
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-4">
-        {section.prompts.map((item) => <HomePromptCard key={`${section.id}-${item.id}`} item={item} />)}
-      </div>
+      <ProductCardGrid>
+        {section.prompts.map(renderPromptCard)}
+      </ProductCardGrid>
     </section>
-  );
-}
-
-function CourseCard({ course }: { course: Course }) {
-  return (
-    <PromptFreeCardShell>
-      <div className="relative aspect-[4/3] overflow-hidden bg-[#07111F]">
-        <img src={course.coverImage} alt={`Ảnh bìa ${course.name}`} className="h-full w-full object-contain transition duration-500 group-hover:scale-[1.025]" />
-        <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#0B1728]/80 to-transparent" />
-        <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-          <span className="rounded-full border border-white/15 bg-black/30 px-3 py-1.5 text-[10px] font-extrabold uppercase tracking-widest text-white backdrop-blur-md">{course.category}</span>
-          <ImageIcon className="h-4 w-4 text-white/60" />
-        </div>
-      </div>
-      <div className="flex min-h-[13.5rem] flex-col p-4">
-        <div className="mb-2 flex items-center justify-between gap-2">
-          <PromptFreeBadge>{course.badge}</PromptFreeBadge>
-          <span className="line-clamp-1 text-[10px] font-semibold text-slate-400">{course.status}</span>
-        </div>
-        <h2 className="line-clamp-2 text-[15px] font-extrabold leading-6 text-white transition group-hover:text-sky-300">
-          {course.name}
-        </h2>
-        <p className="mt-2 line-clamp-2 text-xs leading-5 text-slate-400">{course.shortDescription}</p>
-        <div className="mt-auto flex items-center justify-between gap-3 pt-3">
-          {course.price ? (
-            <div className="flex min-w-0 items-center gap-2">
-              <span className="truncate text-xs font-semibold text-sky-400">{course.price}</span>
-              {course.originalPrice ? <span className="whitespace-nowrap text-[10px] font-semibold text-slate-500 line-through">{course.originalPrice}</span> : null}
-            </div>
-          ) : (
-            <span className="text-xs font-semibold text-cyan-300">Sắp ra mắt</span>
-          )}
-          {course.landingPageUrl ? (
-            <a href={course.landingPageUrl} className="inline-flex h-7 shrink-0 items-center gap-1 rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300 transition hover:bg-sky-500/15 hover:text-sky-200">
-              Xem chi tiết <ArrowRight className="h-3 w-3" />
-            </a>
-          ) : (
-            <span className="inline-flex h-7 shrink-0 items-center rounded-md bg-white/[0.06] px-2 py-1 text-[10px] font-bold text-slate-300">Sắp ra mắt</span>
-          )}
-        </div>
-      </div>
-    </PromptFreeCardShell>
   );
 }
 
@@ -278,9 +290,9 @@ function FeaturedCoursesSection() {
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      <div className="grid items-stretch gap-x-5 gap-y-5 sm:grid-cols-2 xl:grid-cols-4">
-        {featuredCourses.map((course) => <CourseCard key={course.id} course={course} />)}
-      </div>
+      <ProductCardGrid>
+        {featuredCourses.map(renderCourseCard)}
+      </ProductCardGrid>
     </section>
   );
 }
@@ -304,9 +316,9 @@ function FeaturedAiToolsSection() {
         </a>
       </div>
       {tools.length ? (
-        <div className="grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
-          {tools.map((tool) => <AiToolCard key={tool.id} tool={tool} compact />)}
-        </div>
+        <ProductCardGrid>
+          {tools.map(renderAiToolCard)}
+        </ProductCardGrid>
       ) : (
         <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có công cụ AI nổi bật. Bạn có thể thêm công cụ từ trang quản trị.</div>
       )}
@@ -333,7 +345,7 @@ function FeaturedChatbotAiAppsSection() {
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      {chatbots.length || apps.length ? <div className="grid items-stretch gap-x-5 gap-y-5 sm:grid-cols-2 xl:grid-cols-4">{chatbots.map((chatbot) => <ChatbotCard key={`chatbot-${chatbot.id}`} chatbot={chatbot} />)}{apps.map((app) => <WorkflowCard key={`ai-app-${app.id}`} workflow={app} />)}</div> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Chatbot hoặc AI App nổi bật.</div>}
+      {chatbots.length || apps.length ? <ProductCardGrid>{chatbots.map(renderChatbotCard)}{apps.map(renderWorkflowCard)}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Chatbot hoặc AI App nổi bật.</div>}
     </section>
   );
 }
@@ -361,4 +373,3 @@ export default function HomePage() {
     </div>
   );
 }
-
