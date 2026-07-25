@@ -22,7 +22,7 @@ export const courses: Course[] = [
     slug: "xay-kenh-affiliate-kiem-tien-bang-video-ai",
     shortDescription:
       "Khóa học hướng dẫn người mới xây kênh nội dung, sản xuất video bằng AI và triển khai Affiliate theo một lộ trình thực chiến từ con số 0.",
-    coverImage: "/images/courses/xay-kenh-affiliate-video-ai-cover.png",
+    coverImage: "/images/courses/xay-kenh-affiliate-video-ai-cover-20260725.png",
     category: "Khóa Học Video AI",
     badge: "Nổi bật",
     status: "Đang mở đăng ký",
@@ -39,7 +39,7 @@ export const courses: Course[] = [
     slug: "co-may-in-tien-xay-landing-page-bang-ai",
     shortDescription:
       "Khóa học dành cho người mới, hướng dẫn sử dụng AI để lên ý tưởng, viết nội dung, thiết kế và xây dựng Landing Page bán hàng mà không cần giỏi lập trình.",
-    coverImage: "/images/courses/co-may-in-tien-landing-page-ai-cover.png",
+    coverImage: "/images/courses/co-may-in-tien-landing-page-ai-cover-20260725.png",
     category: "Khóa Học AI",
     badge: "Sắp ra mắt",
     status: "Sắp ra mắt",
