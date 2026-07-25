@@ -36,7 +36,7 @@ export const aiTools: AiTool[] = [
       "AI Dancing là kho công cụ AI tất cả trong một giúp tạo video quảng cáo, review sản phẩm, thời trang, AI KOL và nội dung mạng xã hội nhanh chóng chỉ với vài thao tác.",
     fullDescription:
       "AI Dancing là nền tảng tích hợp nhiều tính năng tạo video bằng trí tuệ nhân tạo trong cùng một hệ thống. Công cụ hỗ trợ người dùng tạo video quảng cáo, video review sản phẩm, video thời trang, nhân vật AI KOL, video nhảy theo nhạc và nội dung ngắn dành cho mạng xã hội.\n\nAI Dancing phù hợp với cả người mới chưa có kinh nghiệm dựng video và những người đang làm sáng tạo nội dung, Affiliate, bán hàng online, marketing hoặc cung cấp dịch vụ video AI.\n\nNền tảng giúp rút ngắn quy trình từ ý tưởng đến video hoàn chỉnh, giảm thời gian chỉnh sửa thủ công và hỗ trợ người dùng tạo nội dung cho TikTok, Facebook Reels, YouTube Shorts và các chiến dịch quảng cáo sản phẩm.",
-    coverImage: "/images/ai-dancing-cover.png",
+    coverImage: "/images/ai-dancing-cover-20260725.png",
     logo: "",
     category: "AI Video",
     badge: "Đề xuất",
