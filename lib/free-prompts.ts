@@ -3,6 +3,7 @@ import { Image as ImageIcon, Shirt, ShoppingBag, Video } from "lucide-react";
 
 export type PromptItem = {
   id: number;
+  slug: string;
   title: string;
   model: string;
   count: string;
@@ -19,6 +20,7 @@ export type PromptItem = {
 export const prompts: PromptItem[] = [
   {
     id: 37,
+    slug: "mini-food-world",
     title: "Mini Food World – Thế Giới Ẩm Thực Tí Hon 🍣🥑🥖",
     model: "GPT Image",
     count: "5 ảnh",
@@ -39,6 +41,7 @@ export const prompts: PromptItem[] = [
   },
   {
     id: 36,
+    slug: "quang-cao-do-uong-splash-sieu-thuc",
     title: "Quảng Cáo Đồ Uống Splash Siêu Thực",
     model: "GPT Image",
     count: "4 ảnh",
@@ -58,6 +61,7 @@ export const prompts: PromptItem[] = [
   },
   {
     id: 35,
+    slug: "poster-quang-cao-dong-ho-cao-cap",
     title: "Poster Quảng Cáo Đồng Hồ Cao Cấp",
     model: "GPT Image",
     count: "1 ảnh",
@@ -78,6 +82,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 34,
+    slug: "minh-hoa-lich-su-cong-cu-co-dai",
     title: "Minh họa lịch sử: Công cụ cổ đại",
     model: "GPT Image",
     count: "3 ảnh",
@@ -96,6 +101,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 33,
+    slug: "thoi-trang-the-thao-nike-sieu-thuc",
     title: "Thời Trang Thể Thao Nike Siêu Thực",
     model: "GPT Image",
     count: "1 ảnh",
@@ -110,6 +116,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 32,
+    slug: "doodle-tuong-tac-anh-goc",
     title: "Doodle Tương Tác Ảnh Gốc",
     model: "GPT Image",
     count: "1 ảnh",
@@ -124,6 +131,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 31,
+    slug: "tap-chi-thoi-trang-orbit",
     title: "Tạp Chí Thời Trang ORBIT",
     model: "GPT Image",
     count: "1 ảnh",
@@ -138,6 +146,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 30,
+    slug: "nhan-vat-3d-cuong-dieu-hoa",
     title: "Nhân vật 3D Cường Điệu Hóa",
     model: "GPT Image",
     count: "4 ảnh",
@@ -157,6 +166,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 29,
+    slug: "nhan-vat-cho-streetwear-3d-thoi-trang",
     title: "Nhân Vật Chó Streetwear 3D Thời Trang",
     model: "GPT Image",
     count: "3 ảnh",
@@ -175,6 +185,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 28,
+    slug: "bia-tap-chi-beauty-pop-art",
     title: "Bìa Tạp Chí Beauty Pop Art",
     model: "GPT Image",
     count: "1 ảnh",
@@ -189,6 +200,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 27,
+    slug: "anh-san-pham-doodle-toi-gian",
     title: "Ảnh Sản Phẩm Doodle Tối Giản",
     model: "Nano Banana Pro",
     count: "1 ảnh",
@@ -203,6 +215,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 26,
+    slug: "poster-quang-cao-my-pham-phong-cach-mem-mai",
     title: "Poster Quảng Cáo Mỹ Phẩm Phong Cách Mềm Mại",
     model: "GPT Image",
     count: "3 ảnh",
@@ -221,6 +234,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 25,
+    slug: "tao-kol-thoi-trang-tre-trung-sang-trong",
     title: "Tạo KOL Thời Trang Trẻ Trung Sang Trọng",
     model: "GPT Image",
     count: "1 ảnh",
@@ -235,6 +249,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 24,
+    slug: "storyboard-skincare",
     title: "Storyboard Skincare",
     model: "GPT Image",
     count: "1 ảnh",
@@ -249,6 +264,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 23,
+    slug: "poster-quang-cao-thoi-trang-cao-cap",
     title: "Poster Quảng Cáo Thời Trang Cao Cấp",
     model: "GPT Image",
     count: "1 ảnh",
@@ -263,6 +279,7 @@ Fastrack — Urban Surface (LIKE GARNIER WATER BUT DRY) High-end commercial watc
   },
   {
     id: 22,
+    slug: "quang-cao-nuoc-hoa-dien-anh-cao-cap",
     title: "Quảng Cáo Nước Hoa Điện Ảnh Cao Cấp",
     model: "GPT Image",
     count: "3 ảnh",
@@ -293,6 +310,7 @@ Cheat Sheet:
   },
   {
     id: 21,
+    slug: "prompt-video-suc-khoe-hoat-hinh-3d",
     title: "Prompt Video Sức Khỏe Hoạt Hình 3D",
     model: "Veo 3",
     count: "4 ảnh",
@@ -366,6 +384,7 @@ Voice:
   },
   {
     id: 20,
+    slug: "tao-anh-quang-cao-do-lot",
     title: "Tạo Ảnh Quảng Cáo Đồ Lót",
     model: "GPT Image",
     count: "1 ảnh",
@@ -380,6 +399,7 @@ Voice:
   },
   {
     id: 19,
+    slug: "character-sheet-dong-nhat-nhan-vat",
     title: "Character Sheet Đồng Nhất Nhân Vật",
     model: "GPT Image",
     count: "1 ảnh",
@@ -433,6 +453,7 @@ Different person, different character, changed face, changed art style, unintend
   },
   {
     id: 18,
+    slug: "op-dien-thoai-xinh",
     title: "Ốp Điện Thoại Xinh",
     model: "GPT Image",
     count: "3 ảnh",
@@ -459,6 +480,7 @@ Soft diffused studio lighting focused on the phone and installed case, subtle ba
   },
   {
     id: 17,
+    slug: "thoi-trang-ao-dai-trung-nien",
     title: "Thời Trang Áo Dài Trung Niên",
     model: "GPT Image",
     count: "2 ảnh",
@@ -476,6 +498,7 @@ Soft diffused studio lighting focused on the phone and installed case, subtle ba
   },
   {
     id: 16,
+    slug: "thoi-trang-bong-ro-nam",
     title: "Thời Trang Bóng Rổ Nam",
     model: "GPT Image",
     count: "5 ảnh",
@@ -496,6 +519,7 @@ Soft diffused studio lighting focused on the phone and installed case, subtle ba
   },
   {
     id: 15,
+    slug: "lam-net-anh",
     title: "Làm nét ảnh",
     model: "GPT Image",
     count: "1 ảnh",
@@ -510,6 +534,7 @@ Soft diffused studio lighting focused on the phone and installed case, subtle ba
   },
   {
     id: 14,
+    slug: "doanh-nhan-nu-studio",
     title: "Doanh nhân nữ studio",
     model: "GPT Image",
     count: "4 ảnh",
@@ -531,6 +556,7 @@ Background is a seamless monochromatic deep burgundy and dark red studio backdro
   },
   {
     id: 13,
+    slug: "mau-nu-ngoi-o-to",
     title: "Mẫu Nữ Ngồi Ô Tô",
     model: "GPT Image",
     count: "1 ảnh",
@@ -569,3 +595,7 @@ export const orderedPrompts = prompts
     return a.originalIndex - b.originalIndex;
   })
   .map(({ item }) => item);
+
+export function getPromptBySlug(slug: string) {
+  return orderedPrompts.find((prompt) => prompt.slug === slug);
+}

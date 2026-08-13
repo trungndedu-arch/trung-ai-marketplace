@@ -4,6 +4,7 @@ import { useMemo, useState } from "react";
 import { Bot, Clapperboard, Search, Workflow as WorkflowIcon } from "lucide-react";
 import type { Chatbot } from "@/lib/chatbots";
 import type { Workflow } from "@/lib/workflows";
+import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 
 type Tab = "all" | "chatbot" | "ai-app";
@@ -12,11 +13,8 @@ type CatalogItem =
   | { kind: "chatbot"; item: Chatbot; order: number }
   | { kind: "ai-app"; item: Workflow; order: number };
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("vi-VN").format(price) + "đ";
-}
-
 function renderChatbotCard(chatbot: Chatbot) {
+  const detailHref = `/workflow/chatbot/${chatbot.slug}`;
   return (
     <ProductCard
       key={`chatbot-${chatbot.id}`}
@@ -25,29 +23,21 @@ function renderChatbotCard(chatbot: Chatbot) {
       image={chatbot.coverImage}
       category={chatbot.category}
       badge={chatbot.badge}
-      status={chatbot.sales}
-      price={chatbot.price === 0 ? "Sắp ra mắt" : formatPrice(chatbot.price)}
-      originalPrice={chatbot.originalPrice ? formatPrice(chatbot.originalPrice) : undefined}
-      href={`/workflow/chatbot/${chatbot.slug}`}
+      status={chatbot.state.hasActiveFlashSale ? "SALE" : undefined}
+      price={getMarketplacePriceLabel(chatbot.state)}
+      originalPrice={getMarketplaceCompareAtPriceLabel(chatbot.state)}
+      href={detailHref}
       meta={[{ label: chatbot.rating, tone: "cyan" }]}
+      actions={getMarketplaceCardActions(chatbot.state, detailHref, chatbot.appUrl, chatbot.databaseId)}
       showFavorite
+      demoVideo={chatbot.demoVideo}
     />
   );
 }
 
 function renderWorkflowCard(workflow: Workflow) {
-  const detailHref = `/workflow/${workflow.slug}`;
-  const actions = workflow.appUrl
-    ? [
-        { label: "Xem chi tiết", href: detailHref },
-        { label: "Sử dụng miễn phí", href: workflow.appUrl, external: true, variant: "primary" as const },
-      ]
-    : !workflow.isFree && workflow.price > 0 && !workflow.appUrl
-      ? [
-          { label: "Xem chi tiết", href: detailHref },
-          { label: "Mua ngay", href: detailHref, variant: "primary" as const },
-        ]
-      : [{ label: "Xem chi tiết", href: detailHref }];
+  const detailHref = workflow.detailUrl ?? `/workflow/${workflow.slug}`;
+  const actions = getMarketplaceCardActions(workflow.state, detailHref, workflow.appUrl, workflow.databaseId);
 
   return (
     <ProductCard
@@ -57,12 +47,14 @@ function renderWorkflowCard(workflow: Workflow) {
       image={workflow.coverImage}
       imageAlt={`Ảnh bìa ${workflow.name}`}
       category={workflow.category}
-      badge={workflow.isFree ? "FREE" : workflow.badge}
-      price={!workflow.hidePrice ? (workflow.isFree ? "Miễn phí" : formatPrice(workflow.price)) : undefined}
-      originalPrice={!workflow.isFree && workflow.originalPrice ? formatPrice(workflow.originalPrice) : undefined}
+      badge={workflow.badge}
+      status={workflow.state.hasActiveFlashSale ? "SALE" : undefined}
+      price={!workflow.hidePrice ? getMarketplacePriceLabel(workflow.state) : undefined}
+      originalPrice={!workflow.hidePrice ? getMarketplaceCompareAtPriceLabel(workflow.state) : undefined}
       href={detailHref}
       meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
       actions={actions}
+      demoVideo={workflow.demoVideo}
     />
   );
 }

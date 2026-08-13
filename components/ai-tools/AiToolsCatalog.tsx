@@ -38,14 +38,15 @@ export function AiToolsCatalog({ tools }: { tools: AiTool[] }) {
             category={tool.category}
             badge={tool.badge}
             status={tool.toolType}
-            href={`/cong-cu-ai/${tool.slug}`}
+            href={tool.detailUrl ?? `/cong-cu-ai/${tool.slug}`}
             meta={tool.tags.slice(0, 3).map((tag) => ({ label: tag, tone: "blue" }))}
             actions={[
-              { label: "Xem chi tiết", href: `/cong-cu-ai/${tool.slug}` },
-              tool.affiliateUrl
+              { label: "Xem chi tiết", href: tool.detailUrl ?? `/cong-cu-ai/${tool.slug}` },
+              tool.state.canVisitAffiliate
                 ? { label: "Truy cập", href: tool.affiliateUrl, external: true, variant: "primary" }
                 : { label: "Sắp cập nhật", disabled: true, variant: "muted" },
             ]}
+            demoVideo={tool.demoVideo}
           />
         ))}
       </ProductCardGrid>

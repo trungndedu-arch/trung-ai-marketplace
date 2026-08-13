@@ -3,9 +3,10 @@ import { ChatbotAiAppCatalog } from "@/components/chatbots/ChatbotAiAppCatalog";
 import { getActiveChatbots } from "@/lib/chatbots";
 import { getActiveWorkflows } from "@/lib/workflows";
 
+export const dynamic = "force-dynamic";
+
 export default async function WorkflowsPage({ searchParams }: { searchParams: Promise<{ tab?: string }> }) {
-  const chatbots = getActiveChatbots();
-  const apps = getActiveWorkflows();
+  const [chatbots, apps] = await Promise.all([getActiveChatbots(), getActiveWorkflows()]);
   const { tab } = await searchParams;
   const initialTab = tab === "ai-app" ? "ai-app" : tab === "chatbot" ? "chatbot" : "all";
 

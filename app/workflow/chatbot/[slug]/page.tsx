@@ -1,19 +1,36 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Bot, CheckCircle2, ShieldCheck } from "lucide-react";
-import { getChatbotBySlug } from "@/lib/chatbots";
+import { ArrowLeft, ArrowRight, Bot, CheckCircle2, ExternalLink, ShieldCheck } from "lucide-react";
+import { ProductPurchaseActions } from "@/components/cart/ProductPurchaseActions";
+import { getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
+import { getChatbotBySlug, type Chatbot } from "@/lib/chatbots";
 
-function formatPrice(price: number) {
-  return price === 0 ? "Sắp ra mắt" : new Intl.NumberFormat("vi-VN").format(price) + "đ";
+export const dynamic = "force-dynamic";
+
+function ChatbotPrimaryAction({ chatbot }: { chatbot: Chatbot }) {
+  const classes = "mt-8 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 px-5 text-sm font-extrabold text-white shadow-[0_0_26px_rgba(59,130,246,.26)] transition hover:-translate-y-0.5 hover:brightness-110";
+
+  if (chatbot.state.canAccessFree && chatbot.appUrl) {
+    return <a href={chatbot.appUrl} target="_blank" rel="noopener noreferrer" className={classes}>Sử dụng miễn phí <ExternalLink className="h-4 w-4" /></a>;
+  }
+
+  if (chatbot.state.isPurchasable) {
+    return <ProductPurchaseActions productId={chatbot.databaseId} className="mt-8 max-w-xl" />;
+  }
+
+  const label = chatbot.state.isComingSoon ? "Sắp ra mắt" : chatbot.state.isPaused ? "Tạm dừng" : "Chưa thể truy cập";
+  return <span aria-disabled="true" className={`${classes} cursor-not-allowed opacity-65`}>{label}<ArrowRight className="h-4 w-4" /></span>;
 }
 
 export default async function ChatbotDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const chatbot = getChatbotBySlug(slug);
+  const chatbot = await getChatbotBySlug(slug);
   if (!chatbot) notFound();
 
   const Icon = chatbot.icon === "shield" ? ShieldCheck : Bot;
+  const priceLabel = getMarketplacePriceLabel(chatbot.state);
+  const compareAtPriceLabel = getMarketplaceCompareAtPriceLabel(chatbot.state);
 
   return (
     <main className="mx-auto max-w-[1200px] px-4 py-9 sm:px-6 lg:px-8 lg:py-12">
@@ -35,24 +52,24 @@ export default async function ChatbotDetailPage({ params }: { params: Promise<{ 
 
             <div className="mt-7 flex flex-wrap items-center gap-2">
               <span className="rounded-full border border-sky-300/25 bg-sky-500/10 px-3 py-1.5 text-xs font-black text-sky-200">{chatbot.badge}</span>
+              {chatbot.state.hasActiveFlashSale ? <span className="rounded-full border border-rose-300/30 bg-rose-500/15 px-3 py-1.5 text-xs font-black text-rose-200">SALE</span> : null}
               <span className="rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-xs font-bold text-slate-200">{chatbot.category}</span>
             </div>
 
             <h1 className="mt-5 text-3xl font-extrabold tracking-[-.04em] text-white sm:text-4xl">{chatbot.name}</h1>
             <p className="mt-5 text-sm leading-7 text-slate-300 sm:text-base">{chatbot.fullDescription}</p>
 
-            <div className="mt-7 flex items-end gap-3">
+            {priceLabel ? <div className="mt-7 flex items-end gap-3">
               <div>
-                <p className="text-xs font-bold uppercase tracking-[.14em] text-slate-500">Trạng thái</p>
+                <p className="text-xs font-bold uppercase tracking-[.14em] text-slate-500">Giá / trạng thái</p>
                 <div className="mt-1 flex items-center gap-3">
-                  <span className="text-3xl font-black text-white">{formatPrice(chatbot.price)}</span>
+                  <span className={`text-3xl font-black ${chatbot.state.isFree ? "text-cyan-300" : "text-white"}`}>{priceLabel}</span>
+                  {compareAtPriceLabel ? <span className="text-sm font-semibold text-slate-500 line-through">{compareAtPriceLabel}</span> : null}
                 </div>
               </div>
-            </div>
+            </div> : null}
 
-            <button className="mt-8 inline-flex min-h-12 cursor-not-allowed items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500/70 to-sky-500/70 px-5 text-sm font-extrabold text-white shadow-[0_0_26px_rgba(59,130,246,.18)]">
-              Sắp ra mắt <ArrowRight className="h-4 w-4" />
-            </button>
+            <ChatbotPrimaryAction chatbot={chatbot} />
           </div>
 
           <div className={`relative mx-auto grid aspect-[9/16] max-h-[640px] w-full max-w-[380px] place-items-center overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br ${chatbot.color}`}>

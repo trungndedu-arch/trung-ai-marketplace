@@ -3,32 +3,14 @@
 import { useMemo, useState } from "react";
 import { Search, Workflow as WorkflowIcon } from "lucide-react";
 import type { Workflow } from "@/lib/workflows";
+import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 
 const allCategories = "Tất cả Workflow";
 
-function formatPrice(price: number) {
-  return new Intl.NumberFormat("vi-VN").format(price) + "đ";
-}
-
 function workflowActions(workflow: Workflow) {
   const detailHref = `/workflow/${workflow.slug}`;
-
-  if (workflow.appUrl) {
-    return [
-      { label: "Xem chi tiết", href: detailHref },
-      { label: "Sử dụng miễn phí", href: workflow.appUrl, external: true, variant: "primary" as const },
-    ];
-  }
-
-  if (!workflow.isFree && workflow.price > 0 && !workflow.appUrl) {
-    return [
-      { label: "Xem chi tiết", href: detailHref },
-      { label: "Mua ngay", href: detailHref, variant: "primary" as const },
-    ];
-  }
-
-  return [{ label: "Xem chi tiết", href: detailHref }];
+  return getMarketplaceCardActions(workflow.state, detailHref, workflow.appUrl, workflow.databaseId);
 }
 
 export function WorkflowsCatalog({ workflows }: { workflows: Workflow[] }) {
@@ -56,12 +38,14 @@ export function WorkflowsCatalog({ workflows }: { workflows: Workflow[] }) {
             image={workflow.coverImage}
             imageAlt={`Ảnh bìa ${workflow.name}`}
             category={workflow.category}
-            badge={workflow.isFree ? "FREE" : workflow.badge}
-            price={!workflow.hidePrice ? (workflow.isFree ? "Miễn phí" : formatPrice(workflow.price)) : undefined}
-            originalPrice={!workflow.isFree && workflow.originalPrice ? formatPrice(workflow.originalPrice) : undefined}
+            badge={workflow.badge}
+            status={workflow.state.hasActiveFlashSale ? "SALE" : undefined}
+            price={!workflow.hidePrice ? getMarketplacePriceLabel(workflow.state) : undefined}
+            originalPrice={!workflow.hidePrice ? getMarketplaceCompareAtPriceLabel(workflow.state) : undefined}
             href={`/workflow/${workflow.slug}`}
             meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
             actions={workflowActions(workflow)}
+            demoVideo={workflow.demoVideo}
           />
         ))}
       </ProductCardGrid>
