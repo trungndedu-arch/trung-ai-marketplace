@@ -1,10 +1,12 @@
 "use server";
 
 import { CART_MAX_ITEMS, isCartProductId } from "@/lib/cart";
+import { findRecoverablePendingOrderForProducts } from "@/lib/checkout/orders";
 import { createClient } from "@/lib/supabase/server";
 
 export type CheckoutOrderActionResult =
   | { status: "success"; orderId: string }
+  | { status: "existing-order"; orderId: string }
   | { status: "error"; code: string; message: string };
 
 const checkoutErrorMessages: Record<string, string> = {
@@ -45,6 +47,14 @@ export async function createCheckoutOrder(input: unknown): Promise<CheckoutOrder
   const { data, error } = await supabase.rpc("create_order", { p_product_ids: productIds });
   if (error) {
     const code = typeof error.code === "string" ? error.code : "P1099";
+    if (code === "P1011") {
+      const existingOrderId = await findRecoverablePendingOrderForProducts(
+        supabase,
+        authData.user.id,
+        productIds,
+      );
+      if (existingOrderId) return { status: "existing-order", orderId: existingOrderId };
+    }
     if (code === "P1099" || !checkoutErrorMessages[code]) console.error("create_order RPC failed:", { code, message: error.message });
     return errorResult(code);
   }

@@ -35,6 +35,53 @@ type CheckoutOrderRow = {
   expires_at: string;
 };
 
+type PendingOrderRecoveryRow = {
+  id: string;
+  payment_status: CheckoutOrder["paymentStatus"];
+  expires_at: string;
+  order_items: Array<{ product_id: string | null }> | null;
+};
+
+type CheckoutSupabaseClient = Awaited<ReturnType<typeof createClient>>;
+
+function hasExactProductSet(order: PendingOrderRecoveryRow, requestedProductIds: readonly string[]) {
+  const orderProductIds = (order.order_items ?? []).flatMap((item) => item.product_id ? [item.product_id] : []).sort();
+  const expectedProductIds = [...requestedProductIds].sort();
+
+  if (expectedProductIds.length === 1) return orderProductIds.includes(expectedProductIds[0]);
+
+  return orderProductIds.length === expectedProductIds.length
+    && orderProductIds.every((productId, index) => productId === expectedProductIds[index]);
+}
+
+export async function findRecoverablePendingOrderForProducts(
+  supabase: CheckoutSupabaseClient,
+  userId: string,
+  productIds: readonly string[],
+) {
+  const now = Date.now();
+  const { data, error } = await supabase
+    .from("orders")
+    .select("id, payment_status, expires_at, order_items(product_id)")
+    .eq("user_id", userId)
+    .eq("status", "pending")
+    .in("payment_status", ["unpaid", "pending_confirmation"]);
+
+  if (error) {
+    console.error("Unable to recover pending checkout order:", { code: error.code, message: error.message });
+    return null;
+  }
+
+  const matches = ((data ?? []) as PendingOrderRecoveryRow[]).filter((order) => {
+    const isRecoverableStatus = order.payment_status === "pending_confirmation"
+      || (order.payment_status === "unpaid" && new Date(order.expires_at).getTime() > now);
+
+    return isRecoverableStatus && hasExactProductSet(order, productIds);
+  });
+
+  return matches.length === 1 ? matches[0].id : null;
+}
+
 export async function getCheckoutOrderForCurrentUser(orderId: string) {
   if (!isCartProductId(orderId)) return { status: "not-found" as const };
 

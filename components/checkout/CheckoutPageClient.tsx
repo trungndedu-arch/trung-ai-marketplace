@@ -14,6 +14,7 @@ export function CheckoutPageClient({ products }: { products: CatalogProduct[] })
   const router = useRouter();
   const { productIds, isReady, removeProducts } = useCart();
   const [errorMessage, setErrorMessage] = useState("");
+  const [isRedirecting, setIsRedirecting] = useState(false);
   const [isPending, startTransition] = useTransition();
   const submittingRef = useRef(false);
   const productMap = new Map(products.map((product) => [product.databaseId, product]));
@@ -25,7 +26,7 @@ export function CheckoutPageClient({ products }: { products: CatalogProduct[] })
   const estimatedTotal = checkoutProducts.reduce((sum, product) => sum + (getCatalogProductState(product).pricing.currentPrice ?? 0), 0);
 
   function submitOrder() {
-    if (submittingRef.current || isPending || productIds.length === 0 || hasInvalidProduct) return;
+    if (submittingRef.current || isPending || isRedirecting || productIds.length === 0 || hasInvalidProduct) return;
     submittingRef.current = true;
     setErrorMessage("");
     const checkedOutIds = [...productIds];
@@ -39,14 +40,18 @@ export function CheckoutPageClient({ products }: { products: CatalogProduct[] })
           return;
         }
 
-        removeProducts(checkedOutIds);
-        router.push(`/checkout/order/${result.orderId}`);
+        setIsRedirecting(true);
+        if (result.status === "success") removeProducts(checkedOutIds);
+        router.replace(`/checkout/order/${result.orderId}`);
       } catch {
         submittingRef.current = false;
+        setIsRedirecting(false);
         setErrorMessage("Không thể kết nối để tạo đơn hàng. Vui lòng thử lại.");
       }
     });
   }
+
+  if (isRedirecting) return <div className="grid min-h-[520px] place-items-center px-4 text-center"><div><Loader2 className="mx-auto h-8 w-8 animate-spin text-sky-300" /><p className="mt-4 text-sm font-extrabold text-white">Đang mở đơn hàng...</p><p className="mt-2 text-xs text-slate-500">Vui lòng giữ nguyên trang trong giây lát.</p></div></div>;
 
   if (!isReady) return <div className="grid min-h-[420px] place-items-center text-sm font-semibold text-slate-400">Đang chuẩn bị thanh toán...</div>;
 
@@ -80,7 +85,7 @@ export function CheckoutPageClient({ products }: { products: CatalogProduct[] })
           <div className="mt-5 flex items-center justify-between border-y border-white/[0.08] py-4"><span className="text-sm text-slate-400">Tổng tham khảo</span><strong className="text-xl text-white">{formatCatalogPrice(estimatedTotal)}</strong></div>
           <p className="mt-4 text-xs leading-5 text-slate-400">Số tiền chuyển khoản chính xác chỉ hiển thị sau khi database tạo order và lưu snapshot.</p>
           {errorMessage ? <p role="alert" className="mt-4 rounded-xl border border-red-300/20 bg-red-500/10 px-3 py-2 text-sm leading-6 text-red-100">{errorMessage}</p> : null}
-          <button type="button" onClick={submitOrder} disabled={isPending || hasInvalidProduct} className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 px-4 text-sm font-extrabold text-white shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-55">{isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{isPending ? "Đang tạo đơn hàng..." : "Đặt hàng"}</button>
+          <button type="button" onClick={submitOrder} disabled={isPending || isRedirecting || hasInvalidProduct} className="mt-5 inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 px-4 text-sm font-extrabold text-white shadow-glow transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-55">{isPending || isRedirecting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}{isRedirecting ? "Đang mở đơn hàng..." : isPending ? "Đang tạo đơn hàng..." : "Đặt hàng"}</button>
         </aside>
       </div>
     </main>

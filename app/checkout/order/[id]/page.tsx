@@ -8,16 +8,16 @@ import {
   CheckCircle2,
   Clock3,
   CreditCard,
-  ExternalLink,
   ReceiptText,
   ShieldCheck,
   WalletCards,
 } from "lucide-react";
 import { CommerceHeader } from "@/components/commerce/CommerceHeader";
+import { PaymentSupportModal } from "@/components/checkout/PaymentSupportModal";
 import { PaymentValueCopy } from "@/components/checkout/PaymentValueCopy";
 import { VietQrImage } from "@/components/checkout/VietQrImage";
 import { getCheckoutOrderForCurrentUser, type CheckoutOrder } from "@/lib/checkout/orders";
-import { buildVietQrUrl, buildZaloUrl } from "@/lib/checkout/vietqr";
+import { buildVietQrUrl } from "@/lib/checkout/vietqr";
 
 export const metadata: Metadata = { title: "Thanh toán đơn hàng" };
 export const dynamic = "force-dynamic";
@@ -128,7 +128,12 @@ export default async function CheckoutOrderPage({ params }: { params: Promise<{ 
       paymentReference: order.paymentReference,
     })
     : null;
-  const zaloUrl = buildZaloUrl(order.supportZaloPhone);
+  const paymentConfirmed = order.status === "completed" && order.paymentStatus === "paid";
+  const supportTriggerLabel = paymentConfirmed
+    ? "Liên hệ hỗ trợ sản phẩm"
+    : paymentState.canPay || order.paymentStatus === "pending_confirmation"
+      ? "Tôi Đã Chuyển Khoản Thanh Toán Và Cần Hỗ Trợ"
+      : "Liên hệ hỗ trợ đơn hàng";
 
   return (
     <div className="min-h-screen bg-ink text-slate-100">
@@ -159,21 +164,22 @@ export default async function CheckoutOrderPage({ params }: { params: Promise<{ 
             <aside className="space-y-4">
               <div className="rounded-2xl border border-sky-300/20 bg-[#0F1F33] p-4 sm:p-5">
                 <div className="text-center">
-                  <p className="text-xs font-black uppercase tracking-[0.16em] text-sky-300">Số tiền cần thanh toán</p>
+                  <p className="text-xs font-black uppercase tracking-[0.16em] text-sky-300">{paymentState.canPay ? "Số tiền cần thanh toán" : "Tổng giá trị đơn hàng"}</p>
                   <p className="mt-2 text-3xl font-black text-white sm:text-4xl">{formattedTotal}</p>
                 </div>
                 {vietQrUrl ? <div className="mx-auto mt-5 max-w-[360px]"><VietQrImage src={vietQrUrl} /><p className="mt-3 text-center text-sm font-semibold text-slate-300">Quét QR bằng ứng dụng ngân hàng</p></div> : null}
                 {paymentState.canPay && order.currency !== "VND" ? <p className="mt-5 rounded-xl border border-amber-300/20 bg-amber-500/10 p-3 text-sm leading-6 text-amber-100">VietQR chỉ hỗ trợ đơn hàng VND. Vui lòng chuyển khoản thủ công theo thông tin bên cạnh.</p> : null}
               </div>
-              <div className="rounded-2xl border border-white/[0.08] bg-[#0F1F33] p-5">
+              {paymentState.canPay ? <div className="rounded-2xl border border-white/[0.08] bg-[#0F1F33] p-5">
                 <p className="flex items-center gap-2 text-xs font-bold uppercase tracking-[0.12em] text-slate-500"><Clock3 className="h-4 w-4 text-sky-300" />Hạn thanh toán</p>
                 <p className="mt-2 text-sm font-extrabold text-white">{formatDate(order.expiresAt)}</p>
                 <p className="mt-3 text-xs leading-5 text-slate-400">Trang này chỉ hiển thị snapshot đã lưu trong Order và không tự thay đổi trạng thái thanh toán.</p>
-              </div>
+              </div> : null}
             </aside>
 
             <div className="min-w-0 space-y-4">
-              <div className="rounded-2xl border border-sky-300/20 bg-sky-500/[0.07] p-5">
+              {paymentState.canPay ? <>
+                <div className="rounded-2xl border border-sky-300/20 bg-sky-500/[0.07] p-5">
                 <p className="text-xs font-black uppercase tracking-[0.16em] text-sky-300">Nội dung chuyển khoản</p>
                 <div className="mt-3 flex flex-wrap items-center justify-between gap-3"><strong className="break-all text-xl font-black tracking-wide text-white">{order.paymentReference}</strong><PaymentValueCopy value={order.paymentReference} /></div>
                 <p className="mt-3 text-xs leading-5 text-slate-400">Vui lòng ghi chính xác nội dung này. Không tự thêm hoặc sửa ký tự.</p>
@@ -190,14 +196,24 @@ export default async function CheckoutOrderPage({ params }: { params: Promise<{ 
               <div className="rounded-2xl border border-white/[0.08] bg-[#0F1F33] p-5">
                 <h2 className="flex items-center gap-2 text-sm font-extrabold text-white"><ReceiptText className="h-4 w-4 text-sky-300" />Hướng dẫn thanh toán</h2>
                 <p className="mt-3 whitespace-pre-line text-sm leading-7 text-slate-300">{order.paymentInstructions}</p>
-              </div>
-
-              {order.supportZaloPhone ? (
-                <div className="flex flex-wrap items-center justify-between gap-3 rounded-2xl border border-white/[0.08] bg-[#0F1F33] p-5">
-                  <div><p className="text-xs font-bold uppercase tracking-[0.12em] text-slate-500">Hỗ trợ Zalo</p><p className="mt-1 font-extrabold text-white">{order.supportZaloPhone}</p></div>
-                  {zaloUrl ? <a href={zaloUrl} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-11 items-center gap-2 rounded-xl border border-sky-300/25 bg-sky-500/10 px-4 text-sm font-extrabold text-sky-100 transition hover:bg-sky-500/20">Mở Zalo<ExternalLink className="h-4 w-4" /></a> : null}
                 </div>
-              ) : null}
+              </> : (
+                <div className="rounded-2xl border border-white/[0.08] bg-[#0F1F33] p-5">
+                  <p className="text-xs font-black uppercase tracking-[0.14em] text-slate-500">Tóm tắt đơn hàng</p>
+                  <dl className="mt-4 space-y-3 text-sm">
+                    <div className="flex flex-wrap items-center justify-between gap-2"><dt className="text-slate-400">Mã đơn</dt><dd className="break-all font-mono font-black text-white">{order.orderCode}</dd></div>
+                    <div className="flex flex-wrap items-center justify-between gap-2"><dt className="text-slate-400">Tổng tiền</dt><dd className="font-black text-white">{formattedTotal}</dd></div>
+                    <div className="flex flex-wrap items-center justify-between gap-2"><dt className="text-slate-400">Trạng thái</dt><dd className="font-black text-sky-100">{paymentState.label}</dd></div>
+                  </dl>
+                  <p className="mt-4 text-xs leading-5 text-slate-400">Thông tin ngân hàng và VietQR được ẩn khi đơn hàng không còn ở trạng thái cho phép thanh toán.</p>
+                </div>
+              )}
+
+              <div className="rounded-2xl border border-sky-300/20 bg-[#0F1F33] p-5">
+                <p className="text-sm font-extrabold text-white">Cần Trung AI Media kiểm tra và hỗ trợ?</p>
+                <p className="mt-2 text-xs leading-5 text-slate-400">Mở hộp thoại hỗ trợ để gửi đúng mã đơn hàng và nội dung chuyển khoản qua Zalo hoặc Fanpage.</p>
+                <div className="mt-4"><PaymentSupportModal orderCode={order.orderCode} formattedTotal={formattedTotal} paymentReference={order.paymentReference} triggerLabel={supportTriggerLabel} prominent={paymentState.canPay} /></div>
+              </div>
 
               {expired ? <Link href="/cart" className="flex min-h-11 items-center justify-center rounded-xl border border-sky-300/25 bg-sky-500/10 text-sm font-extrabold text-sky-100">Quay lại giỏ hàng</Link> : null}
             </div>

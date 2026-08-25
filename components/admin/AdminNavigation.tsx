@@ -22,7 +22,7 @@ const navigationItems = [
   { label: "Banner", href: "/admin/banners", icon: ImageIcon, enabled: true, adminOnly: false },
   { label: "Flash Sale", href: "/admin/flash-sales", icon: BadgePercent, enabled: true, adminOnly: false },
   { label: "Khách hàng", href: "/admin/customers", icon: Users, enabled: true, adminOnly: true },
-  { label: "Đơn hàng", icon: ReceiptText, enabled: false, adminOnly: false },
+  { label: "Đơn hàng", href: "/admin/orders", icon: ReceiptText, enabled: true, adminOnly: true },
   { label: "Cài đặt", href: "/admin/settings", icon: Settings, enabled: true, adminOnly: true },
 ] as const;
 
