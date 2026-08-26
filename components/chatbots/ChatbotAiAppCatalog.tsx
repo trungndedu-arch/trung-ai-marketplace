@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Bot, Clapperboard, Search, Workflow as WorkflowIcon } from "lucide-react";
 import type { Chatbot } from "@/lib/chatbots";
 import type { Workflow } from "@/lib/workflows";
-import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
+import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplaceDiscountPercent, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 
 type Tab = "all" | "chatbot" | "ai-app";
@@ -26,6 +26,7 @@ function renderChatbotCard(chatbot: Chatbot) {
       status={chatbot.state.hasActiveFlashSale ? "SALE" : undefined}
       price={getMarketplacePriceLabel(chatbot.state)}
       originalPrice={getMarketplaceCompareAtPriceLabel(chatbot.state)}
+      discountPercent={getMarketplaceDiscountPercent(chatbot.state)}
       href={detailHref}
       meta={[{ label: chatbot.rating, tone: "cyan" }]}
       actions={getMarketplaceCardActions(chatbot.state, detailHref, chatbot.appUrl, chatbot.databaseId)}
@@ -51,6 +52,7 @@ function renderWorkflowCard(workflow: Workflow) {
       status={workflow.state.hasActiveFlashSale ? "SALE" : undefined}
       price={!workflow.hidePrice ? getMarketplacePriceLabel(workflow.state) : undefined}
       originalPrice={!workflow.hidePrice ? getMarketplaceCompareAtPriceLabel(workflow.state) : undefined}
+      discountPercent={!workflow.hidePrice ? getMarketplaceDiscountPercent(workflow.state) : undefined}
       href={detailHref}
       meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
       actions={actions}

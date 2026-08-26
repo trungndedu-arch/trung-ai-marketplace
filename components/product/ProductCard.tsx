@@ -35,6 +35,7 @@ type ProductCardProps = {
   meta?: ProductCardMeta[];
   price?: string;
   originalPrice?: string;
+  discountPercent?: number;
   href?: string;
   onClick?: () => void;
   actions?: ProductCardAction[];
@@ -197,6 +198,7 @@ export function ProductCard({
   meta = [],
   price,
   originalPrice,
+  discountPercent,
   href,
   onClick,
   actions = [],
@@ -204,8 +206,13 @@ export function ProductCard({
   demoVideo,
   className = "",
 }: ProductCardProps) {
+  const visibleMeta = meta.filter((item) => item.label.trim()).slice(0, 3);
+  const normalizedDiscount = typeof discountPercent === "number" && Number.isFinite(discountPercent)
+    ? Math.round(discountPercent)
+    : undefined;
+  const hasDiscount = Boolean(price && originalPrice && normalizedDiscount && normalizedDiscount > 0);
   const hasPrice = Boolean(price || originalPrice);
-  const hasFooter = hasPrice || meta.length > 0 || actions.length > 0 || href;
+  const hasFooter = hasPrice || visibleMeta.length > 0 || actions.length > 0 || href;
   const imageBadges = Array.from(new Set([badge, status].filter((item): item is string => Boolean(item)))).slice(0, 2);
   const content = (
     <>
@@ -222,14 +229,18 @@ export function ProductCard({
         {hasFooter ? (
           <div className="mt-auto shrink-0 space-y-2.5 pt-2.5">
             {hasPrice ? (
-              <div className="flex min-h-5 min-w-0 items-center gap-2">
-                {price ? <span className="max-w-[9rem] truncate text-xs font-black text-white">{price}</span> : null}
-                {originalPrice ? <span className="max-w-[6rem] truncate text-[10px] font-semibold text-slate-500 line-through">{originalPrice}</span> : null}
+              <div className={`min-h-[58px] min-w-0 rounded-xl border px-3 py-2 ${hasDiscount ? "border-sky-300/20 bg-gradient-to-r from-sky-500/10 to-blue-500/[0.04]" : "border-white/[0.07] bg-white/[0.025]"}`}>
+                {hasDiscount ? <p className="text-[9px] font-black uppercase tracking-[0.16em] text-sky-300">Giá ưu đãi</p> : null}
+                <div className={`flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1 ${hasDiscount ? "mt-0.5" : "min-h-10 items-center"}`}>
+                  {price ? <span className="whitespace-nowrap text-xl font-black leading-none text-white drop-shadow-[0_0_14px_rgba(56,189,248,.22)]">{price}</span> : null}
+                  {originalPrice ? <span className="whitespace-nowrap text-[11px] font-bold text-slate-400 line-through decoration-slate-500 decoration-1">{originalPrice}</span> : null}
+                  {hasDiscount ? <span className="whitespace-nowrap rounded-md border border-rose-300/25 bg-rose-500/15 px-1.5 py-0.5 text-[10px] font-black text-rose-200">-{normalizedDiscount}%</span> : null}
+                </div>
               </div>
             ) : null}
-            {meta.length ? (
+            {visibleMeta.length ? (
               <div className="flex min-h-6 flex-nowrap gap-1.5 overflow-hidden">
-                {meta.slice(0, 3).map((item) => (
+                {visibleMeta.map((item) => (
                   <span key={item.label} className={`min-w-0 flex-1 truncate rounded-md px-2 py-0.5 text-[10px] font-bold leading-4 ${metaToneClass(item.tone)}`}>
                     {item.label}
                   </span>

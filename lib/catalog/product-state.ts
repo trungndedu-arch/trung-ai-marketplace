@@ -168,6 +168,22 @@ export function getMarketplaceCompareAtPriceLabel(state: CatalogProductState) {
   return formatCatalogPrice(compareAtPrice);
 }
 
+export function getMarketplaceDiscountPercent(state: CatalogProductState) {
+  const { compareAtPrice, currentPrice } = state.pricing;
+
+  if (
+    !state.isPaid
+    || !state.isOnSale
+    || compareAtPrice === null
+    || currentPrice === null
+    || compareAtPrice <= 0
+    || currentPrice < 0
+    || currentPrice >= compareAtPrice
+  ) return undefined;
+
+  return Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100);
+}
+
 export function getMarketplaceCardActions(
   state: CatalogProductState,
   detailHref: string,

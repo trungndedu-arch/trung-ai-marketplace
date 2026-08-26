@@ -3,7 +3,7 @@
 import { useMemo, useState } from "react";
 import { Search, Workflow as WorkflowIcon } from "lucide-react";
 import type { Workflow } from "@/lib/workflows";
-import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
+import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplaceDiscountPercent, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 
 const allCategories = "Tất cả Workflow";
@@ -42,6 +42,7 @@ export function WorkflowsCatalog({ workflows }: { workflows: Workflow[] }) {
             status={workflow.state.hasActiveFlashSale ? "SALE" : undefined}
             price={!workflow.hidePrice ? getMarketplacePriceLabel(workflow.state) : undefined}
             originalPrice={!workflow.hidePrice ? getMarketplaceCompareAtPriceLabel(workflow.state) : undefined}
+            discountPercent={!workflow.hidePrice ? getMarketplaceDiscountPercent(workflow.state) : undefined}
             href={`/workflow/${workflow.slug}`}
             meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
             actions={workflowActions(workflow)}

@@ -11,7 +11,7 @@ import type { AiTool } from "@/lib/ai-tools";
 import type { Workflow } from "@/lib/workflows";
 import type { Chatbot } from "@/lib/chatbots";
 import type { Course } from "@/lib/courses";
-import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
+import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplaceDiscountPercent, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 import {
   ArrowRight,
@@ -167,6 +167,7 @@ function renderCourseCard(course: Course) {
       status={course.status}
       price={course.state.isComingSoon ? "Sắp ra mắt" : course.price}
       originalPrice={course.originalPrice}
+      discountPercent={getMarketplaceDiscountPercent(course.state)}
       href={course.landingPageUrl}
       actions={[course.state.isOnSale && course.landingPageUrl ? { label: "Xem chi tiết", href: course.landingPageUrl } : { label: course.status, disabled: true, variant: "muted" }]}
       demoVideo={course.demoVideo}
@@ -187,6 +188,7 @@ function renderChatbotCard(chatbot: Chatbot) {
       status={chatbot.state.hasActiveFlashSale ? "SALE" : undefined}
       price={getMarketplacePriceLabel(chatbot.state)}
       originalPrice={getMarketplaceCompareAtPriceLabel(chatbot.state)}
+      discountPercent={getMarketplaceDiscountPercent(chatbot.state)}
       href={detailHref}
       meta={[{ label: chatbot.rating, tone: "cyan" }]}
       actions={getMarketplaceCardActions(chatbot.state, detailHref, chatbot.appUrl, chatbot.databaseId)}
@@ -211,6 +213,7 @@ function renderWorkflowCard(workflow: Workflow) {
       status={workflow.state.hasActiveFlashSale ? "SALE" : undefined}
       price={!workflow.hidePrice ? getMarketplacePriceLabel(workflow.state) : undefined}
       originalPrice={!workflow.hidePrice ? getMarketplaceCompareAtPriceLabel(workflow.state) : undefined}
+      discountPercent={!workflow.hidePrice ? getMarketplaceDiscountPercent(workflow.state) : undefined}
       href={detailHref}
       meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
       actions={getMarketplaceCardActions(workflow.state, detailHref, workflow.appUrl, workflow.databaseId)}

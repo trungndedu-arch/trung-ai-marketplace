@@ -36,11 +36,16 @@ function metadataString(product: CatalogProduct, key: string, fallback = "") {
 }
 
 function salesLabel(product: CatalogProduct) {
-  return metadataString(
-    product,
-    "sales_label",
-    product.salesStatus === "coming_soon" ? "Sắp ra mắt" : product.salesStatus === "paused" ? "Tạm dừng" : "Đang bán",
-  );
+  if (product.salesStatus === "coming_soon") return "Sắp ra mắt";
+  if (product.salesStatus === "paused") return "Tạm dừng";
+  return "Đang bán";
+}
+
+function safeRatingLabel(value: string, state: CatalogProductState) {
+  const normalized = value.trim().toLocaleLowerCase("vi");
+  const isComingSoonLabel = normalized === "coming soon" || normalized === "sắp ra mắt";
+
+  return !state.isComingSoon && isComingSoonLabel ? "" : value;
 }
 
 function mapProductToChatbot(product: CatalogProduct): Chatbot {
@@ -60,7 +65,10 @@ function mapProductToChatbot(product: CatalogProduct): Chatbot {
     fullDescription: product.fullDescription,
     price: product.price ?? 0,
     originalPrice: product.originalPrice ?? undefined,
-    rating: metadataString(product, "rating", product.salesStatus === "coming_soon" ? "Coming soon" : ""),
+    rating: safeRatingLabel(
+      metadataString(product, "rating", state.isComingSoon ? "Coming soon" : ""),
+      state,
+    ),
     sales: state.statusBadge ?? salesLabel(product),
     color: metadataString(product, "color", "from-blue-900 via-sky-700 to-cyan-500"),
     coverImage: product.coverImage || undefined,
