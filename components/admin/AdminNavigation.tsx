@@ -16,7 +16,7 @@ import {
 import type { AdminRole } from "@/lib/auth/admin";
 
 const navigationItems = [
-  { label: "Tổng quan", href: "/admin", icon: LayoutDashboard, enabled: true, adminOnly: false },
+  { label: "Tổng quan", href: "/admin", icon: LayoutDashboard, enabled: true, adminOnly: true },
   { label: "Sản phẩm", href: "/admin/products", icon: PackageSearch, enabled: true, adminOnly: false },
   { label: "Danh mục", href: "/admin/categories", icon: ListTree, enabled: true, adminOnly: false },
   { label: "Banner", href: "/admin/banners", icon: ImageIcon, enabled: true, adminOnly: false },
@@ -57,7 +57,7 @@ function NavigationLinks({ role }: { role: AdminRole }) {
 export function AdminDesktopNavigation({ role }: { role: AdminRole }) {
   return (
     <aside className="hidden min-h-screen border-r border-white/[0.07] bg-[#07111F] px-4 py-6 lg:flex lg:flex-col">
-      <Link href="/admin" className="flex items-center gap-3 px-2" aria-label="Trung AI Admin">
+      <Link href={role === "admin" ? "/admin" : "/admin/products"} className="flex items-center gap-3 px-2" aria-label="Trung AI Admin">
         <span className="grid h-10 w-10 place-items-center rounded-lg border border-sky-400/30 bg-sky-400/10 text-lg font-black text-sky-200">T</span>
         <span><b className="block text-sm text-white">Trung AI Admin</b><small className="text-xs text-slate-500">Marketplace Console</small></span>
       </Link>
