@@ -1,4 +1,4 @@
-import { getPublishedProductBySlug, getPublishedProducts } from "@/lib/catalog/repository";
+import { getPublishedProducts } from "@/lib/catalog/repository";
 import { getCatalogProductState, getCatalogVisualBadge, type CatalogProductState } from "@/lib/catalog/product-state";
 import type { CatalogDemoVideo, CatalogProduct } from "@/lib/catalog/types";
 
@@ -20,6 +20,8 @@ export type Course = {
   displayOrder: number;
   state: CatalogProductState;
 };
+
+export const VIDEO_AI_COURSE_SLUG = "xay-kenh-affiliate-kiem-tien-bang-video-ai";
 
 function metadataString(product: CatalogProduct, key: string, fallback = "") {
   const value = product.metadata[key];
@@ -71,6 +73,7 @@ export async function getFeaturedCourses() {
 }
 
 export async function getCourseBySlug(slug: string) {
-  const product = await getPublishedProductBySlug(slug, ["course"]);
+  const products = await getPublishedProducts(["course"]);
+  const product = products.find((item) => item.slug === slug);
   return product ? mapProductToCourse(product) : undefined;
 }

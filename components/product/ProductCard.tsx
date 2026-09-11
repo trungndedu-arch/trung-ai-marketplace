@@ -4,7 +4,7 @@ import { useState, type MouseEvent, type ReactNode } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowRight, ExternalLink, Heart, Play, ShoppingCart } from "lucide-react";
+import { ArrowRight, ExternalLink, Heart, Play, ShoppingCart, Zap } from "lucide-react";
 import { useCart } from "@/components/cart/CartProvider";
 import type { CatalogDemoVideo } from "@/lib/catalog/types";
 import { isYouTubeVideoId } from "@/lib/youtube";
@@ -229,12 +229,19 @@ export function ProductCard({
         {hasFooter ? (
           <div className="mt-auto shrink-0 space-y-2.5 pt-2.5">
             {hasPrice ? (
-              <div className={`min-h-[58px] min-w-0 rounded-xl border px-3 py-2 ${hasDiscount ? "border-sky-300/20 bg-gradient-to-r from-sky-500/10 to-blue-500/[0.04]" : "border-white/[0.07] bg-white/[0.025]"}`}>
-                {hasDiscount ? <p className="text-[9px] font-black uppercase tracking-[0.16em] text-sky-300">Giá ưu đãi</p> : null}
-                <div className={`flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1 ${hasDiscount ? "mt-0.5" : "min-h-10 items-center"}`}>
-                  {price ? <span className="whitespace-nowrap text-xl font-black leading-none text-white drop-shadow-[0_0_14px_rgba(56,189,248,.22)]">{price}</span> : null}
-                  {originalPrice ? <span className="whitespace-nowrap text-[11px] font-bold text-slate-400 line-through decoration-slate-500 decoration-1">{originalPrice}</span> : null}
-                  {hasDiscount ? <span className="whitespace-nowrap rounded-md border border-rose-300/25 bg-rose-500/15 px-1.5 py-0.5 text-[10px] font-black text-rose-200">-{normalizedDiscount}%</span> : null}
+              <div className={`relative min-h-[58px] min-w-0 rounded-xl border px-3 pb-2.5 transition duration-300 ${hasDiscount ? "border-amber-300/35 bg-gradient-to-br from-amber-400/[0.12] via-[#111B2D] to-rose-500/[0.09] pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_0_22px_rgba(245,158,11,.09)] group-hover:border-amber-200/55 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,.07),0_0_28px_rgba(251,146,60,.16)]" : "border-amber-300/20 bg-gradient-to-r from-amber-400/[0.07] via-white/[0.025] to-transparent pt-2.5 group-hover:border-amber-200/35"}`}>
+                {hasDiscount ? (
+                  <span className="absolute -top-2.5 left-3 inline-flex h-5 items-center gap-1 rounded-full border border-orange-200/25 bg-gradient-to-r from-orange-500 to-rose-500 px-2 text-[9px] font-black uppercase tracking-[0.13em] text-white shadow-[0_0_16px_rgba(244,63,94,.28)]">
+                    <Zap aria-hidden="true" className="h-2.5 w-2.5 fill-current" />
+                    Giá ưu đãi
+                  </span>
+                ) : null}
+                <div className={`${hasDiscount ? "grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-end gap-x-2 gap-y-1" : "flex min-h-8 min-w-0 flex-wrap items-center gap-x-2 gap-y-1"}`}>
+                  <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
+                    {price ? <span className="whitespace-nowrap bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400 bg-clip-text text-2xl font-black leading-none tracking-[-0.035em] text-transparent drop-shadow-[0_0_12px_rgba(251,191,36,.2)]">{price}</span> : null}
+                    {originalPrice ? <span className="whitespace-nowrap text-[11px] font-bold text-slate-300/75 line-through decoration-slate-400/80 decoration-[1.5px]">{originalPrice}</span> : null}
+                  </div>
+                  {hasDiscount ? <span className="mb-px whitespace-nowrap rounded-full border border-rose-200/30 bg-gradient-to-r from-rose-600 to-pink-500 px-2 py-1 text-[10px] font-black leading-none text-white shadow-[0_0_14px_rgba(244,63,94,.24)]">-{normalizedDiscount}%</span> : null}
                 </div>
               </div>
             ) : null}
