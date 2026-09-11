@@ -46,7 +46,7 @@ type ProductCardProps = {
 
 export function ProductCardGrid({ children, className = "" }: { children: ReactNode; className?: string }) {
   return (
-    <section className={`grid auto-rows-fr items-stretch gap-5 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 ${className}`}>
+    <section className={`grid auto-rows-fr items-stretch gap-4 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 min-[1600px]:grid-cols-5 xl:gap-5 ${className}`}>
       {children}
     </section>
   );
@@ -148,7 +148,7 @@ function ProductCardMedia({
               src={image}
               alt={imageAlt ?? title}
               fill
-              sizes="(min-width: 1536px) 25vw, (min-width: 1280px) 33vw, (min-width: 640px) 50vw, 100vw"
+              sizes="(min-width: 1600px) 20vw, (min-width: 1280px) 25vw, (min-width: 768px) 33vw, (min-width: 480px) 50vw, 100vw"
               className="object-cover object-center transition duration-500 group-hover:scale-[1.025]"
             />
           ) : (

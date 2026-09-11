@@ -3,7 +3,7 @@
 import { useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { HeaderAccountNav } from "@/components/auth/AccountNav";
+import { MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
 import { BankTransferModal } from "@/components/payment/BankTransferModal";
 import { videoAiCoursePaymentProduct } from "@/data/payment";
 import type { AuthUserSummary } from "@/lib/auth/session";
@@ -45,14 +45,6 @@ import {
   WandSparkles,
   X,
 } from "lucide-react";
-
-const menuItems = [
-  { label: "Vấn đề", target: "van-de" },
-  { label: "Dành cho ai", target: "doi-tuong" },
-  { label: "Nội dung khóa", target: "noi-dung-khoa-hoc" },
-  { label: "Giảng viên", target: "nguoi-huong-dan" },
-  { label: "FAQ", target: "faq" },
-];
 
 const featureItems = [
   { label: "Sản xuất video AI", icon: Clapperboard, color: "text-blue-400", border: "border-blue-500/55", glow: "shadow-[0_0_28px_rgba(37,99,235,.32)]" },
@@ -132,86 +124,7 @@ const problemCards = [
 ];
 
 function Header({ user }: { user: AuthUserSummary }) {
-  const scrollToSection = (target: string) => {
-    document.getElementById(target)?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
-
-  return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-blue-500/15 bg-[#07111F]/95 shadow-[0_10px_45px_rgba(37,99,235,.13)] backdrop-blur-xl">
-      <div className="mx-auto flex h-[64px] max-w-[1360px] items-center gap-3 px-3 sm:h-[68px] sm:px-6 lg:px-8">
-        <Link href="/" className="flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-gradient-to-br from-blue-600 via-sky-500 to-cyan-300 shadow-[0_0_32px_rgba(59,130,246,.45)]">
-            <img src="/images/brand/trung-ai-logo.png" alt="Trung AI Media" className="h-8 w-8 object-contain" />
-          </span>
-          <span className="text-base font-black tracking-tight text-white sm:text-lg">Trung AI <span className="text-sky-400">Media</span></span>
-        </Link>
-
-        <nav className="mx-auto hidden items-center gap-9 lg:flex">
-          {menuItems.map((item) => (
-            <button key={item.target} type="button" onClick={() => scrollToSection(item.target)} className="text-sm font-semibold text-slate-300 transition hover:text-white">
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        <nav className="mx-auto hidden items-center gap-4 md:flex lg:hidden">
-          {menuItems.slice(0, 3).map((item) => (
-            <button key={item.target} type="button" onClick={() => scrollToSection(item.target)} className="text-xs font-semibold text-slate-300 transition hover:text-white">
-              {item.label}
-            </button>
-          ))}
-        </nav>
-
-        <div className="ml-auto flex items-center gap-3">
-          <div className="hidden text-right leading-tight sm:block">
-            <p className="text-xs font-bold text-slate-400 line-through">899.000đ</p>
-            <p className="text-sm font-black text-white">149.000đ</p>
-          </div>
-          <div className="hidden md:block">
-            <HeaderAccountNav user={user} />
-          </div>
-          <button type="button" onClick={() => scrollToSection("dang-ky-thanh-toan")} className="rounded-full bg-gradient-to-r from-blue-600 via-sky-500 to-blue-500 px-3 py-2.5 text-[11px] font-black text-white shadow-[0_0_30px_rgba(37,99,235,.42)] transition hover:-translate-y-0.5 hover:shadow-[0_0_45px_rgba(59,130,246,.55)] sm:px-6 sm:text-xs">
-            Đăng ký ngay
-          </button>
-        </div>
-      </div>
-      <div className="no-scrollbar flex gap-2 overflow-x-auto border-t border-white/5 px-3 pb-3 md:hidden">
-        {menuItems.map((item) => (
-          <button
-            key={item.target}
-            type="button"
-            onClick={() => scrollToSection(item.target)}
-            className="shrink-0 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1.5 text-[11px] font-bold text-slate-200 transition hover:border-sky-300/40 hover:text-white"
-          >
-            {item.label}
-          </button>
-        ))}
-        <div className="shrink-0">
-          <HeaderAccountNav user={user} showLabels />
-        </div>
-      </div>
-      <style jsx global>{`
-        #van-de,
-        #doi-tuong,
-        #noi-dung-khoa-hoc,
-        #nguoi-huong-dan,
-        #faq,
-        #dang-ky-thanh-toan {
-          scroll-margin-top: 124px;
-        }
-        @media (min-width: 768px) {
-          #van-de,
-          #doi-tuong,
-          #noi-dung-khoa-hoc,
-          #nguoi-huong-dan,
-          #faq,
-          #dang-ky-thanh-toan {
-            scroll-margin-top: 88px;
-          }
-        }
-      `}</style>
-    </header>
-  );
+  return <MarketplaceHeader user={user} />;
 }
 function VideoPanel({ className = "", wide = false, label = "AI Render" }: { className?: string; wide?: boolean; label?: string }) {
   return (
@@ -2021,7 +1934,6 @@ export function VideoAiCourseClient({ user }: { user: AuthUserSummary }) {
   return (
     <main className="min-h-screen scroll-smooth overflow-hidden bg-[#07111F] text-white">
       <Header user={user} />
-      <div className="h-[112px] md:h-[68px]" aria-hidden="true" />
 
       <section className="relative px-3 py-4 sm:px-6 sm:py-7 lg:px-8">
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-blue-700/18 to-transparent" />

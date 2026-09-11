@@ -3,9 +3,8 @@
 
 // Marketplace home page and featured AI tools.
 
-import { useState } from "react";
 import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
-import { HeaderAccountNav, SidebarAccountNav } from "@/components/auth/AccountNav";
+import { MarketplaceBrand, MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
 import type { AuthUserSummary } from "@/lib/auth/session";
 import type { AiTool } from "@/lib/ai-tools";
 import type { Workflow } from "@/lib/workflows";
@@ -15,28 +14,11 @@ import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarket
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 import {
   ArrowRight,
-  Bell,
   Boxes,
-  ChevronRight,
   Clapperboard,
   GraduationCap,
-  Heart,
-  Home,
-  Menu,
-  MessageSquareMore,
-  Search,
   Sparkles,
-  Store,
-  X,
 } from "lucide-react";
-
-const navItems = [
-  { label: "Trang chủ", icon: Home, active: true, href: "/" },
-  { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, href: "/free-prompts" },
-  { label: "Chatbot & AI App", icon: Clapperboard, href: "/workflow" },
-  { label: "Khóa Học Video AI", icon: GraduationCap, href: "/video-ai-course" },
-  { label: "Công Cụ AI Nên Dùng", icon: Boxes, href: "/cong-cu-ai" },
-];
 
 const homeFeaturedPromptTitles = [
   "Mẫu Nữ Ngồi Ô Tô",
@@ -71,71 +53,6 @@ const categorySections: CategorySection[] = [
     prompts: homeFeaturedPrompts,
   },
 ];
-
-function Logo() {
-  return (
-    <div className="flex items-center gap-3">
-      <div className="grid h-9 w-9 place-items-center rounded-xl bg-gradient-to-br from-sky-500 to-blue-500 shadow-glow">
-        <img src="/images/brand/trung-ai-logo.png" alt="Trung AI Media" className="h-7 w-7 object-contain" />
-      </div>
-      <div className="text-[18px] font-extrabold tracking-tight text-white">Trung AI <span className="text-sky-400">Media</span></div>
-    </div>
-  );
-}
-
-function Sidebar({ open, close, user }: { open: boolean; close: () => void; user: AuthUserSummary }) {
-  return (
-    <>
-      {open && <button aria-label="Đóng menu" className="fixed inset-0 z-40 bg-black/70 backdrop-blur-sm lg:hidden" onClick={close} />}
-      <aside className={`fixed inset-y-0 left-0 z-50 flex w-[252px] flex-col border-r border-white/[0.07] bg-[#07111F]/95 px-4 py-5 backdrop-blur-xl transition-transform duration-300 lg:translate-x-0 ${open ? "translate-x-0" : "-translate-x-full"}`}>
-        <div className="mb-8 flex items-center justify-between px-2">
-          <Logo />
-          <button aria-label="Đóng menu" onClick={close} className="text-slate-300 lg:hidden"><X className="h-5 w-5" /></button>
-        </div>
-        <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">Trang chủ</p>
-        <nav className="space-y-1">
-          {navItems.map(({ label, icon: Icon, active, href }) => (
-            <a key={label} href={href} onClick={close} className={`group flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold transition ${active ? "bg-sky-500/15 text-sky-300" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}>
-              <Icon className={`h-[18px] w-[18px] ${active ? "text-sky-400" : "text-slate-400 group-hover:text-slate-200"}`} />
-              {label}
-              {active && <span className="ml-auto h-1.5 w-1.5 rounded-full bg-sky-400 shadow-[0_0_10px_#38BDF8]" />}
-            </a>
-          ))}
-        </nav>
-        <div className="my-6 h-px bg-white/[0.06]" />
-        <p className="mb-3 px-3 text-[10px] font-bold uppercase tracking-[0.22em] text-slate-500">Cá nhân</p>
-        <div className="mb-2">
-          <SidebarAccountNav user={user} close={close} />
-        </div>
-        <a href="#" className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/[0.04] hover:text-white"><Heart className="h-[18px] w-[18px] text-slate-400" /> Yêu thích</a>
-        <a href="#" className="flex items-center gap-3 rounded-xl px-3 py-3 text-sm font-semibold text-slate-300 hover:bg-white/[0.04] hover:text-white"><Store className="h-[18px] w-[18px] text-slate-400" /> Bộ sưu tập</a>
-        <div className="mt-auto rounded-2xl border border-sky-400/15 bg-gradient-to-br from-sky-500/15 to-blue-500/[0.04] p-4">
-          <div className="mb-3 grid h-9 w-9 place-items-center rounded-xl bg-sky-500/20"><Store className="h-[18px] w-[18px] text-sky-300" /></div>
-          <p className="text-sm font-bold text-white">Trở thành creator</p>
-          <p className="mt-1 text-xs leading-5 text-slate-400">Biến ý tưởng AI của bạn thành thu nhập.</p>
-          <button className="mt-3 flex items-center gap-1 text-xs font-bold text-sky-300">Bắt đầu ngay <ChevronRight className="h-3.5 w-3.5" /></button>
-        </div>
-      </aside>
-    </>
-  );
-}
-
-function Header({ openMenu, user }: { openMenu: () => void; user: AuthUserSummary }) {
-  return (
-    <header className="sticky top-0 z-30 flex h-[72px] items-center gap-3 border-b border-white/[0.06] bg-ink/75 px-4 backdrop-blur-xl sm:px-6 lg:px-8">
-      <button onClick={openMenu} aria-label="Mở menu" className="grid h-10 w-10 place-items-center rounded-xl border border-white/10 text-slate-200 lg:hidden"><Menu className="h-5 w-5" /></button>
-      <span className="flex items-center gap-2 whitespace-nowrap text-xs font-extrabold text-white sm:text-sm lg:hidden"><img src="/images/brand/trung-ai-logo.png" alt="Trung AI Media" className="h-7 w-7 object-contain" />Trung AI <span className="text-sky-400">Media</span></span>
-      <div className="relative max-w-xl flex-1">
-        <Search className="absolute left-4 top-1/2 h-[18px] w-[18px] -translate-y-1/2 text-slate-500" />
-        <input aria-label="Tìm kiếm" placeholder="Tìm prompt, chatbot, workflow..." className="h-11 w-full rounded-xl border border-white/[0.07] bg-white/[0.035] pl-11 pr-4 text-sm text-white outline-none placeholder:text-slate-500 focus:border-sky-500/50 focus:ring-2 focus:ring-sky-500/10" />
-      </div>
-      <button aria-label="Thông báo" className="relative grid h-10 w-10 place-items-center rounded-xl border border-white/[0.07] bg-white/[0.035] text-slate-300 hover:text-white"><Bell className="h-[18px] w-[18px]" /><span className="absolute right-2.5 top-2.5 h-1.5 w-1.5 rounded-full bg-blue-500" /></button>
-      <HeaderAccountNav user={user} />
-      <button className="hidden rounded-xl bg-gradient-to-r from-blue-500 to-sky-500 px-4 py-2.5 text-sm font-extrabold text-white shadow-glow transition hover:brightness-110 sm:block">Khám phá ngay</button>
-    </header>
-  );
-}
-
 function renderPromptCard(item: FreePromptItem) {
   return (
     <ProductCard
@@ -343,25 +260,28 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
 }
 
 export function HomePageClient({ chatbots, apps, courses, aiTools, user }: { chatbots: Chatbot[]; apps: Workflow[]; courses: Course[]; aiTools: AiTool[]; user: AuthUserSummary }) {
-  const [menuOpen, setMenuOpen] = useState(false);
-
   return (
     <div className="min-h-screen bg-ink text-slate-100">
-      <Sidebar open={menuOpen} close={() => setMenuOpen(false)} user={user} />
-      <div className="lg:pl-[252px]">
-        <Header openMenu={() => setMenuOpen(true)} user={user} />
-        <main className="mx-auto max-w-[1500px] px-4 py-6 sm:px-6 lg:px-8 lg:py-8">
-          <section id="products" className="scroll-mt-24">
-            <div className="space-y-12">
-              <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />
-              <CategoryPreviewSection section={categorySections[0]} />
-              <FeaturedCoursesSection courses={courses} />
-              <FeaturedAiToolsSection tools={aiTools} />
-            </div>
-          </section>
-          <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-slate-500 sm:flex-row"><Logo /><p>© 2026 Trung AI Media. Crafted for the AI era.</p></footer>
-        </main>
-      </div>
+      <MarketplaceHeader user={user} />
+      <main className="mx-auto max-w-[1800px] px-4 py-10 sm:px-6 lg:py-14 xl:px-8">
+        <section id="products" className="scroll-mt-36">
+          <div className="mb-9 border-b border-white/[0.07] pb-7">
+            <h1 className="max-w-5xl text-2xl font-black leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
+              Khám phá công cụ AI thực chiến giúp bạn làm nhanh hơn, <span className="text-sky-300">bán hàng tốt hơn</span>
+            </h1>
+            <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-400">
+              Chatbot, AI App, Prompt, Khóa học và các công cụ AI giúp bạn tiết kiệm thời gian, tăng hiệu suất và tạo ra kết quả vượt trội.
+            </p>
+          </div>
+          <div className="space-y-14">
+            <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />
+            <CategoryPreviewSection section={categorySections[0]} />
+            <FeaturedCoursesSection courses={courses} />
+            <FeaturedAiToolsSection tools={aiTools} />
+          </div>
+        </section>
+        <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-slate-500 sm:flex-row"><MarketplaceBrand /><p>© 2026 Trung AI Media. Đồng hành cùng người Việt ứng dụng AI thực chiến.</p></footer>
+      </main>
     </div>
   );
 }
