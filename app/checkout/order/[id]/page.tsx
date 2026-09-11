@@ -17,7 +17,6 @@ import { PaymentSupportModal } from "@/components/checkout/PaymentSupportModal";
 import { PaymentValueCopy } from "@/components/checkout/PaymentValueCopy";
 import { VietQrImage } from "@/components/checkout/VietQrImage";
 import { getCheckoutOrderForCurrentUser, type CheckoutOrder } from "@/lib/checkout/orders";
-import { buildVietQrUrl } from "@/lib/checkout/vietqr";
 
 export const metadata: Metadata = { title: "Thanh toán đơn hàng" };
 export const dynamic = "force-dynamic";
@@ -88,7 +87,7 @@ function getPaymentState(order: CheckoutOrder, expired: boolean) {
     label: "Chờ thanh toán",
     className: "border-sky-300/25 bg-sky-500/10 text-sky-100",
     title: "Thanh toán đơn hàng",
-    message: "Quét QR bằng ứng dụng ngân hàng hoặc chuyển khoản theo thông tin bên dưới.",
+    message: "Quét QR bằng ứng dụng ngân hàng, sau đó nhập đúng số tiền và nội dung chuyển khoản bên dưới.",
     canPay: order.status === "pending" && order.paymentStatus === "unpaid",
   };
 }
@@ -119,15 +118,6 @@ export default async function CheckoutOrderPage({ params }: { params: Promise<{ 
     && Number.isFinite(expiresAt)
     && expiresAt <= Date.now();
   const paymentState = getPaymentState(order, expired);
-  const vietQrUrl = paymentState.canPay && order.currency === "VND"
-    ? buildVietQrUrl({
-      bankBin: order.bankBin,
-      bankAccountNumber: order.bankAccountNumber,
-      bankAccountHolder: order.bankAccountHolder,
-      amount: order.total,
-      paymentReference: order.paymentReference,
-    })
-    : null;
   const paymentConfirmed = order.status === "completed" && order.paymentStatus === "paid";
   const supportTriggerLabel = paymentConfirmed
     ? "Liên hệ hỗ trợ sản phẩm"
@@ -167,7 +157,7 @@ export default async function CheckoutOrderPage({ params }: { params: Promise<{ 
                   <p className="text-xs font-black uppercase tracking-[0.16em] text-sky-300">{paymentState.canPay ? "Số tiền cần thanh toán" : "Tổng giá trị đơn hàng"}</p>
                   <p className="mt-2 text-3xl font-black text-white sm:text-4xl">{formattedTotal}</p>
                 </div>
-                {vietQrUrl ? <div className="mx-auto mt-5 max-w-[360px]"><VietQrImage src={vietQrUrl} /><p className="mt-3 text-center text-sm font-semibold text-slate-300">Quét QR bằng ứng dụng ngân hàng</p></div> : null}
+                {paymentState.canPay && order.currency === "VND" ? <div className="mx-auto mt-5 max-w-[360px]"><VietQrImage /><p className="mt-3 text-center text-sm font-semibold leading-6 text-slate-300">Quét QR, sau đó nhập đúng số tiền và nội dung chuyển khoản</p></div> : null}
                 {paymentState.canPay && order.currency !== "VND" ? <p className="mt-5 rounded-xl border border-amber-300/20 bg-amber-500/10 p-3 text-sm leading-6 text-amber-100">VietQR chỉ hỗ trợ đơn hàng VND. Vui lòng chuyển khoản thủ công theo thông tin bên cạnh.</p> : null}
               </div>
               {paymentState.canPay ? <div className="rounded-2xl border border-white/[0.08] bg-[#0F1F33] p-5">
@@ -205,7 +195,7 @@ export default async function CheckoutOrderPage({ params }: { params: Promise<{ 
                     <div className="flex flex-wrap items-center justify-between gap-2"><dt className="text-slate-400">Tổng tiền</dt><dd className="font-black text-white">{formattedTotal}</dd></div>
                     <div className="flex flex-wrap items-center justify-between gap-2"><dt className="text-slate-400">Trạng thái</dt><dd className="font-black text-sky-100">{paymentState.label}</dd></div>
                   </dl>
-                  <p className="mt-4 text-xs leading-5 text-slate-400">Thông tin ngân hàng và VietQR được ẩn khi đơn hàng không còn ở trạng thái cho phép thanh toán.</p>
+                  <p className="mt-4 text-xs leading-5 text-slate-400">Thông tin ngân hàng và mã QR được ẩn khi đơn hàng không còn ở trạng thái cho phép thanh toán.</p>
                 </div>
               )}
 

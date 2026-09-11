@@ -19,14 +19,7 @@ const nextConfig: NextConfig = {
     },
   },
   images: {
-    remotePatterns: [
-      ...getSupabaseImagePatterns(),
-      {
-        protocol: "https",
-        hostname: "img.vietqr.io",
-        pathname: "/image/**",
-      },
-    ],
+    remotePatterns: getSupabaseImagePatterns(),
   },
 };
 
