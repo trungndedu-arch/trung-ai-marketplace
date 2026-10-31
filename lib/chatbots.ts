@@ -1,4 +1,4 @@
-import { getPublishedProductBySlug, getPublishedProducts } from "@/lib/catalog/repository";
+import { getFeaturedPublishedProducts, getPublishedProductBySlug, getPublishedProducts } from "@/lib/catalog/repository";
 import { getCatalogProductState, getCatalogVisualBadge, type CatalogProductState } from "@/lib/catalog/product-state";
 import type { CatalogDemoVideo, CatalogProduct } from "@/lib/catalog/types";
 
@@ -23,6 +23,7 @@ export type Chatbot = {
   isFeatured: boolean;
   isActive: boolean;
   displayOrder: number;
+  createdAt: string;
   detailUrl?: string;
   appUrl?: string;
   demoVideo: CatalogDemoVideo | null;
@@ -77,6 +78,7 @@ function mapProductToChatbot(product: CatalogProduct): Chatbot {
     isFeatured: product.isFeatured,
     isActive: state.isPublic,
     displayOrder: product.displayOrder,
+    createdAt: product.createdAt,
     detailUrl: product.detailUrl || undefined,
     appUrl: product.externalUrl || undefined,
     demoVideo: product.demoVideo,
@@ -91,8 +93,8 @@ export async function getActiveChatbots() {
 }
 
 export async function getFeaturedChatbots() {
-  const chatbots = await getActiveChatbots();
-  return chatbots.filter((chatbot) => chatbot.isFeatured);
+  const products = await getFeaturedPublishedProducts(["chatbot"]);
+  return products.map(mapProductToChatbot);
 }
 
 export async function getChatbotBySlug(slug: string) {

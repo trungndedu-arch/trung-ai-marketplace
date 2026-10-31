@@ -207,7 +207,11 @@ function sortCatalogProducts(products: CatalogProduct[]) {
   return [...products].sort((a, b) => a.displayOrder - b.displayOrder || a.title.localeCompare(b.title, "vi"));
 }
 
-export async function getPublishedProducts(productTypes?: ProductType[]) {
+function sortHomepageProducts(products: CatalogProduct[]) {
+  return [...products].sort((a, b) => a.displayOrder - b.displayOrder || a.createdAt.localeCompare(b.createdAt) || a.databaseId.localeCompare(b.databaseId));
+}
+
+async function getPublicProducts(productTypes?: ProductType[], featuredOnly = false) {
   const supabase = createPublicCatalogClient();
   let query = supabase
     .from("products")
@@ -219,6 +223,9 @@ export async function getPublishedProducts(productTypes?: ProductType[]) {
   if (productTypes?.length) {
     query = query.in("product_type", productTypes);
   }
+  if (featuredOnly) {
+    query = query.eq("is_featured", true);
+  }
 
   const { data, error } = await query;
 
@@ -229,6 +236,15 @@ export async function getPublishedProducts(productTypes?: ProductType[]) {
 
   const products = ((data ?? []) as unknown as ProductRow[]).map(normalizeProduct);
   return sortCatalogProducts(products.filter((product) => getCatalogProductState(product).isPublic));
+}
+
+export async function getPublishedProducts(productTypes?: ProductType[]) {
+  return getPublicProducts(productTypes);
+}
+
+export async function getFeaturedPublishedProducts(productTypes?: ProductType[]) {
+  const products = await getPublicProducts(productTypes, true);
+  return sortHomepageProducts(products);
 }
 
 export async function getPublishedProductBySlug(slug: string, productTypes?: ProductType[]) {

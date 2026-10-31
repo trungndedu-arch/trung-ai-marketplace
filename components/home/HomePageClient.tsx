@@ -239,6 +239,11 @@ function FeaturedAiToolsSection({ tools }: { tools: AiTool[] }) {
 }
 
 function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[]; apps: Workflow[] }) {
+  const products = [
+    ...chatbots.map((product) => ({ kind: "chatbot" as const, product })),
+    ...apps.map((product) => ({ kind: "ai_app" as const, product })),
+  ].sort((a, b) => a.product.displayOrder - b.product.displayOrder || a.product.createdAt.localeCompare(b.product.createdAt) || a.product.databaseId.localeCompare(b.product.databaseId));
+
   return (
     <section id="chatbot-ai-app" className="scroll-mt-24">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
@@ -254,7 +259,7 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      {chatbots.length || apps.length ? <ProductCardGrid>{chatbots.map(renderChatbotCard)}{apps.map(renderWorkflowCard)}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Chatbot hoặc AI App nổi bật.</div>}
+      {products.length ? <ProductCardGrid>{products.map((item) => item.kind === "chatbot" ? renderChatbotCard(item.product) : renderWorkflowCard(item.product))}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Chatbot hoặc AI App nổi bật.</div>}
     </section>
   );
 }
