@@ -17,7 +17,15 @@ import { useActionState, useEffect, useMemo, useRef, useState } from "react";
 import { ProductCoverUpload } from "@/components/admin/ProductCoverUpload";
 import { getProductTypeLabel } from "@/components/admin/AdminProductUi";
 import { createProduct, updateProduct } from "@/lib/admin/product-actions";
-import { getProductCatalogDestination, getSuggestedDetailUrl } from "@/lib/admin/product-catalog";
+import {
+  getPlacementOption,
+  getProductCatalogDestination,
+  getProductPlacement,
+  getProductPlacementOptions,
+  getRecommendedCategorySlug,
+  getSuggestedDetailUrl,
+  type ProductPlacement,
+} from "@/lib/admin/product-catalog";
 import {
   metadataBoolean,
   metadataString,
@@ -32,7 +40,6 @@ import { getYouTubeThumbnailUrl, getYouTubeWatchUrl } from "@/lib/youtube";
 const initialState: ProductMutationState = { status: "idle", message: "", fieldErrors: {} };
 const inputClass = "mt-2 h-11 w-full rounded-xl border border-white/10 bg-[#07111F] px-3 text-sm text-white outline-none transition placeholder:text-slate-600 focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/10";
 const textareaClass = "mt-2 w-full rounded-xl border border-white/10 bg-[#07111F] px-3 py-3 text-sm leading-6 text-white outline-none transition placeholder:text-slate-600 focus:border-sky-400/50 focus:ring-2 focus:ring-sky-400/10";
-const productTypes: ProductType[] = ["chatbot", "ai_app", "ai_tool", "course"];
 
 function FieldError({ message }: { message?: string }) {
   return message ? <span className="mt-1.5 block text-xs font-semibold text-rose-300">{message}</span> : null;
@@ -136,6 +143,12 @@ function ProductForm({ mode, product, categories }: { mode: "create" | "edit"; p
   const [state, formAction, pending] = useActionState(action, initialState);
   const formId = `product-${mode}-form`;
   const [productType, setProductType] = useState<ProductType>(product?.productType ?? "ai_app");
+  const [placement, setPlacement] = useState<ProductPlacement>(getProductPlacement(product?.productType ?? "ai_app"));
+  function getSuggestedCategoryId(type: ProductType) {
+    const slug = getRecommendedCategorySlug(type);
+    return slug ? categories.find((category) => category.isActive && category.productType === type && category.slug === slug)?.id ?? "" : "";
+  }
+  const [categoryId, setCategoryId] = useState(product?.category?.id ?? getSuggestedCategoryId(product?.productType ?? "ai_app"));
   const [title, setTitle] = useState(product?.title ?? "");
   const [slug, setSlug] = useState(product?.slug ?? "");
   const [detailUrl, setDetailUrl] = useState(product?.detailUrl ?? "");
@@ -146,6 +159,7 @@ function ProductForm({ mode, product, categories }: { mode: "create" | "edit"; p
   const detailUrlWasEdited = useRef(Boolean(product?.detailUrl));
   const cancelHref = product ? `/admin/products/${product.id}` : "/admin/products";
   const destination = getProductCatalogDestination(productType);
+  const placementOption = getPlacementOption(placement);
   const compatibleCategories = categories.filter((category) => ((category.isActive && (category.productType === null || category.productType === productType)) || category.id === product?.category?.id));
   const unknownMetadata = useMemo(() => Object.fromEntries(Object.entries(product?.metadata ?? {}).filter(([key]) => !PRODUCT_METADATA_KEYS[productType].includes(key))), [product?.metadata, productType]);
 
@@ -169,7 +183,16 @@ function ProductForm({ mode, product, categories }: { mode: "create" | "edit"; p
 
   function updateProductType(value: ProductType) {
     setProductType(value);
+    setPlacement(getProductPlacement(value));
+    setCategoryId(getSuggestedCategoryId(value));
+    setDirty(true);
     if (mode === "create" && !detailUrlWasEdited.current) setDetailUrl(getSuggestedDetailUrl(value, slug));
+  }
+
+  function updatePlacement(value: ProductPlacement) {
+    const next = getPlacementOption(value);
+    setPlacement(value);
+    updateProductType(next.defaultProductType);
   }
 
   const current = Number(price);
@@ -183,9 +206,11 @@ function ProductForm({ mode, product, categories }: { mode: "create" | "edit"; p
       {state.message ? <div role="alert" className="rounded-xl border border-rose-300/20 bg-rose-400/10 px-4 py-3 text-sm font-semibold text-rose-100">{state.message}</div> : null}
 
       <FormSection step={1} title="Phân loại" description="Chọn nơi sản phẩm xuất hiện trên website trước khi nhập nội dung.">
-        {mode === "create" ? <label className="block"><span className="text-sm font-bold text-slate-200">Loại sản phẩm</span><select form={formId} name="productType" value={productType} onChange={(event) => updateProductType(event.target.value as ProductType)} className={inputClass}>{productTypes.map((value) => <option key={value} value={value}>{getProductTypeLabel(value)}</option>)}</select><FieldError message={state.fieldErrors.productType} /></label> : <div><span className="text-sm font-bold text-slate-200">Loại sản phẩm</span><div className="mt-2 flex h-11 items-center rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 text-sm font-semibold text-slate-300">{getProductTypeLabel(productType)} · không đổi sau khi tạo</div></div>}
-        <label className="block"><span className="text-sm font-bold text-slate-200">Danh mục</span><select key={`${mode}-${productType}`} form={formId} name="categoryId" defaultValue={product?.category?.id ?? ""} className={inputClass}><option value="">Chưa phân loại</option>{compatibleCategories.map((category) => <option key={category.id} value={category.id}>{category.name}{category.isActive ? "" : " (đang ẩn)"}</option>)}</select><FieldError message={state.fieldErrors.categoryId} /></label>
-        <div className="md:col-span-2 rounded-xl border border-sky-300/15 bg-sky-500/[0.07] px-4 py-3"><p className="text-xs font-black uppercase tracking-[0.12em] text-sky-300">Vị trí ngoài website</p><p className="mt-1 text-sm font-bold text-white">{destination.label}</p><p className="mt-1 text-xs leading-5 text-slate-400">{destination.description}</p></div>
+        {mode === "create" ? <label className="block md:col-span-2"><span className="text-sm font-bold text-slate-200">Nhóm hiển thị ngoài website</span><select value={placement} onChange={(event) => updatePlacement(event.target.value as ProductPlacement)} className={inputClass}>{getProductPlacementOptions().map((option) => <option key={option.id} value={option.id}>{option.label}</option>)}</select><span className="mt-1.5 block text-xs leading-5 text-slate-500">Chỉ là cách chọn dễ hiểu trong Admin; hệ thống vẫn lưu bằng loại sản phẩm và danh mục hiện có.</span></label> : <div className="md:col-span-2 rounded-xl border border-white/[0.07] bg-white/[0.025] px-4 py-3"><p className="text-xs font-black uppercase tracking-[0.12em] text-slate-500">Nhóm hiển thị ngoài website</p><p className="mt-1 text-sm font-bold text-slate-200">{placementOption.label}</p><p className="mt-1 text-xs leading-5 text-slate-500">Được suy ra từ loại sản phẩm hiện có và không làm thay đổi dữ liệu khi chỉnh sửa.</p></div>}
+        {mode === "create" && placementOption.productTypes.length > 1 ? <label className="block"><span className="text-sm font-bold text-slate-200">Loại sản phẩm</span><select form={formId} name="productType" value={productType} onChange={(event) => updateProductType(event.target.value as ProductType)} className={inputClass}>{placementOption.productTypes.map((value) => <option key={value} value={value}>{getProductTypeLabel(value)}</option>)}</select><span className="mt-1.5 block text-xs text-slate-500">AI App hiển thị tab AI App; Chatbot hiển thị tab Chatbot.</span><FieldError message={state.fieldErrors.productType} /></label> : mode === "create" ? <div><input form={formId} type="hidden" name="productType" value={productType} /><span className="text-sm font-bold text-slate-200">Loại sản phẩm</span><div className="mt-2 flex h-11 items-center rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 text-sm font-semibold text-slate-300">{getProductTypeLabel(productType)} · xác định từ nhóm hiển thị</div></div> : <div><span className="text-sm font-bold text-slate-200">Loại sản phẩm</span><div className="mt-2 flex h-11 items-center rounded-xl border border-white/[0.07] bg-white/[0.025] px-3 text-sm font-semibold text-slate-300">{getProductTypeLabel(productType)} · không đổi sau khi tạo</div></div>}
+        <div className="block"><span className="text-sm font-bold text-slate-200">Danh mục chi tiết</span>{compatibleCategories.length ? <select form={formId} name="categoryId" value={categoryId} onChange={(event) => { setCategoryId(event.target.value); setDirty(true); }} className={inputClass}><option value="">Chưa chọn danh mục chi tiết</option>{compatibleCategories.map((category) => <option key={category.id} value={category.id}>{category.name}{category.isActive ? "" : " (đang ẩn)"}</option>)}</select> : <div className="mt-2 rounded-xl border border-dashed border-amber-300/25 bg-amber-400/[0.06] px-3 py-3 text-xs leading-5 text-amber-100">Chưa có danh mục phù hợp với loại này. Bạn có thể lưu không phân loại hoặc tạo danh mục từ khu vực Danh mục khi được duyệt.</div>}<span className="mt-1.5 block text-xs leading-5 text-slate-500">Chỉ hiển thị category đang hoạt động phù hợp với loại sản phẩm. AI App và Chatbot được gợi ý category chung tương ứng.</span><FieldError message={state.fieldErrors.categoryId} /></div>
+        <div className="md:col-span-2 rounded-xl border border-sky-300/15 bg-sky-500/[0.07] px-4 py-3"><p className="text-xs font-black uppercase tracking-[0.12em] text-sky-300">Vị trí cụ thể ngoài website</p><p className="mt-1 text-sm font-bold text-white">{destination.label}</p><p className="mt-1 text-xs leading-5 text-slate-400">{destination.description}</p></div>
+        <div className="md:col-span-2 rounded-xl border border-dashed border-violet-300/20 bg-violet-500/[0.05] px-4 py-3"><p className="text-sm font-bold text-violet-100">Prompt AI Miễn Phí không được quản lý ở đây</p><p className="mt-1 text-xs leading-5 text-slate-400">Menu Prompt AI Miễn Phí dùng module nội dung riêng tại <span className="font-mono">/free-prompts</span>, không có product_type hoặc category DB tương ứng. Không chọn mục này để tránh tạo bản ghi giả.</p></div>
       </FormSection>
 
       <FormSection step={2} title="Thông tin cơ bản" description="Tên, đường dẫn và nội dung giới thiệu khách hàng sẽ nhìn thấy.">
