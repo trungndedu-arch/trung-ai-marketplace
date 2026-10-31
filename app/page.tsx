@@ -21,10 +21,10 @@ export default async function HomePage() {
 
   return (
     <HomePageClient
-      chatbots={chatbots.slice(0, 4)}
-      apps={apps.slice(0, 6)}
+      chatbots={chatbots}
+      apps={apps}
       courses={courses}
-      aiTools={aiTools.slice(0, 6)}
+      aiTools={aiTools}
       user={user}
     />
   );

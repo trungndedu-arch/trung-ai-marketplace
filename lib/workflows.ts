@@ -1,4 +1,4 @@
-import { getPublishedProductBySlug, getPublishedProducts, getRelatedPublishedProducts } from "@/lib/catalog/repository";
+import { getFeaturedPublishedProducts, getPublishedProductBySlug, getPublishedProducts, getRelatedPublishedProducts } from "@/lib/catalog/repository";
 import { getCatalogProductState, getCatalogVisualBadge, type CatalogProductState } from "@/lib/catalog/product-state";
 import type { CatalogDemoVideo, CatalogProduct } from "@/lib/catalog/types";
 
@@ -117,8 +117,8 @@ export async function getActiveWorkflows() {
 }
 
 export async function getFeaturedWorkflows() {
-  const workflows = await getActiveWorkflows();
-  return workflows.filter((workflow) => workflow.isFeatured);
+  const products = await getFeaturedPublishedProducts(["ai_app"]);
+  return products.map(mapProductToWorkflow);
 }
 
 export async function getWorkflowBySlug(slug: string) {

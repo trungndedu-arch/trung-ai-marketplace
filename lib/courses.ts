@@ -1,4 +1,4 @@
-import { getPublishedProducts } from "@/lib/catalog/repository";
+import { getFeaturedPublishedProducts, getPublishedProducts } from "@/lib/catalog/repository";
 import { getCatalogProductState, getCatalogVisualBadge, type CatalogProductState } from "@/lib/catalog/product-state";
 import type { CatalogDemoVideo, CatalogProduct } from "@/lib/catalog/types";
 
@@ -68,8 +68,8 @@ export async function getActiveCourses() {
 }
 
 export async function getFeaturedCourses() {
-  const courses = await getActiveCourses();
-  return courses.filter((course) => course.isFeatured);
+  const products = await getFeaturedPublishedProducts(["course"]);
+  return products.map(mapProductToCourse);
 }
 
 export async function getCourseBySlug(slug: string) {

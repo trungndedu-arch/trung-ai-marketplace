@@ -1,4 +1,4 @@
-import { getPublishedProductBySlug, getPublishedProducts, getRelatedPublishedProducts } from "@/lib/catalog/repository";
+import { getFeaturedPublishedProducts, getPublishedProductBySlug, getPublishedProducts, getRelatedPublishedProducts } from "@/lib/catalog/repository";
 import { getCatalogProductState, getCatalogVisualBadge, type CatalogProductState } from "@/lib/catalog/product-state";
 import type { CatalogDemoVideo, CatalogProduct } from "@/lib/catalog/types";
 
@@ -86,8 +86,8 @@ export async function getActiveAiTools() {
 }
 
 export async function getFeaturedAiTools() {
-  const tools = await getActiveAiTools();
-  return tools.filter((tool) => tool.isFeatured);
+  const products = await getFeaturedPublishedProducts(["ai_tool"]);
+  return products.map(mapProductToAiTool);
 }
 
 export async function getAiToolBySlug(slug: string) {

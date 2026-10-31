@@ -34,7 +34,7 @@ const salesStatuses: SalesStatus[] = ["on_sale", "coming_soon", "paused"];
 const accessTypes: AccessType[] = ["paid", "free"];
 const homepageVisibilityOptions = ["featured", "not_featured"] as const;
 const sortOptions: { value: AdminProductSort; label: string }[] = [
-  { value: "display_order", label: "Thứ tự hiển thị" },
+  { value: "display_order", label: "Thứ tự ưu tiên" },
   { value: "title", label: "Tên sản phẩm" },
   { value: "created_at", label: "Ngày tạo" },
   { value: "updated_at", label: "Ngày cập nhật" },
@@ -161,7 +161,7 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
           <div className="mt-6 hidden overflow-hidden rounded-lg border border-white/[0.08] bg-[#0B1728] md:block">
             <div className="overflow-x-auto">
               <table className="w-full min-w-[1040px] border-collapse text-left">
-                <thead className="border-b border-white/[0.08] bg-white/[0.025] text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><tr><th className="px-4 py-3">Sản phẩm</th><th className="px-4 py-3">Loại</th><th className="px-4 py-3">Giá</th><th className="px-4 py-3">Bán hàng</th><th className="px-4 py-3">Xuất bản</th><th className="px-4 py-3 text-center">Thứ tự</th><th className="px-4 py-3 text-right">Xem</th></tr></thead>
+                <thead className="border-b border-white/[0.08] bg-white/[0.025] text-[11px] font-black uppercase tracking-[0.12em] text-slate-500"><tr><th className="px-4 py-3">Sản phẩm</th><th className="px-4 py-3">Loại</th><th className="px-4 py-3">Giá</th><th className="px-4 py-3">Bán hàng</th><th className="px-4 py-3">Xuất bản</th><th className="px-4 py-3 text-center">Ưu tiên</th><th className="px-4 py-3 text-right">Xem</th></tr></thead>
                 <tbody className="divide-y divide-white/[0.06]">
                   {result.products.map((product) => (
                     <tr key={product.id} className="transition hover:bg-white/[0.025]">
@@ -185,7 +185,7 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
                 <div className="flex gap-3"><ProductCover image={product.coverImage} title={product.title} className="h-28 w-[63px]" /><div className="min-w-0 flex-1"><p className="text-xs font-bold text-sky-300">{getProductTypeLabel(product.productType)}</p><h2 className="mt-1 line-clamp-2 text-sm font-extrabold text-white">{product.title}</h2><p className="mt-1 truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-3 text-sm font-black text-white">{formatAdminPrice(product.price, product.currency)}</p></div></div>
                 <div className="mt-4 flex flex-wrap gap-2"><PublicationChip value={product.publicationStatus} /><SalesChip value={product.salesStatus} /><AccessChip value={product.accessType} /><HomepageStatus isFeatured={product.isFeatured} /></div>
                 <p className="mt-3 text-xs font-semibold text-sky-300">Danh mục chi tiết: {product.category?.name ?? "Chưa chọn"} · Nhóm hiển thị: {getProductCatalogDestination(product.productType).label}</p>
-                <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3"><span className="text-xs text-slate-500">Thứ tự: {product.displayOrder}</span><div className="flex gap-2"><Link href={`/admin/products/${product.id}`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-bold text-slate-300">Xem</Link><Link href={`/admin/products/${product.id}/edit`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-sky-300/20 bg-sky-500/10 px-3 text-xs font-bold text-sky-200">Chỉnh sửa<Pencil className="h-3.5 w-3.5" /></Link></div></div>
+                <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3"><span className="text-xs text-slate-500">Ưu tiên trang chủ: {product.displayOrder}</span><div className="flex gap-2"><Link href={`/admin/products/${product.id}`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-bold text-slate-300">Xem</Link><Link href={`/admin/products/${product.id}/edit`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-sky-300/20 bg-sky-500/10 px-3 text-xs font-bold text-sky-200">Chỉnh sửa<Pencil className="h-3.5 w-3.5" /></Link></div></div>
               </article>
             ))}
           </div>
