@@ -20,7 +20,7 @@ function UploadButton({ hasCover, canSubmit }: { hasCover: boolean; canSubmit: b
   );
 }
 
-export function ProductCoverUpload({ productId, title, currentCover }: { productId: string; title: string; currentCover: { url: string; alt: string } | null }) {
+export function ProductCoverUpload({ productId, title, currentCover, embedded = false }: { productId: string; title: string; currentCover: { url: string; alt: string } | null; embedded?: boolean }) {
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const [state, formAction] = useActionState(uploadProductCover, initialState);
@@ -89,11 +89,10 @@ export function ProductCoverUpload({ productId, title, currentCover }: { product
   const hasCover = Boolean(state.coverUrl || currentCover);
 
   return (
-    <section className="mb-5 rounded-lg border border-white/[0.08] bg-[#0B1728] p-5 sm:p-6">
-      <h2 className="text-base font-extrabold text-white">Ảnh bìa sản phẩm</h2>
-      <p className="mt-2 text-sm text-slate-500">Ảnh dọc 9:16, tối đa 5 MB. Hỗ trợ JPG, PNG và WEBP.</p>
+    <section className={embedded ? "" : "mb-5 rounded-lg border border-white/[0.08] bg-[#0B1728] p-5 sm:p-6"}>
+      {!embedded ? <><h2 className="text-base font-extrabold text-white">Ảnh bìa sản phẩm</h2><p className="mt-2 text-sm text-slate-500">Ảnh dọc 9:16, tối đa 5 MB. Hỗ trợ JPG, PNG và WEBP.</p></> : null}
 
-      <form action={formAction} className="mt-5 grid gap-5 sm:grid-cols-[180px_minmax(0,1fr)]">
+      <form action={formAction} className={`${embedded ? "" : "mt-5"} grid gap-5 sm:grid-cols-[180px_minmax(0,1fr)]`}>
         <input type="hidden" name="productId" value={productId} />
         <div className="relative aspect-[9/16] w-full max-w-[180px] overflow-hidden rounded-lg border border-white/10 bg-[#07111F]">
           {displayUrl ? <img src={displayUrl} alt={previewUrl ? `Xem trước ${title}` : currentCover?.alt || title} onLoad={handlePreviewLoad} className="h-full w-full object-cover object-center" /> : <div className="grid h-full place-items-center text-center text-slate-600"><div><ImageIcon className="mx-auto h-7 w-7" /><span className="mt-2 block text-xs font-semibold">Chưa có ảnh bìa</span></div></div>}

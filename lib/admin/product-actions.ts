@@ -23,6 +23,7 @@ type ExistingProduct = {
   product_type: ProductType;
   category_id: string | null;
   detail_url: string | null;
+  metadata: Record<string, unknown> | null;
 };
 
 async function validateCategory(
@@ -71,7 +72,7 @@ export async function updateProduct(_previousState: ProductMutationState, formDa
   const supabase = await createClient();
   const { data: existingData, error: existingError } = await supabase
     .from("products")
-    .select("id, slug, product_type, category_id, detail_url")
+    .select("id, slug, product_type, category_id, detail_url, metadata")
     .eq("id", id)
     .maybeSingle();
 
@@ -90,7 +91,7 @@ export async function updateProduct(_previousState: ProductMutationState, formDa
     return { status: "error", message: "Vui lòng kiểm tra lại các trường được đánh dấu.", fieldErrors: validation.fieldErrors };
   }
 
-  const payload = toProductDatabaseFields(validation.values);
+  const payload = toProductDatabaseFields(validation.values, existing.product_type, existing.metadata ?? {});
   if (!payload) return { status: "error", message: "Dữ liệu sản phẩm chưa hợp lệ.", fieldErrors: validation.fieldErrors };
 
   const { data: duplicateSlug, error: duplicateError } = await findDuplicateSlug(supabase, payload.slug, id);
@@ -132,7 +133,7 @@ export async function createProduct(_previousState: ProductMutationState, formDa
     return { status: "error", message: "Vui lòng kiểm tra lại các trường được đánh dấu.", fieldErrors: validation.fieldErrors };
   }
 
-  const fields = toProductDatabaseFields(validation.values);
+  const fields = toProductDatabaseFields(validation.values, productType);
   if (!fields) return { status: "error", message: "Dữ liệu sản phẩm chưa hợp lệ.", fieldErrors: validation.fieldErrors };
 
   const { data: duplicateSlug, error: duplicateError } = await findDuplicateSlug(supabase, fields.slug);
@@ -159,5 +160,5 @@ export async function createProduct(_previousState: ProductMutationState, formDa
 
   revalidatePath("/admin");
   revalidatePath("/admin/products");
-  redirect(`/admin/products/${created.id}?created=1`);
+  redirect(`/admin/products/${created.id}/edit?created=1`);
 }

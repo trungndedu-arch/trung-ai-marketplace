@@ -1,4 +1,9 @@
 import type { AccessType, ProductType, PublicationStatus, SalesStatus } from "@/lib/catalog/types";
+import {
+  mergeEditableProductMetadata,
+  parseEditableProductMetadata,
+  type EditableProductMetadata,
+} from "@/lib/admin/product-metadata";
 import { parseYouTubeVideoUrl } from "@/lib/youtube";
 
 export type EditableProductField =
@@ -23,7 +28,8 @@ export type EditableProductField =
   | "demoVideoUrl"
   | "displayOrder"
   | "isFeatured"
-  | "tags";
+  | "tags"
+  | "metadata";
 
 export type ProductMutationState = {
   status: "idle" | "error";
@@ -53,6 +59,7 @@ export type ProductMutationValues = {
   tags: string[];
   isFeatured: boolean;
   displayOrder: number | null;
+  metadata: EditableProductMetadata;
 };
 
 export type ProductDatabaseFields = {
@@ -78,6 +85,7 @@ export type ProductDatabaseFields = {
   tags: string[];
   is_featured: boolean;
   display_order: number;
+  metadata: Record<string, unknown>;
 };
 
 export const PRODUCT_TYPES: ProductType[] = ["chatbot", "ai_app", "ai_tool", "course"];
@@ -165,6 +173,7 @@ export function validateProductFormData(formData: FormData, productType: Product
   const displayOrder = parseDisplayOrder(stringField(formData, "displayOrder"));
   const isFeatured = formData.get("isFeatured") === "on";
   const tags = normalizeTags(stringField(formData, "tags"));
+  const metadata = parseEditableProductMetadata(formData, productType);
   const fieldErrors: ProductMutationState["fieldErrors"] = {};
 
   if (!title) fieldErrors.title = "Tên sản phẩm không được để trống.";
@@ -188,6 +197,7 @@ export function validateProductFormData(formData: FormData, productType: Product
   if (demoVideoUrl && !demoVideoId) fieldErrors.demoVideoUrl = "Link YouTube không hợp lệ.";
   if (displayOrder === null) fieldErrors.displayOrder = "Thứ tự hiển thị phải là số nguyên hợp lệ.";
   if (tags.length > 30 || tags.some((tag) => tag.length > 60)) fieldErrors.tags = "Tối đa 30 tag, mỗi tag không quá 60 ký tự.";
+  if (metadata.errors.metadata) fieldErrors.metadata = metadata.errors.metadata;
 
   if (accessType && salesStatus && !price.error && !originalPrice.error) {
     if (accessType === "free") {
@@ -234,12 +244,17 @@ export function validateProductFormData(formData: FormData, productType: Product
     tags,
     isFeatured,
     displayOrder,
+    metadata: metadata.values,
   };
 
   return { values, fieldErrors, isValid: Object.keys(fieldErrors).length === 0 && accessType !== null && salesStatus !== null && publicationStatus !== null && displayOrder !== null };
 }
 
-export function toProductDatabaseFields(values: ProductMutationValues): ProductDatabaseFields | null {
+export function toProductDatabaseFields(
+  values: ProductMutationValues,
+  productType: ProductType,
+  existingMetadata: Record<string, unknown> = {},
+): ProductDatabaseFields | null {
   if (!values.accessType || !values.salesStatus || !values.publicationStatus || values.displayOrder === null) return null;
   return {
     category_id: values.categoryId || null,
@@ -264,6 +279,7 @@ export function toProductDatabaseFields(values: ProductMutationValues): ProductD
     tags: values.tags,
     is_featured: values.isFeatured,
     display_order: values.displayOrder,
+    metadata: mergeEditableProductMetadata(existingMetadata, productType, values.metadata),
   };
 }
 

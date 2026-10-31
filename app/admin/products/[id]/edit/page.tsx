@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { ProductCoverUpload } from "@/components/admin/ProductCoverUpload";
 import { ProductEditForm } from "@/components/admin/ProductEditForm";
 import { getAdminCategories, getAdminProductById } from "@/lib/admin/products";
 
@@ -10,8 +9,9 @@ export const metadata: Metadata = {
   title: "Chỉnh sửa sản phẩm",
 };
 
-export default async function AdminProductEditPage({ params }: { params: Promise<{ id: string }> }) {
+export default async function AdminProductEditPage({ params, searchParams }: { params: Promise<{ id: string }>; searchParams: Promise<{ created?: string | string[] }> }) {
   const { id } = await params;
+  const query = await searchParams;
   const [productResult, categoryResult] = await Promise.all([
     getAdminProductById(id),
     getAdminCategories(),
@@ -31,8 +31,8 @@ export default async function AdminProductEditPage({ params }: { params: Promise
   return (
     <div className="mx-auto w-full max-w-[1100px]">
       <Link href={`/admin/products/${product.id}`} className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-sky-300 hover:text-white"><ArrowLeft className="h-4 w-4" />Chi tiết sản phẩm</Link>
-      <div className="mb-7 mt-4"><p className="text-xs font-black uppercase tracking-[0.18em] text-sky-300">Product Editor</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Chỉnh sửa sản phẩm</h1><p className="mt-2 line-clamp-2 text-sm text-slate-400">{product.title}</p></div>
-      <ProductCoverUpload productId={product.id} title={product.title} currentCover={product.coverImage} />
+      <div className="mb-7 mt-4"><p className="text-xs font-black uppercase tracking-[0.18em] text-sky-300">Quản lý sản phẩm</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Chỉnh sửa sản phẩm</h1><p className="mt-2 line-clamp-2 text-sm text-slate-400">{product.title}</p></div>
+      {query.created === "1" ? <div className="mb-5 rounded-xl border border-emerald-300/20 bg-emerald-400/10 px-4 py-3 text-sm font-semibold text-emerald-100">Đã tạo bản nháp. Tiếp tục tải ảnh bìa và hoàn thiện nội dung trước khi xuất bản.</div> : null}
       <ProductEditForm product={product} categories={categories} />
     </div>
   );
