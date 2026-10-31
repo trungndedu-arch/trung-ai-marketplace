@@ -32,6 +32,7 @@ const productTypes: ProductType[] = ["chatbot", "ai_app", "ai_tool", "course"];
 const publicationStatuses: PublicationStatus[] = ["published", "draft", "hidden"];
 const salesStatuses: SalesStatus[] = ["on_sale", "coming_soon", "paused"];
 const accessTypes: AccessType[] = ["paid", "free"];
+const homepageVisibilityOptions = ["featured", "not_featured"] as const;
 const sortOptions: { value: AdminProductSort; label: string }[] = [
   { value: "display_order", label: "Thứ tự hiển thị" },
   { value: "title", label: "Tên sản phẩm" },
@@ -48,6 +49,10 @@ function enumValue<T extends string>(value: string | undefined, allowed: readonl
   return value && allowed.includes(value as T) ? value as T : "all";
 }
 
+function HomepageStatus({ isFeatured }: { isFeatured: boolean }) {
+  return <span className={`inline-flex rounded-full border px-2 py-1 text-[10px] font-black ${isFeatured ? "border-sky-300/25 bg-sky-500/10 text-sky-200" : "border-white/10 bg-white/[0.025] text-slate-500"}`}>{isFeatured ? "Hiển thị trang chủ" : "Không hiển thị trang chủ"}</span>;
+}
+
 function parseFilters(params: Record<string, string | string[] | undefined>): AdminProductFilters {
   const sortValue = firstValue(params.sort);
   const pageValue = Number.parseInt(firstValue(params.page) ?? "1", 10);
@@ -59,6 +64,7 @@ function parseFilters(params: Record<string, string | string[] | undefined>): Ad
     publicationStatus: enumValue(firstValue(params.publication), publicationStatuses),
     salesStatus: enumValue(firstValue(params.sales), salesStatuses),
     accessType: enumValue(firstValue(params.access), accessTypes),
+    homepageVisibility: enumValue(firstValue(params.home), homepageVisibilityOptions),
     sort: sortOptions.some((option) => option.value === sortValue) ? sortValue as AdminProductSort : "display_order",
     page: Number.isFinite(pageValue) && pageValue > 0 ? pageValue : 1,
   };
@@ -72,6 +78,7 @@ function buildProductsHref(filters: AdminProductFilters, page: number) {
   if (filters.publicationStatus !== "all") params.set("publication", filters.publicationStatus);
   if (filters.salesStatus !== "all") params.set("sales", filters.salesStatus);
   if (filters.accessType !== "all") params.set("access", filters.accessType);
+  if (filters.homepageVisibility !== "all") params.set("home", filters.homepageVisibility);
   if (filters.sort !== "display_order") params.set("sort", filters.sort);
   if (page > 1) params.set("page", String(page));
   const query = params.toString();
@@ -86,7 +93,7 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
     redirect(buildProductsHref(filters, result.totalPages));
   }
 
-  const hasFilters = Boolean(filters.search || filters.categoryId !== "all" || filters.productType !== "all" || filters.publicationStatus !== "all" || filters.salesStatus !== "all" || filters.accessType !== "all");
+  const hasFilters = Boolean(filters.search || filters.categoryId !== "all" || filters.productType !== "all" || filters.publicationStatus !== "all" || filters.salesStatus !== "all" || filters.accessType !== "all" || filters.homepageVisibility !== "all");
   const firstItem = result.total ? (result.page - 1) * ADMIN_PRODUCTS_PAGE_SIZE + 1 : 0;
   const lastItem = Math.min(result.page * ADMIN_PRODUCTS_PAGE_SIZE, result.total);
 
@@ -108,7 +115,7 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
         <Link href={buildProductsHref({ ...filters, publicationStatus: "all", salesStatus: "on_sale" }, 1)} className={`rounded-full border px-3 py-2 text-xs font-bold ${filters.salesStatus === "on_sale" ? "border-sky-300/30 bg-sky-500/10 text-sky-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Đang bán</Link>
       </div>
 
-      <form method="get" className="mt-4 grid gap-3 rounded-xl border border-white/[0.08] bg-[#0B1728] p-4 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(6,minmax(130px,1fr))_auto_auto]">
+      <form method="get" className="mt-4 grid gap-3 rounded-xl border border-white/[0.08] bg-[#0B1728] p-4 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(7,minmax(130px,1fr))_auto_auto]">
         <label className="relative block md:col-span-2 xl:col-span-1">
           <span className="sr-only">Tìm sản phẩm</span>
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
@@ -134,6 +141,10 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
           <option value="all">Tất cả truy cập</option>
           <option value="paid">Trả phí</option><option value="free">Miễn phí</option>
         </select>
+        <select name="home" defaultValue={filters.homepageVisibility} aria-label="Lọc theo hiển thị trang chủ" className="h-11 rounded-lg border border-white/10 bg-[#07111F] px-3 text-sm text-slate-200 outline-none focus:border-sky-400/40">
+          <option value="all">Tất cả trang chủ</option>
+          <option value="featured">Hiển thị trang chủ</option><option value="not_featured">Không hiển thị trang chủ</option>
+        </select>
         <select name="sort" defaultValue={filters.sort} aria-label="Sắp xếp sản phẩm" className="h-11 rounded-lg border border-white/10 bg-[#07111F] px-3 text-sm text-slate-200 outline-none focus:border-sky-400/40">
           {sortOptions.map((option) => <option key={option.value} value={option.value}>{option.label}</option>)}
         </select>
@@ -154,7 +165,7 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
                 <tbody className="divide-y divide-white/[0.06]">
                   {result.products.map((product) => (
                     <tr key={product.id} className="transition hover:bg-white/[0.025]">
-                      <td className="px-4 py-3"><div className="flex min-w-0 items-center gap-3"><ProductCover image={product.coverImage} title={product.title} /><div className="min-w-0"><Link href={`/admin/products/${product.id}`} className="line-clamp-2 max-w-md text-sm font-extrabold text-white hover:text-sky-300">{product.title}</Link><p className="mt-1 max-w-md truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-1 text-xs font-semibold text-sky-300">Danh mục chi tiết: {product.category?.name ?? "Chưa chọn"}</p><p className="mt-0.5 text-[10px] text-slate-600">Nhóm hiển thị: {getProductCatalogDestination(product.productType).label}</p></div></div></td>
+                      <td className="px-4 py-3"><div className="flex min-w-0 items-center gap-3"><ProductCover image={product.coverImage} title={product.title} /><div className="min-w-0"><Link href={`/admin/products/${product.id}`} className="line-clamp-2 max-w-md text-sm font-extrabold text-white hover:text-sky-300">{product.title}</Link><p className="mt-1 max-w-md truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-1 text-xs font-semibold text-sky-300">Danh mục chi tiết: {product.category?.name ?? "Chưa chọn"}</p><p className="mt-0.5 text-[10px] text-slate-600">Nhóm hiển thị: {getProductCatalogDestination(product.productType).label}</p><div className="mt-2"><HomepageStatus isFeatured={product.isFeatured} /></div></div></div></td>
                       <td className="px-4 py-3"><p className="text-sm font-bold text-slate-200">{getProductTypeLabel(product.productType)}</p><div className="mt-2"><AccessChip value={product.accessType} /></div></td>
                       <td className="px-4 py-3"><p className="whitespace-nowrap text-sm font-extrabold text-white">{formatAdminPrice(product.price, product.currency)}</p>{product.originalPrice !== null ? <p className="mt-1 whitespace-nowrap text-xs text-slate-500 line-through">{formatAdminPrice(product.originalPrice, product.currency)}</p> : null}</td>
                       <td className="px-4 py-3"><SalesChip value={product.salesStatus} /><p className="mt-2 text-xs text-slate-500">{product.sellable ? "Có thể bán" : "Không bán trực tiếp"}</p></td>
@@ -172,7 +183,7 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
             {result.products.map((product) => (
               <article key={product.id} className="rounded-lg border border-white/[0.08] bg-[#0B1728] p-4">
                 <div className="flex gap-3"><ProductCover image={product.coverImage} title={product.title} className="h-28 w-[63px]" /><div className="min-w-0 flex-1"><p className="text-xs font-bold text-sky-300">{getProductTypeLabel(product.productType)}</p><h2 className="mt-1 line-clamp-2 text-sm font-extrabold text-white">{product.title}</h2><p className="mt-1 truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-3 text-sm font-black text-white">{formatAdminPrice(product.price, product.currency)}</p></div></div>
-                <div className="mt-4 flex flex-wrap gap-2"><PublicationChip value={product.publicationStatus} /><SalesChip value={product.salesStatus} /><AccessChip value={product.accessType} /></div>
+                <div className="mt-4 flex flex-wrap gap-2"><PublicationChip value={product.publicationStatus} /><SalesChip value={product.salesStatus} /><AccessChip value={product.accessType} /><HomepageStatus isFeatured={product.isFeatured} /></div>
                 <p className="mt-3 text-xs font-semibold text-sky-300">Danh mục chi tiết: {product.category?.name ?? "Chưa chọn"} · Nhóm hiển thị: {getProductCatalogDestination(product.productType).label}</p>
                 <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3"><span className="text-xs text-slate-500">Thứ tự: {product.displayOrder}</span><div className="flex gap-2"><Link href={`/admin/products/${product.id}`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-bold text-slate-300">Xem</Link><Link href={`/admin/products/${product.id}/edit`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-sky-300/20 bg-sky-500/10 px-3 text-xs font-bold text-sky-200">Chỉnh sửa<Pencil className="h-3.5 w-3.5" /></Link></div></div>
               </article>

@@ -6,6 +6,7 @@ import type { AccessType, CatalogDemoVideo, ProductType, PublicationStatus, Sale
 export const ADMIN_PRODUCTS_PAGE_SIZE = 20;
 
 export type AdminProductSort = "display_order" | "title" | "created_at" | "updated_at";
+export type AdminHomepageVisibility = "all" | "featured" | "not_featured";
 
 export type AdminProductFilters = {
   search: string;
@@ -14,6 +15,7 @@ export type AdminProductFilters = {
   publicationStatus: PublicationStatus | "all";
   salesStatus: SalesStatus | "all";
   accessType: AccessType | "all";
+  homepageVisibility: AdminHomepageVisibility;
   sort: AdminProductSort;
   page: number;
 };
@@ -223,6 +225,8 @@ export async function getAdminProducts(filters: AdminProductFilters): Promise<Ad
   if (filters.publicationStatus !== "all") query = query.eq("publication_status", filters.publicationStatus);
   if (filters.salesStatus !== "all") query = query.eq("sales_status", filters.salesStatus);
   if (filters.accessType !== "all") query = query.eq("access_type", filters.accessType);
+  if (filters.homepageVisibility === "featured") query = query.eq("is_featured", true);
+  if (filters.homepageVisibility === "not_featured") query = query.eq("is_featured", false);
 
   const { data, error, count } = await query
     .order(filters.sort, { ascending: true })
