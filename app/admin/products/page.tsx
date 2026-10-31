@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { ArrowLeft, ArrowRight, Eye, PackageSearch, Plus, RotateCcw, Search } from "lucide-react";
+import { ArrowLeft, ArrowRight, Eye, PackageSearch, Pencil, Plus, RotateCcw, Search } from "lucide-react";
 import {
   AccessChip,
   formatAdminPrice,
@@ -12,10 +12,12 @@ import {
 } from "@/components/admin/AdminProductUi";
 import {
   ADMIN_PRODUCTS_PAGE_SIZE,
+  getAdminCategories,
   getAdminProducts,
   type AdminProductFilters,
   type AdminProductSort,
 } from "@/lib/admin/products";
+import { getProductCatalogDestination } from "@/lib/admin/product-catalog";
 import type { AccessType, ProductType, PublicationStatus, SalesStatus } from "@/lib/catalog/types";
 
 export const metadata: Metadata = {
@@ -36,6 +38,7 @@ const sortOptions: { value: AdminProductSort; label: string }[] = [
   { value: "created_at", label: "Ngày tạo" },
   { value: "updated_at", label: "Ngày cập nhật" },
 ];
+const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 
 function firstValue(value: string | string[] | undefined) {
   return Array.isArray(value) ? value[0] : value;
@@ -51,6 +54,7 @@ function parseFilters(params: Record<string, string | string[] | undefined>): Ad
 
   return {
     search: (firstValue(params.q) ?? "").trim().slice(0, 100),
+    categoryId: UUID_PATTERN.test(firstValue(params.category) ?? "") ? firstValue(params.category)! : "all",
     productType: enumValue(firstValue(params.type), productTypes),
     publicationStatus: enumValue(firstValue(params.publication), publicationStatuses),
     salesStatus: enumValue(firstValue(params.sales), salesStatuses),
@@ -63,6 +67,7 @@ function parseFilters(params: Record<string, string | string[] | undefined>): Ad
 function buildProductsHref(filters: AdminProductFilters, page: number) {
   const params = new URLSearchParams();
   if (filters.search) params.set("q", filters.search);
+  if (filters.categoryId !== "all") params.set("category", filters.categoryId);
   if (filters.productType !== "all") params.set("type", filters.productType);
   if (filters.publicationStatus !== "all") params.set("publication", filters.publicationStatus);
   if (filters.salesStatus !== "all") params.set("sales", filters.salesStatus);
@@ -75,13 +80,13 @@ function buildProductsHref(filters: AdminProductFilters, page: number) {
 
 export default async function AdminProductsPage({ searchParams }: ProductsPageProps) {
   const filters = parseFilters(await searchParams);
-  const result = await getAdminProducts(filters);
+  const [result, categoryResult] = await Promise.all([getAdminProducts(filters), getAdminCategories()]);
 
   if (!result.error && result.totalPages > 0 && result.page > result.totalPages) {
     redirect(buildProductsHref(filters, result.totalPages));
   }
 
-  const hasFilters = Boolean(filters.search || filters.productType !== "all" || filters.publicationStatus !== "all" || filters.salesStatus !== "all" || filters.accessType !== "all");
+  const hasFilters = Boolean(filters.search || filters.categoryId !== "all" || filters.productType !== "all" || filters.publicationStatus !== "all" || filters.salesStatus !== "all" || filters.accessType !== "all");
   const firstItem = result.total ? (result.page - 1) * ADMIN_PRODUCTS_PAGE_SIZE + 1 : 0;
   const lastItem = Math.min(result.page * ADMIN_PRODUCTS_PAGE_SIZE, result.total);
 
@@ -90,17 +95,29 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <p className="text-xs font-black uppercase tracking-[0.18em] text-sky-300">Catalog</p>
-          <h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Sản phẩm</h1>
+          <h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Quản lý sản phẩm</h1>
+          <p className="mt-2 text-sm text-slate-500">Tìm, lọc và cập nhật sản phẩm theo đúng khu vực hiển thị ngoài website.</p>
         </div>
         <div className="flex items-center gap-3"><span className="text-sm font-semibold text-slate-400">{result.total} kết quả</span><Link href="/admin/products/new" className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-sky-500 px-4 text-sm font-extrabold text-white transition hover:bg-sky-400"><Plus className="h-4 w-4" />Thêm sản phẩm</Link></div>
       </div>
 
-      <form method="get" className="mt-7 grid gap-3 rounded-lg border border-white/[0.08] bg-[#0B1728] p-4 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.5fr)_repeat(5,minmax(130px,1fr))_auto_auto]">
+      <div className="mt-7 flex flex-wrap gap-2">
+        <Link href={buildProductsHref({ ...filters, publicationStatus: "all", salesStatus: "all" }, 1)} className={`rounded-full border px-3 py-2 text-xs font-bold ${filters.publicationStatus === "all" && filters.salesStatus === "all" ? "border-sky-300/30 bg-sky-500/15 text-sky-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Tất cả sản phẩm</Link>
+        <Link href={buildProductsHref({ ...filters, publicationStatus: "draft", salesStatus: "all" }, 1)} className={`rounded-full border px-3 py-2 text-xs font-bold ${filters.publicationStatus === "draft" ? "border-amber-300/30 bg-amber-500/10 text-amber-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Bản nháp</Link>
+        <Link href={buildProductsHref({ ...filters, publicationStatus: "published", salesStatus: "all" }, 1)} className={`rounded-full border px-3 py-2 text-xs font-bold ${filters.publicationStatus === "published" && filters.salesStatus === "all" ? "border-emerald-300/30 bg-emerald-500/10 text-emerald-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Đã xuất bản</Link>
+        <Link href={buildProductsHref({ ...filters, publicationStatus: "all", salesStatus: "on_sale" }, 1)} className={`rounded-full border px-3 py-2 text-xs font-bold ${filters.salesStatus === "on_sale" ? "border-sky-300/30 bg-sky-500/10 text-sky-100" : "border-white/10 text-slate-400 hover:text-white"}`}>Đang bán</Link>
+      </div>
+
+      <form method="get" className="mt-4 grid gap-3 rounded-xl border border-white/[0.08] bg-[#0B1728] p-4 md:grid-cols-2 xl:grid-cols-[minmax(220px,1.4fr)_repeat(6,minmax(130px,1fr))_auto_auto]">
         <label className="relative block md:col-span-2 xl:col-span-1">
           <span className="sr-only">Tìm sản phẩm</span>
           <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
           <input name="q" defaultValue={filters.search} placeholder="Tên, slug hoặc legacy ID" className="h-11 w-full rounded-lg border border-white/10 bg-[#07111F] pl-10 pr-3 text-sm text-white outline-none placeholder:text-slate-600 focus:border-sky-400/40" />
         </label>
+        <select name="category" defaultValue={filters.categoryId} aria-label="Lọc theo danh mục" className="h-11 rounded-lg border border-white/10 bg-[#07111F] px-3 text-sm text-slate-200 outline-none focus:border-sky-400/40">
+          <option value="all">Tất cả danh mục</option>
+          {categoryResult.categories.map((category) => <option key={category.id} value={category.id}>{category.name} · {category.productType ? getProductCatalogDestination(category.productType).label : "Dùng chung"}</option>)}
+        </select>
         <select name="type" defaultValue={filters.productType} aria-label="Lọc theo loại sản phẩm" className="h-11 rounded-lg border border-white/10 bg-[#07111F] px-3 text-sm text-slate-200 outline-none focus:border-sky-400/40">
           <option value="all">Tất cả loại</option>
           {productTypes.map((value) => <option key={value} value={value}>{getProductTypeLabel(value)}</option>)}
@@ -124,8 +141,8 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
         <Link href="/admin/products" aria-label="Xóa bộ lọc" title="Xóa bộ lọc" className="grid h-11 w-11 place-items-center rounded-lg border border-white/10 text-slate-400 transition hover:text-white"><RotateCcw className="h-4 w-4" /></Link>
       </form>
 
-      {result.error ? (
-        <section className="mt-6 rounded-lg border border-rose-300/20 bg-rose-400/10 px-5 py-8 text-center"><p className="font-bold text-rose-100">{result.error}</p><p className="mt-2 text-sm text-rose-200/70">Vui lòng tải lại trang sau ít phút.</p></section>
+      {result.error || categoryResult.error ? (
+        <section className="mt-6 rounded-lg border border-rose-300/20 bg-rose-400/10 px-5 py-8 text-center"><p className="font-bold text-rose-100">{result.error || categoryResult.error}</p><p className="mt-2 text-sm text-rose-200/70">Vui lòng tải lại trang sau ít phút.</p></section>
       ) : result.products.length === 0 ? (
         <section className="mt-6 grid min-h-64 place-items-center rounded-lg border border-dashed border-white/10 bg-[#0B1728]/60 px-5 text-center"><div><PackageSearch className="mx-auto h-9 w-9 text-slate-600" /><h2 className="mt-4 font-extrabold text-white">{hasFilters ? "Không có sản phẩm phù hợp" : "Chưa có sản phẩm"}</h2><p className="mt-2 text-sm text-slate-500">{hasFilters ? "Hãy thay đổi từ khóa hoặc bộ lọc." : "Catalog hiện chưa có dữ liệu."}</p></div></section>
       ) : (
@@ -137,13 +154,13 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
                 <tbody className="divide-y divide-white/[0.06]">
                   {result.products.map((product) => (
                     <tr key={product.id} className="transition hover:bg-white/[0.025]">
-                      <td className="px-4 py-3"><div className="flex min-w-0 items-center gap-3"><ProductCover image={product.coverImage} title={product.title} /><div className="min-w-0"><Link href={`/admin/products/${product.id}`} className="line-clamp-2 max-w-md text-sm font-extrabold text-white hover:text-sky-300">{product.title}</Link><p className="mt-1 max-w-md truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-1 text-xs text-slate-500">{product.category?.name ?? "Chưa phân loại"}</p></div></div></td>
+                      <td className="px-4 py-3"><div className="flex min-w-0 items-center gap-3"><ProductCover image={product.coverImage} title={product.title} /><div className="min-w-0"><Link href={`/admin/products/${product.id}`} className="line-clamp-2 max-w-md text-sm font-extrabold text-white hover:text-sky-300">{product.title}</Link><p className="mt-1 max-w-md truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-1 text-xs font-semibold text-sky-300">{product.category?.name ?? "Chưa phân loại"}</p><p className="mt-0.5 text-[10px] text-slate-600">{getProductCatalogDestination(product.productType).label}</p></div></div></td>
                       <td className="px-4 py-3"><p className="text-sm font-bold text-slate-200">{getProductTypeLabel(product.productType)}</p><div className="mt-2"><AccessChip value={product.accessType} /></div></td>
                       <td className="px-4 py-3"><p className="whitespace-nowrap text-sm font-extrabold text-white">{formatAdminPrice(product.price, product.currency)}</p>{product.originalPrice !== null ? <p className="mt-1 whitespace-nowrap text-xs text-slate-500 line-through">{formatAdminPrice(product.originalPrice, product.currency)}</p> : null}</td>
                       <td className="px-4 py-3"><SalesChip value={product.salesStatus} /><p className="mt-2 text-xs text-slate-500">{product.sellable ? "Có thể bán" : "Không bán trực tiếp"}</p></td>
                       <td className="px-4 py-3"><PublicationChip value={product.publicationStatus} /></td>
                       <td className="px-4 py-3 text-center text-sm font-black tabular-nums text-slate-300">{product.displayOrder}</td>
-                      <td className="px-4 py-3 text-right"><Link href={`/admin/products/${product.id}`} aria-label={`Xem ${product.title}`} className="inline-grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-slate-400 transition hover:border-sky-300/30 hover:text-sky-200"><Eye className="h-4 w-4" /></Link></td>
+                      <td className="px-4 py-3 text-right"><div className="flex justify-end gap-2"><Link href={`/admin/products/${product.id}`} aria-label={`Xem ${product.title}`} className="inline-grid h-9 w-9 place-items-center rounded-lg border border-white/10 text-slate-400 transition hover:border-sky-300/30 hover:text-sky-200"><Eye className="h-4 w-4" /></Link><Link href={`/admin/products/${product.id}/edit`} aria-label={`Chỉnh sửa ${product.title}`} className="inline-grid h-9 w-9 place-items-center rounded-lg border border-sky-300/20 bg-sky-500/10 text-sky-200 transition hover:border-sky-300/40"><Pencil className="h-4 w-4" /></Link></div></td>
                     </tr>
                   ))}
                 </tbody>
@@ -156,7 +173,8 @@ export default async function AdminProductsPage({ searchParams }: ProductsPagePr
               <article key={product.id} className="rounded-lg border border-white/[0.08] bg-[#0B1728] p-4">
                 <div className="flex gap-3"><ProductCover image={product.coverImage} title={product.title} className="h-28 w-[63px]" /><div className="min-w-0 flex-1"><p className="text-xs font-bold text-sky-300">{getProductTypeLabel(product.productType)}</p><h2 className="mt-1 line-clamp-2 text-sm font-extrabold text-white">{product.title}</h2><p className="mt-1 truncate text-xs text-slate-500">/{product.slug}</p><p className="mt-3 text-sm font-black text-white">{formatAdminPrice(product.price, product.currency)}</p></div></div>
                 <div className="mt-4 flex flex-wrap gap-2"><PublicationChip value={product.publicationStatus} /><SalesChip value={product.salesStatus} /><AccessChip value={product.accessType} /></div>
-                <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3"><span className="text-xs text-slate-500">Thứ tự: {product.displayOrder}</span><Link href={`/admin/products/${product.id}`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-sky-300/20 px-3 text-xs font-bold text-sky-200">Xem chi tiết<ArrowRight className="h-3.5 w-3.5" /></Link></div>
+                <p className="mt-3 text-xs font-semibold text-sky-300">{product.category?.name ?? "Chưa phân loại"} · {getProductCatalogDestination(product.productType).label}</p>
+                <div className="mt-4 flex items-center justify-between border-t border-white/[0.07] pt-3"><span className="text-xs text-slate-500">Thứ tự: {product.displayOrder}</span><div className="flex gap-2"><Link href={`/admin/products/${product.id}`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-white/10 px-3 text-xs font-bold text-slate-300">Xem</Link><Link href={`/admin/products/${product.id}/edit`} className="inline-flex min-h-9 items-center gap-2 rounded-lg border border-sky-300/20 bg-sky-500/10 px-3 text-xs font-bold text-sky-200">Chỉnh sửa<Pencil className="h-3.5 w-3.5" /></Link></div></div>
               </article>
             ))}
           </div>

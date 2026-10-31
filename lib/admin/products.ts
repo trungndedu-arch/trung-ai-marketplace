@@ -9,6 +9,7 @@ export type AdminProductSort = "display_order" | "title" | "created_at" | "updat
 
 export type AdminProductFilters = {
   search: string;
+  categoryId: string | "all";
   productType: ProductType | "all";
   publicationStatus: PublicationStatus | "all";
   salesStatus: SalesStatus | "all";
@@ -217,6 +218,7 @@ export async function getAdminProducts(filters: AdminProductFilters): Promise<Ad
   const search = sanitizeSearch(filters.search);
 
   if (search) query = query.or(`title.ilike.%${search}%,slug.ilike.%${search}%,legacy_id.ilike.%${search}%`);
+  if (filters.categoryId !== "all") query = query.eq("category_id", filters.categoryId);
   if (filters.productType !== "all") query = query.eq("product_type", filters.productType);
   if (filters.publicationStatus !== "all") query = query.eq("publication_status", filters.publicationStatus);
   if (filters.salesStatus !== "all") query = query.eq("sales_status", filters.salesStatus);

@@ -18,7 +18,7 @@ export default async function AdminNewProductPage() {
   return (
     <div className="mx-auto w-full max-w-[1100px]">
       <Link href="/admin/products" className="inline-flex min-h-10 items-center gap-2 text-sm font-bold text-sky-300 hover:text-white"><ArrowLeft className="h-4 w-4" />Danh sách sản phẩm</Link>
-      <div className="mb-7 mt-4"><p className="text-xs font-black uppercase tracking-[0.18em] text-sky-300">Product Creator</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Thêm sản phẩm</h1><p className="mt-2 text-sm text-slate-400">Sản phẩm mới luôn được lưu dưới dạng bản nháp.</p></div>
+      <div className="mb-7 mt-4"><p className="text-xs font-black uppercase tracking-[0.18em] text-sky-300">Quản lý sản phẩm</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Thêm sản phẩm mới</h1><p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Điền lần lượt theo từng bước. Sản phẩm luôn được tạo dưới dạng bản nháp để bạn kiểm tra ảnh, giá và trang chi tiết trước khi xuất bản.</p></div>
       <ProductCreateForm categories={result.categories} />
     </div>
   );
