@@ -53,16 +53,16 @@ export function ProductCardGrid({ children, className = "" }: { children: ReactN
 }
 
 function metaToneClass(tone: ProductCardMeta["tone"] = "slate") {
-  if (tone === "blue") return "bg-sky-500/10 text-sky-300";
-  if (tone === "cyan") return "bg-cyan-500/10 text-cyan-200";
-  return "bg-white/[0.06] text-slate-300";
+  if (tone === "blue") return "bg-[#FFEDD5] text-[#C65D1B]";
+  if (tone === "cyan") return "bg-[#FFF3E5] text-[#C65D1B]";
+  return "bg-[#FFF8F0] text-[#786D63]";
 }
 
 function actionClass(variant: ProductCardAction["variant"] = "secondary", disabled = false) {
-  if (disabled) return "border border-white/[0.08] bg-white/[0.03] text-slate-500";
-  if (variant === "primary") return "bg-gradient-to-r from-blue-500 to-sky-500 text-white shadow-[0_0_20px_rgba(59,130,246,.22)] hover:brightness-110";
-  if (variant === "muted") return "border border-white/[0.08] bg-white/[0.04] text-slate-300 hover:bg-white/[0.08] hover:text-white";
-  return "border border-sky-300/25 bg-sky-500/10 text-sky-200 hover:border-sky-300/50 hover:bg-sky-500/20 hover:text-white";
+  if (disabled) return "border border-[#F1E6D7] bg-[#FFF8F0] text-[#A99B8E]";
+  if (variant === "primary") return "bg-gradient-to-r from-[#E76F21] to-[#C65D1B] text-white shadow-[0_10px_20px_rgba(198,93,27,.2)] hover:brightness-110";
+  if (variant === "muted") return "border border-[#F1E6D7] bg-white text-[#786D63] hover:bg-[#FFEDD5] hover:text-[#C65D1B]";
+  return "border border-[#E76F21]/35 bg-[#FFEDD5] text-[#C65D1B] hover:border-[#E76F21] hover:bg-[#FFE1BE]";
 }
 
 function ActionItem({ action }: { action: ProductCardAction }) {
@@ -131,7 +131,7 @@ function ProductCardMedia({
   }
 
   return (
-    <div className="pointer-events-none relative z-10 aspect-[9/16] w-full shrink-0 overflow-hidden rounded-t-2xl bg-[#07111F]">
+    <div className="pointer-events-none relative z-10 aspect-[9/16] w-full shrink-0 overflow-hidden rounded-t-2xl bg-[#FFF3E5]">
       {isPlaying && canPlayDemo ? (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${demoVideo.id}?autoplay=1&playsinline=1&rel=0`}
@@ -152,12 +152,12 @@ function ProductCardMedia({
               className="object-cover object-center transition duration-500 group-hover:scale-[1.025]"
             />
           ) : (
-            <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-blue-700/20 to-cyan-500/10" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[#FFEDD5] via-[#F5C38E] to-[#E76F21]/45" />
           )}
-          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#0F1F33]/95 to-transparent" />
+          <div className="absolute inset-x-0 bottom-0 h-20 bg-gradient-to-t from-[#202020]/70 to-transparent" />
           <div className="absolute left-3 top-3 flex max-w-[calc(100%-4rem)] flex-wrap gap-2">
             {imageBadges.map((item, index) => (
-              <span key={item} className={`max-w-full truncate rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-wider backdrop-blur-md ${index === 0 ? "border-sky-200/25 bg-[#07111F]/75 text-sky-100" : "border-white/15 bg-black/35 text-white"}`}>
+              <span key={item} className={`max-w-full truncate rounded-full border px-2.5 py-1 text-[10px] font-black uppercase tracking-wider backdrop-blur-md ${index === 0 ? "border-[#FFE1BE] bg-[#C65D1B]/90 text-white" : "border-white/30 bg-black/35 text-white"}`}>
                 {item}
               </span>
             ))}
@@ -166,7 +166,7 @@ function ProductCardMedia({
             <button
               type="button"
               aria-label="Thêm vào yêu thích"
-              className="pointer-events-auto absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-white/10 bg-black/35 text-white/70 backdrop-blur-md transition hover:text-sky-300"
+              className="pointer-events-auto absolute right-3 top-3 grid h-8 w-8 place-items-center rounded-full border border-white/20 bg-black/35 text-white/80 backdrop-blur-md transition hover:text-[#FFE1BE]"
             >
               <Heart className="h-4 w-4" />
             </button>
@@ -176,7 +176,7 @@ function ProductCardMedia({
               type="button"
               aria-label={`Phát video demo ${title}`}
               onClick={playDemo}
-              className="pointer-events-auto absolute left-1/2 top-1/2 z-20 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/55 text-white shadow-[0_10px_32px_rgba(0,0,0,.45)] backdrop-blur-sm transition hover:scale-105 hover:border-sky-200/70 hover:bg-sky-500/80 focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 focus-visible:ring-offset-2 focus-visible:ring-offset-[#07111F] sm:h-16 sm:w-16"
+              className="pointer-events-auto absolute left-1/2 top-1/2 z-20 grid h-14 w-14 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full border border-white/30 bg-black/55 text-white shadow-[0_10px_32px_rgba(0,0,0,.45)] backdrop-blur-sm transition hover:scale-105 hover:border-[#FFE1BE] hover:bg-[#C65D1B]/90 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E76F21] focus-visible:ring-offset-2 focus-visible:ring-offset-[#FFF3E5] sm:h-16 sm:w-16"
             >
               <Play className="ml-0.5 h-6 w-6 fill-current sm:h-7 sm:w-7" />
             </button>
@@ -216,32 +216,32 @@ export function ProductCard({
   const imageBadges = Array.from(new Set([badge, status].filter((item): item is string => Boolean(item)))).slice(0, 2);
   const content = (
     <>
-      {href && !onClick ? <Link href={href} aria-label={`Xem chi tiết ${title}`} className="absolute inset-0 z-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300" /> : null}
+      {href && !onClick ? <Link href={href} aria-label={`Xem chi tiết ${title}`} className="absolute inset-0 z-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-[#E76F21]" /> : null}
       <ProductCardMedia title={title} image={image} imageAlt={imageAlt} imageBadges={imageBadges} showFavorite={showFavorite} demoVideo={demoVideo} />
 
       <div className="pointer-events-none relative z-10 flex min-h-0 flex-1 flex-col p-3.5 sm:p-4">
-        {category ? <span className="block min-h-4 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{category}</span> : null}
+        {category ? <span className="block min-h-4 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-[#C65D1B]">{category}</span> : null}
         <div className="mt-1.5 shrink-0">
-          <h3 className="line-clamp-2 min-h-11 text-[15px] font-extrabold leading-[1.45] text-white transition group-hover:text-sky-300">{title}</h3>
-          {description ? <p className="mt-1.5 line-clamp-2 min-h-10 text-xs leading-5 text-slate-400">{description}</p> : <div className="mt-1.5 min-h-10" />}
+          <h3 className="line-clamp-2 min-h-11 text-[15px] font-extrabold leading-[1.45] text-[#202020] transition group-hover:text-[#C65D1B]">{title}</h3>
+          {description ? <p className="mt-1.5 line-clamp-2 min-h-10 text-xs leading-5 text-[#786D63]">{description}</p> : <div className="mt-1.5 min-h-10" />}
         </div>
 
         {hasFooter ? (
           <div className="mt-auto shrink-0 space-y-2.5 pt-2.5">
             {hasPrice ? (
-              <div className={`relative min-h-[58px] min-w-0 rounded-xl border px-3 pb-2.5 transition duration-300 ${hasDiscount ? "border-amber-300/35 bg-gradient-to-br from-amber-400/[0.12] via-[#111B2D] to-rose-500/[0.09] pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_0_22px_rgba(245,158,11,.09)] group-hover:border-amber-200/55 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,.07),0_0_28px_rgba(251,146,60,.16)]" : "border-amber-300/20 bg-gradient-to-r from-amber-400/[0.07] via-white/[0.025] to-transparent pt-2.5 group-hover:border-amber-200/35"}`}>
+              <div className={`relative min-h-[58px] min-w-0 rounded-xl border px-3 pb-2.5 transition duration-300 ${hasDiscount ? "border-[#F0B26E] bg-gradient-to-br from-[#FFF3E5] via-white to-[#FFEDD5] pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,.9),0_8px_18px_rgba(198,93,27,.08)] group-hover:border-[#E76F21]" : "border-[#F1E6D7] bg-[#FFFDF9] pt-2.5 group-hover:border-[#F0B26E]"}`}>
                 {hasDiscount ? (
-                  <span className="absolute -top-2.5 left-3 inline-flex h-5 items-center gap-1 rounded-full border border-orange-200/25 bg-gradient-to-r from-orange-500 to-rose-500 px-2 text-[9px] font-black uppercase tracking-[0.13em] text-white shadow-[0_0_16px_rgba(244,63,94,.28)]">
+                  <span className="absolute -top-2.5 left-3 inline-flex h-5 items-center gap-1 rounded-full border border-[#FFE1BE] bg-gradient-to-r from-[#E76F21] to-[#C65D1B] px-2 text-[9px] font-black uppercase tracking-[0.13em] text-white shadow-[0_6px_14px_rgba(198,93,27,.22)]">
                     <Zap aria-hidden="true" className="h-2.5 w-2.5 fill-current" />
                     Giá ưu đãi
                   </span>
                 ) : null}
                 <div className={`${hasDiscount ? "grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-end gap-x-2 gap-y-1" : "flex min-h-8 min-w-0 flex-wrap items-center gap-x-2 gap-y-1"}`}>
                   <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-                    {price ? <span className="whitespace-nowrap bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400 bg-clip-text text-2xl font-black leading-none tracking-[-0.035em] text-transparent drop-shadow-[0_0_12px_rgba(251,191,36,.2)]">{price}</span> : null}
-                    {originalPrice ? <span className="whitespace-nowrap text-[11px] font-bold text-slate-300/75 line-through decoration-slate-400/80 decoration-[1.5px]">{originalPrice}</span> : null}
+                    {price ? <span className="whitespace-nowrap text-2xl font-black leading-none tracking-[-0.035em] text-[#C65D1B]">{price}</span> : null}
+                    {originalPrice ? <span className="whitespace-nowrap text-[11px] font-bold text-[#A99B8E] line-through decoration-[#A99B8E] decoration-[1.5px]">{originalPrice}</span> : null}
                   </div>
-                  {hasDiscount ? <span className="mb-px whitespace-nowrap rounded-full border border-rose-200/30 bg-gradient-to-r from-rose-600 to-pink-500 px-2 py-1 text-[10px] font-black leading-none text-white shadow-[0_0_14px_rgba(244,63,94,.24)]">-{normalizedDiscount}%</span> : null}
+                  {hasDiscount ? <span className="mb-px whitespace-nowrap rounded-full border border-[#FFE1BE] bg-[#FFEDD5] px-2 py-1 text-[10px] font-black leading-none text-[#C65D1B]">-{normalizedDiscount}%</span> : null}
                 </div>
               </div>
             ) : null}
@@ -260,7 +260,7 @@ export function ProductCard({
               </div>
             ) : href ? (
               <div className="flex justify-end">
-                <span className="text-slate-500 transition group-hover:text-sky-400"><ArrowRight className="h-4 w-4" /></span>
+                <span className="text-[#A99B8E] transition group-hover:text-[#C65D1B]"><ArrowRight className="h-4 w-4" /></span>
               </div>
             ) : null}
           </div>
@@ -269,7 +269,7 @@ export function ProductCard({
     </>
   );
 
-  const classes = `group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-white/[0.08] bg-[#0F1F33] text-left shadow-[0_12px_45px_rgba(0,0,0,.24)] transition duration-300 hover:-translate-y-1 hover:border-sky-300/45 hover:shadow-[0_24px_62px_rgba(59,130,246,.18)] ${className}`;
+  const classes = `group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#F1E6D7] bg-white text-left shadow-[0_10px_30px_rgba(94,54,22,.08)] transition duration-300 hover:-translate-y-1 hover:border-[#E76F21]/55 hover:shadow-[0_20px_48px_rgba(198,93,27,.14)] ${className}`;
 
   if (onClick) return <button type="button" onClick={onClick} className={classes}>{content}</button>;
   return <article className={classes}>{content}</article>;

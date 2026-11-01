@@ -34,7 +34,7 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="vi" className="dark">
+    <html lang="vi">
       <body><CartProvider>{children}</CartProvider></body>
     </html>
   );
