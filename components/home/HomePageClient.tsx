@@ -167,16 +167,16 @@ function renderAiToolCard(tool: AiTool) {
 
 function CategoryPreviewSection({ section }: { section: CategorySection }) {
   return (
-    <section id={section.id} className="scroll-mt-24">
+    <section id={section.id} className="home-section scroll-mt-24">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+          <div className="home-section-label mb-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em]">
             <Sparkles className="h-3.5 w-3.5" /> {section.title}
           </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{section.title}</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">{section.description}</p>
+          <h3 className="home-section-title text-2xl font-extrabold tracking-tight sm:text-3xl">{section.title}</h3>
+          <p className="home-section-copy mt-2 max-w-2xl text-sm leading-6">{section.description}</p>
         </div>
-        <a href={section.href} className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+        <a href={section.href} className="home-section-link group inline-flex w-fit items-center gap-2 rounded-xl border px-4 py-3 text-sm font-extrabold transition">
           {section.cta}
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
@@ -190,16 +190,16 @@ function CategoryPreviewSection({ section }: { section: CategorySection }) {
 
 function FeaturedCoursesSection({ courses }: { courses: Course[] }) {
   return (
-    <section id="video-ai-course" className="scroll-mt-24">
+    <section id="video-ai-course" className="home-section scroll-mt-24">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+          <div className="home-section-label mb-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em]">
             <GraduationCap className="h-3.5 w-3.5" /> Khóa Học Video AI
           </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Khóa Học Video AI</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.</p>
+          <h3 className="home-section-title text-2xl font-extrabold tracking-tight sm:text-3xl">Khóa Học Video AI</h3>
+          <p className="home-section-copy mt-2 max-w-2xl text-sm leading-6">Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.</p>
         </div>
-        <a href="/video-ai-course" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+        <a href="/video-ai-course" className="home-section-link group inline-flex w-fit items-center gap-2 rounded-xl border px-4 py-3 text-sm font-extrabold transition">
           Xem khóa học
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
@@ -213,16 +213,16 @@ function FeaturedCoursesSection({ courses }: { courses: Course[] }) {
 
 function FeaturedAiToolsSection({ tools }: { tools: AiTool[] }) {
   return (
-    <section id="ai-apps" className="scroll-mt-24">
+    <section id="ai-apps" className="home-section scroll-mt-24">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+          <div className="home-section-label mb-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em]">
             <Boxes className="h-3.5 w-3.5" /> Công Cụ AI Nên Dùng
           </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Công Cụ AI Nên Dùng</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Các công cụ AI được chọn lọc để hỗ trợ tạo nội dung, xây kênh và làm Affiliate hiệu quả hơn.</p>
+          <h3 className="home-section-title text-2xl font-extrabold tracking-tight sm:text-3xl">Công Cụ AI Nên Dùng</h3>
+          <p className="home-section-copy mt-2 max-w-2xl text-sm leading-6">Các công cụ AI được chọn lọc để hỗ trợ tạo nội dung, xây kênh và làm Affiliate hiệu quả hơn.</p>
         </div>
-        <a href="/cong-cu-ai" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+        <a href="/cong-cu-ai" className="home-section-link group inline-flex w-fit items-center gap-2 rounded-xl border px-4 py-3 text-sm font-extrabold transition">
           Xem thêm công cụ AI
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
@@ -232,7 +232,7 @@ function FeaturedAiToolsSection({ tools }: { tools: AiTool[] }) {
           {tools.map(renderAiToolCard)}
         </ProductCardGrid>
       ) : (
-        <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có công cụ AI nổi bật. Bạn có thể thêm công cụ từ trang quản trị.</div>
+        <div className="rounded-2xl border border-dashed border-[#E7D9C9] bg-[#FFF8EF] p-8 text-sm text-[#786D63]">Chưa có công cụ AI nổi bật. Bạn có thể thêm công cụ từ trang quản trị.</div>
       )}
     </section>
   );
@@ -245,21 +245,21 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
   ].sort((a, b) => a.product.displayOrder - b.product.displayOrder || a.product.createdAt.localeCompare(b.product.createdAt) || a.product.databaseId.localeCompare(b.product.databaseId));
 
   return (
-    <section id="chatbot-ai-app" className="scroll-mt-24">
+    <section id="chatbot-ai-app" className="home-section scroll-mt-24">
       <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
+          <div className="home-section-label mb-2 inline-flex items-center gap-2 rounded-full border px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em]">
             <Clapperboard className="h-3.5 w-3.5" /> Chatbot & AI App
           </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Chatbot & AI App</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Khám phá các Chatbot và AI App hữu ích giúp tạo nội dung, bán hàng, chăm sóc khách hàng và tự động hóa công việc.</p>
+          <h3 className="home-section-title text-2xl font-extrabold tracking-tight sm:text-3xl">Chatbot & AI App</h3>
+          <p className="home-section-copy mt-2 max-w-2xl text-sm leading-6">Khám phá các Chatbot và AI App hữu ích giúp tạo nội dung, bán hàng, chăm sóc khách hàng và tự động hóa công việc.</p>
         </div>
-        <a href="/workflow" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
+        <a href="/workflow" className="home-section-link group inline-flex w-fit items-center gap-2 rounded-xl border px-4 py-3 text-sm font-extrabold transition">
           Xem thêm
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      {products.length ? <ProductCardGrid>{products.map((item) => item.kind === "chatbot" ? renderChatbotCard(item.product) : renderWorkflowCard(item.product))}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có Chatbot hoặc AI App nổi bật.</div>}
+      {products.length ? <ProductCardGrid>{products.map((item) => item.kind === "chatbot" ? renderChatbotCard(item.product) : renderWorkflowCard(item.product))}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-[#E7D9C9] bg-[#FFF8EF] p-8 text-sm text-[#786D63]">Chưa có Chatbot hoặc AI App nổi bật.</div>}
     </section>
   );
 }
@@ -270,22 +270,22 @@ export function HomePageClient({ chatbots, apps, courses, aiTools, user }: { cha
       <MarketplaceHeader user={user} />
       <main className="mx-auto max-w-[1800px] px-4 py-10 sm:px-6 lg:py-14 xl:px-8">
         <section id="products" className="scroll-mt-36">
-          <div className="mb-9 border-b border-white/[0.07] pb-7">
-            <h1 className="max-w-5xl text-2xl font-black leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Khám phá công cụ AI thực chiến giúp bạn làm nhanh hơn, <span className="text-sky-300">bán hàng tốt hơn</span>
+          <div className="home-intro mb-9 border-b pb-7">
+            <h1 className="max-w-5xl text-2xl font-black leading-tight tracking-tight text-[#202020] sm:text-3xl lg:text-4xl">
+              Khám phá công cụ AI thực chiến giúp bạn làm nhanh hơn, <span className="text-[#C65D1B]">bán hàng tốt hơn</span>
             </h1>
-            <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-400">
+            <p className="mt-3 max-w-4xl text-sm leading-6 text-[#665D55]">
               Chatbot, AI App, Prompt, Khóa học và các công cụ AI giúp bạn tiết kiệm thời gian, tăng hiệu suất và tạo ra kết quả vượt trội.
             </p>
           </div>
-          <div className="space-y-14">
+          <div className="space-y-8 sm:space-y-10">
             <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />
             <CategoryPreviewSection section={categorySections[0]} />
             <FeaturedCoursesSection courses={courses} />
             <FeaturedAiToolsSection tools={aiTools} />
           </div>
         </section>
-        <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-white/[0.06] py-8 text-xs text-slate-500 sm:flex-row"><MarketplaceBrand /><p>© 2026 Trung AI Media. Đồng hành cùng người Việt ứng dụng AI thực chiến.</p></footer>
+        <footer className="mt-16 flex flex-col items-center justify-between gap-4 border-t border-[#DFCFBC] py-8 text-xs text-[#786D63] sm:flex-row"><MarketplaceBrand /><p>© 2026 Trung AI Media. Đồng hành cùng người Việt ứng dụng AI thực chiến.</p></footer>
       </main>
     </div>
   );

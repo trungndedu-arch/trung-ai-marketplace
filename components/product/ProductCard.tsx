@@ -269,7 +269,7 @@ export function ProductCard({
     </>
   );
 
-  const classes = `group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#F1E6D7] bg-white text-left shadow-[0_10px_30px_rgba(94,54,22,.08)] transition duration-300 hover:-translate-y-1 hover:border-[#E76F21]/55 hover:shadow-[0_20px_48px_rgba(198,93,27,.14)] ${className}`;
+  const classes = `group relative flex h-full w-full flex-col overflow-hidden rounded-2xl border border-[#E3D2C0] bg-white text-left shadow-[0_12px_28px_rgba(94,54,22,.12)] transition duration-300 hover:-translate-y-1.5 hover:border-[#E76F21]/75 hover:shadow-[0_24px_52px_rgba(198,93,27,.18)] ${className}`;
 
   if (onClick) return <button type="button" onClick={onClick} className={classes}>{content}</button>;
   return <article className={classes}>{content}</article>;
