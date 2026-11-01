@@ -38,10 +38,10 @@ function NavigationLinks({ role }: { role: AdminRole }) {
         const isActive = "href" in item && (item.href === "/admin" ? pathname === item.href : pathname.startsWith(item.href));
         const classes = `flex min-h-11 items-center gap-3 rounded-lg px-3 text-sm font-bold transition ${
           isActive
-            ? "border border-sky-400/25 bg-sky-400/10 text-sky-100"
+            ? "border border-[#F0B26E] bg-[#FFEDD5] text-[#C65D1B]"
             : item.enabled
-              ? "border border-transparent text-slate-300 hover:border-white/10 hover:bg-white/[0.04] hover:text-white"
-            : "cursor-not-allowed border border-transparent text-slate-600"
+              ? "border border-transparent text-[#786D63] hover:border-[#F1E6D7] hover:bg-[#FFEDD5] hover:text-[#C65D1B]"
+            : "cursor-not-allowed border border-transparent text-[#A99B8E]"
         }`;
 
         if (item.enabled && "href" in item) {
@@ -56,13 +56,13 @@ function NavigationLinks({ role }: { role: AdminRole }) {
 
 export function AdminDesktopNavigation({ role }: { role: AdminRole }) {
   return (
-    <aside className="hidden min-h-screen border-r border-white/[0.07] bg-[#07111F] px-4 py-6 lg:flex lg:flex-col">
+    <aside className="hidden min-h-screen border-r border-[#F1E6D7] bg-white px-4 py-6 lg:flex lg:flex-col">
       <Link href={role === "admin" ? "/admin" : "/admin/products"} className="flex items-center gap-3 px-2" aria-label="Trung AI Admin">
-        <span className="grid h-10 w-10 place-items-center rounded-lg border border-sky-400/30 bg-sky-400/10 text-lg font-black text-sky-200">T</span>
-        <span><b className="block text-sm text-white">Trung AI Admin</b><small className="text-xs text-slate-500">Marketplace Console</small></span>
+        <span className="grid h-10 w-10 place-items-center rounded-lg border border-[#F0B26E] bg-[#FFEDD5] text-lg font-black text-[#C65D1B]">T</span>
+        <span><b className="block text-sm text-[#202020]">Trung AI Admin</b><small className="text-xs text-[#786D63]">Marketplace Console</small></span>
       </Link>
       <div className="mt-8"><NavigationLinks role={role} /></div>
-      <div className="mt-auto flex items-center gap-2 border-t border-white/[0.07] px-2 pt-5 text-xs font-semibold text-slate-500"><Boxes className="h-4 w-4" />Admin Foundation</div>
+      <div className="mt-auto flex items-center gap-2 border-t border-[#F1E6D7] px-2 pt-5 text-xs font-semibold text-[#786D63]"><Boxes className="h-4 w-4" />Admin Foundation</div>
     </aside>
   );
 }
@@ -70,10 +70,10 @@ export function AdminDesktopNavigation({ role }: { role: AdminRole }) {
 export function AdminMobileNavigation({ role }: { role: AdminRole }) {
   return (
     <details className="relative lg:hidden">
-      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-white/10 bg-white/[0.04] px-3 text-sm font-bold text-slate-200">
+      <summary className="flex min-h-11 cursor-pointer list-none items-center gap-2 rounded-lg border border-[#F1E6D7] bg-white px-3 text-sm font-bold text-[#786D63]">
         <LayoutDashboard className="h-4 w-4" />Menu
       </summary>
-      <div className="absolute right-0 top-12 z-50 w-64 rounded-lg border border-white/10 bg-[#07111F] p-3 shadow-2xl shadow-black/50">
+      <div className="absolute right-0 top-12 z-50 w-64 rounded-lg border border-[#F1E6D7] bg-white p-3 shadow-2xl shadow-[#5E3616]/15">
         <NavigationLinks role={role} />
       </div>
     </details>
