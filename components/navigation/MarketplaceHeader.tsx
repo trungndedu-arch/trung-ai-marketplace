@@ -66,7 +66,7 @@ export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-[#F1E6D7] bg-[#FFFAF3]/95 shadow-[0_10px_28px_rgba(94,54,22,.08)] backdrop-blur-xl">
+      <header className="sticky top-0 z-40 border-b border-[#E3D2C0] bg-[#FFFDF9]/95 shadow-[0_8px_24px_rgba(94,54,22,.12)] backdrop-blur-xl">
         <div className="mx-auto flex min-h-[68px] max-w-[1800px] items-center gap-3 px-4 py-2 sm:px-6 xl:px-8">
           <MarketplaceBrand />
 

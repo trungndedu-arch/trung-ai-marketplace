@@ -4,8 +4,8 @@
 
 /* Premium Commerce light theme. Legacy utility aliases below keep existing layouts intact. */
 :root {
-  --color-bg: #fffaf3;
-  --color-section: #ffffff;
+  --color-bg: #f5f0e8;
+  --color-section: #fbf7f1;
   --color-card: #ffffff;
   --color-primary: #e76f21;
   --color-primary-bright: #f1873b;
@@ -13,7 +13,7 @@
   --color-accent: #e76f21;
   --color-text: #202020;
   --color-muted: #786d63;
-  --color-border: #f1e6d7;
+  --color-border: #e7d9c9;
   --color-emphasis: #ffedd5;
   --color-glow: rgba(231, 111, 33, .2);
   --gradient-brand: linear-gradient(135deg, #e76f21, #c65d1b);
@@ -36,11 +36,22 @@ button, a { cursor: pointer; }
 .gradient-text { background: linear-gradient(110deg, #c65d1b 5%, #e76f21 52%, #f1873b 78%, #c65d1b 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
 .hero-grid { background-image: radial-gradient(circle at 18% 18%, rgba(231,111,33,.12), transparent 28%), radial-gradient(circle at 82% 24%, rgba(255,183,77,.13), transparent 32%), linear-gradient(rgba(198,93,27,.055) 1px, transparent 1px), linear-gradient(90deg, rgba(198,93,27,.05) 1px, transparent 1px); background-size: 42px 42px; }
 .card-hover { transition: transform .25s ease, border-color .25s ease, box-shadow .25s ease; }
-.card-hover:hover { transform: translateY(-5px); border-color: rgba(231,111,33,.42); box-shadow: 0 18px 42px rgba(94,54,22,.12); }
+.card-hover:hover { transform: translateY(-5px); border-color: rgba(231,111,33,.52); box-shadow: 0 20px 46px rgba(94,54,22,.15); }
 .prompt-card { transition: transform .28s ease, border-color .28s ease, box-shadow .28s ease; }
 .prompt-card:hover { transform: translateY(-6px); border-color: rgba(231,111,33,.44); box-shadow: 0 18px 46px rgba(94,54,22,.12); }
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Homepage depth: each commerce category gets a dedicated, restrained surface. */
+.home-intro { border-bottom-color: #dfcfbc; }
+.home-section { border: 1px solid #e7d9c9; border-radius: 1.5rem; background: linear-gradient(135deg, rgba(255,255,255,.96), rgba(255,250,243,.9)); box-shadow: 0 12px 32px rgba(94,54,22,.07); padding: 1.25rem; }
+.home-section-label { border-color: #f0b26e; background: #ffedd5; color: #a84b14; }
+.home-section-title { color: #202020; }
+.home-section-copy { color: #665d55; }
+.home-section-link { border-color: #eeb06c; background: #fff8ef; color: #c65d1b; box-shadow: 0 5px 14px rgba(198,93,27,.08); }
+.home-section-link:hover { border-color: #e76f21; background: #ffedd5; color: #a84b14; box-shadow: 0 8px 18px rgba(198,93,27,.14); }
+
+@media (min-width: 640px) { .home-section { padding: 1.5rem; } }
 
 /* Compatibility layer for the pre-existing dark palette. This intentionally affects styling only. */
 [class*="bg-[#050B14]"], [class*="bg-[#07111F]"], [class*="bg-[#07111f]"], [class*="bg-[#08111E]"] { background-color: #fffaf3 !important; }
