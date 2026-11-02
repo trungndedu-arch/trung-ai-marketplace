@@ -216,7 +216,8 @@ export async function getAdminProducts(filters: AdminProductFilters): Promise<Ad
   const requestedPage = Math.max(1, filters.page);
   const from = (requestedPage - 1) * ADMIN_PRODUCTS_PAGE_SIZE;
   const to = from + ADMIN_PRODUCTS_PAGE_SIZE - 1;
-  let query = supabase.from("products").select(adminProductSelect, { count: "exact" });
+  function buildQuery() {
+    let query = supabase.from("products").select(adminProductSelect, { count: "exact" });
   const search = sanitizeSearch(filters.search);
 
   if (search) query = query.or(`title.ilike.%${search}%,slug.ilike.%${search}%,legacy_id.ilike.%${search}%`);
@@ -226,12 +227,15 @@ export async function getAdminProducts(filters: AdminProductFilters): Promise<Ad
   if (filters.salesStatus !== "all") query = query.eq("sales_status", filters.salesStatus);
   if (filters.accessType !== "all") query = query.eq("access_type", filters.accessType);
   if (filters.homepageVisibility === "featured") query = query.eq("is_featured", true);
-  if (filters.homepageVisibility === "not_featured") query = query.eq("is_featured", false);
+    if (filters.homepageVisibility === "not_featured") query = query.eq("is_featured", false);
+    return query;
+  }
 
-  const { data, error, count } = await query
+  const { data, error, count } = await buildQuery()
     .order(filters.sort, { ascending: true })
     .order("title", { ascending: true })
     .range(from, to);
+
 
   if (error) {
     console.error("[admin/products] Unable to load product list:", error);
