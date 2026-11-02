@@ -128,6 +128,13 @@ export async function getWorkflowBySlug(slug: string) {
   return mapProductToWorkflow(product);
 }
 
+export async function getLegacyWorkflowBySlug(slug: string) {
+  const product = await getPublishedProductBySlug(slug, ["ai_app"]);
+  if (!product || product.detailUrl !== `/workflow/chatbot/${product.slug}`) return undefined;
+
+  return mapProductToWorkflow(product);
+}
+
 const videoAutomationTerms = ["video", "clip", "reel", "short", "tiktok"];
 const workflowTopicTerms = ["review", "quang cao", "thoi trang", "pov", "triet ly", "san pham", "ban hang"];
 

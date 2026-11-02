@@ -1,10 +1,12 @@
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft, ArrowRight, Bot, CheckCircle2, ExternalLink, ShieldCheck } from "lucide-react";
+import { ArrowLeft, ArrowRight, Bot, ExternalLink, ShieldCheck } from "lucide-react";
+import { WorkflowDetailContent } from "@/components/workflows/WorkflowDetailContent";
 import { ProductPurchaseActions } from "@/components/cart/ProductPurchaseActions";
 import { getMarketplaceCompareAtPriceLabel, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { getChatbotBySlug, type Chatbot } from "@/lib/chatbots";
+import { getLegacyWorkflowBySlug } from "@/lib/workflows";
 
 export const dynamic = "force-dynamic";
 
@@ -25,6 +27,9 @@ function ChatbotPrimaryAction({ chatbot }: { chatbot: Chatbot }) {
 
 export default async function ChatbotDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const legacyAiApp = await getLegacyWorkflowBySlug(slug);
+  if (legacyAiApp) return <WorkflowDetailContent workflow={legacyAiApp} />;
+
   const chatbot = await getChatbotBySlug(slug);
   if (!chatbot) notFound();
 
@@ -94,14 +99,6 @@ export default async function ChatbotDetailPage({ params }: { params: Promise<{ 
         </div>
       </section>
 
-      <section className="mt-8 grid gap-4 sm:grid-cols-3">
-        {["Đang hoàn thiện tính năng", "Thông tin chi tiết sẽ cập nhật sau", "Phù hợp cho người làm nội dung"].map((item) => (
-          <div key={item} className="flex gap-3 rounded-2xl border border-white/[0.08] bg-white/[0.03] p-5 text-sm text-slate-300">
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-sky-300" />
-            {item}
-          </div>
-        ))}
-      </section>
     </main>
   );
 }

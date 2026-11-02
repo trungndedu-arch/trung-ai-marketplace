@@ -98,10 +98,8 @@ export async function getFeaturedChatbots() {
 }
 
 export async function getChatbotBySlug(slug: string) {
-  const product = await getPublishedProductBySlug(slug, ["chatbot", "ai_app"]);
-
+  const product = await getPublishedProductBySlug(slug, ["chatbot"]);
   if (!product) return undefined;
-  if (product.productType === "ai_app" && !product.detailUrl.includes("/workflow/chatbot/")) return undefined;
 
   return mapProductToChatbot(product);
 }
