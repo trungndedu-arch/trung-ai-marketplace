@@ -1,4 +1,4 @@
-import { getFeaturedPublishedProducts, getPublishedProductBySlug, getPublishedProducts, getRelatedPublishedProducts } from "@/lib/catalog/repository";
+import { getFeaturedPublishedProducts, getPublishedProductBySlug, getPublishedProducts } from "@/lib/catalog/repository";
 import { getCatalogProductState, getCatalogVisualBadge, type CatalogProductState } from "@/lib/catalog/product-state";
 import type { CatalogDemoVideo, CatalogProduct } from "@/lib/catalog/types";
 
@@ -128,10 +128,87 @@ export async function getWorkflowBySlug(slug: string) {
   return mapProductToWorkflow(product);
 }
 
-export async function getRelatedWorkflows(workflow: Workflow, limit = 4) {
-  const product = await getPublishedProductBySlug(workflow.slug, ["ai_app"]);
-  if (!product) return [];
+const videoAutomationTerms = ["video", "clip", "reel", "short", "tiktok"];
+const workflowTopicTerms = ["review", "quang cao", "thoi trang", "pov", "triet ly", "san pham", "ban hang"];
 
-  const related = await getRelatedPublishedProducts(product, limit);
-  return related.filter(isWorkflowDetailRoute).map(mapProductToWorkflow);
+function normalizeText(value: string) {
+  return value
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "")
+    .toLocaleLowerCase("vi");
+}
+
+function normalizedSearchText(workflow: Workflow) {
+  return normalizeText([workflow.name, workflow.shortDescription, workflow.category, ...workflow.tags].join(" "));
+}
+
+function hasVideoAutomationFocus(workflow: Workflow) {
+  const text = normalizedSearchText(workflow);
+  return videoAutomationTerms.some((term) => text.includes(term));
+}
+
+function sharedTagCount(source: Workflow, candidate: Workflow) {
+  const sourceTags = new Set(source.tags.map((tag) => normalizeText(tag.trim())).filter(Boolean));
+  return candidate.tags.reduce((count, tag) => count + Number(sourceTags.has(normalizeText(tag.trim()))), 0);
+}
+
+function sharedTopicCount(source: Workflow, candidate: Workflow) {
+  const sourceText = normalizedSearchText(source);
+  const candidateText = normalizedSearchText(candidate);
+  return workflowTopicTerms.filter((term) => sourceText.includes(term) && candidateText.includes(term)).length;
+}
+
+function workflowTopic(workflow: Workflow) {
+  const text = normalizedSearchText(workflow);
+  return workflowTopicTerms.find((term) => text.includes(term)) ?? workflow.category.toLocaleLowerCase("vi");
+}
+
+function compareRelatedWorkflows(source: Workflow, left: Workflow, right: Workflow) {
+  const score = (candidate: Workflow) => {
+    const sameCategory = candidate.category === source.category ? 100 : 0;
+    return sameCategory + sharedTagCount(source, candidate) * 10 + sharedTopicCount(source, candidate) * 20;
+  };
+
+  return score(right) - score(left)
+    || left.displayOrder - right.displayOrder
+    || left.createdAt.localeCompare(right.createdAt)
+    || left.databaseId.localeCompare(right.databaseId);
+}
+
+function selectDiverseWorkflows(source: Workflow, candidates: Workflow[], limit: number) {
+  const ordered = [...candidates].sort((left, right) => compareRelatedWorkflows(source, left, right));
+  const selected: Workflow[] = [];
+  const usedTopics = new Set<string>();
+
+  for (const candidate of ordered) {
+    const topic = workflowTopic(candidate);
+    if (usedTopics.has(topic)) continue;
+    selected.push(candidate);
+    usedTopics.add(topic);
+    if (selected.length === limit) return selected;
+  }
+
+  for (const candidate of ordered) {
+    if (selected.some((item) => item.databaseId === candidate.databaseId)) continue;
+    selected.push(candidate);
+    if (selected.length === limit) break;
+  }
+
+  return selected;
+}
+
+export function getRelatedWorkflowTitle(workflow: Workflow) {
+  return hasVideoAutomationFocus(workflow) ? "Các App làm video tự động tương tự" : "AI App tương tự";
+}
+
+export async function getRelatedWorkflows(workflow: Workflow, limit = 4) {
+  const candidates = (await getPublishedProducts(["ai_app"])).map(mapProductToWorkflow);
+  const isVideoWorkflow = hasVideoAutomationFocus(workflow);
+  const related = candidates.filter((candidate) => {
+    if (candidate.databaseId === workflow.databaseId) return false;
+    if (isVideoWorkflow) return hasVideoAutomationFocus(candidate);
+    return candidate.category === workflow.category || sharedTagCount(workflow, candidate) > 0;
+  });
+
+  return selectDiverseWorkflows(workflow, related, limit);
 }
