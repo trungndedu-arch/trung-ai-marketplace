@@ -5,6 +5,7 @@ import {
   type EditableProductMetadata,
 } from "@/lib/admin/product-metadata";
 import { parseYouTubeVideoUrl } from "@/lib/youtube";
+import { parseHomepagePosition } from "@/lib/homepage-product-position";
 
 export type EditableProductField =
   | "productType"
@@ -118,12 +119,6 @@ function parseMoney(value: string) {
   return { value: number, error: "" };
 }
 
-function parseDisplayOrder(value: string) {
-  if (!/^-?\d+$/.test(value)) return null;
-  const number = Number(value);
-  return Number.isSafeInteger(number) && number >= -999_999 && number <= 999_999 ? number : null;
-}
-
 function isHttpUrl(value: string) {
   if (!value) return true;
   try {
@@ -170,7 +165,7 @@ export function validateProductFormData(formData: FormData, productType: Product
   const detailUrl = stringField(formData, "detailUrl");
   const demoVideoUrl = stringField(formData, "demoVideoUrl");
   const demoVideoId = demoVideoUrl ? parseYouTubeVideoUrl(demoVideoUrl) : null;
-  const displayOrder = parseDisplayOrder(stringField(formData, "displayOrder"));
+  const homepagePosition = parseHomepagePosition(stringField(formData, "displayOrder"));
   const isFeatured = formData.get("isFeatured") === "on";
   const tags = normalizeTags(stringField(formData, "tags"));
   const metadata = parseEditableProductMetadata(formData, productType);
@@ -195,7 +190,8 @@ export function validateProductFormData(formData: FormData, productType: Product
   if (externalUrl.length > 2048 || !isHttpUrl(externalUrl)) fieldErrors.externalUrl = "External URL phải là địa chỉ HTTP(S) hợp lệ, tối đa 2.048 ký tự.";
   if (detailUrl.length > 2048 || !isSafeDetailUrl(detailUrl)) fieldErrors.detailUrl = "Detail URL phải là đường dẫn nội bộ hoặc HTTP(S) hợp lệ, tối đa 2.048 ký tự.";
   if (demoVideoUrl && !demoVideoId) fieldErrors.demoVideoUrl = "Link YouTube không hợp lệ.";
-  if (displayOrder === null) fieldErrors.displayOrder = "Thứ tự hiển thị phải là số nguyên hợp lệ.";
+  if (homepagePosition.error) fieldErrors.displayOrder = homepagePosition.error;
+  if (isFeatured && publicationStatus === "published" && homepagePosition.value === null) fieldErrors.displayOrder = "Sản phẩm đã xuất bản và hiển thị trang chủ cần một vị trí từ 1 trở lên.";
   if (tags.length > 30 || tags.some((tag) => tag.length > 60)) fieldErrors.tags = "Tối đa 30 tag, mỗi tag không quá 60 ký tự.";
   if (metadata.errors.metadata) fieldErrors.metadata = metadata.errors.metadata;
 
@@ -243,11 +239,11 @@ export function validateProductFormData(formData: FormData, productType: Product
     badge,
     tags,
     isFeatured,
-    displayOrder,
+    displayOrder: homepagePosition.value,
     metadata: metadata.values,
   };
 
-  return { values, fieldErrors, isValid: Object.keys(fieldErrors).length === 0 && accessType !== null && salesStatus !== null && publicationStatus !== null && displayOrder !== null };
+  return { values, fieldErrors, isValid: Object.keys(fieldErrors).length === 0 && accessType !== null && salesStatus !== null && publicationStatus !== null };
 }
 
 export function toProductDatabaseFields(

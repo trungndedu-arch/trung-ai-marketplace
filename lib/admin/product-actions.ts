@@ -2,7 +2,8 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-import { requireAdminAccess } from "@/lib/auth/admin";
+import { requireAdminAccess, requireAdminRole } from "@/lib/auth/admin";
+import { moveHomepagePosition, type HomepagePositionProduct } from "@/lib/homepage-product-position";
 import { revalidateAdminProductRoutes, revalidatePublicProductRoutes } from "@/lib/admin/product-revalidation";
 import {
   parseProductType,
@@ -24,6 +25,9 @@ type ExistingProduct = {
   category_id: string | null;
   detail_url: string | null;
   metadata: Record<string, unknown> | null;
+  is_featured: boolean;
+  publication_status: "draft" | "published" | "hidden";
+  display_order: number;
 };
 
 async function validateCategory(
@@ -70,11 +74,12 @@ export async function updateProduct(_previousState: ProductMutationState, formDa
   if (!id) return { status: "error", message: "Không xác định được sản phẩm cần cập nhật.", fieldErrors: {} };
 
   const supabase = await createClient();
-  const { data: existingData, error: existingError } = await supabase
+  let { data: existingData, error: existingError } = await supabase
     .from("products")
-    .select("id, slug, product_type, category_id, detail_url, metadata")
+    .select("id, slug, product_type, category_id, detail_url, metadata, is_featured, publication_status, display_order")
     .eq("id", id)
     .maybeSingle();
+
 
   if (existingError) {
     console.error("[admin/products] Unable to verify product before update:", existingError);
@@ -101,18 +106,36 @@ export async function updateProduct(_previousState: ProductMutationState, formDa
   }
   if (duplicateSlug) return { status: "error", message: "Slug này đã được sử dụng.", fieldErrors: { slug: "Hãy chọn một slug khác." } };
 
-  const { data: updated, error: updateError } = await supabase
-    .from("products")
-    .update(payload)
-    .eq("id", id)
-    .select("id")
-    .maybeSingle();
+  await requireAdminRole(`/admin/products/${id}/edit`);
+  const { data: updated, error: updateError } = await supabase.from("products").update(payload).eq("id", id).select("id").maybeSingle();
 
   if (updateError) {
     console.error("[admin/products] Product update rejected:", updateError);
     return { status: "error", message: productDatabaseErrorMessage(updateError, "update"), fieldErrors: {} };
   }
   if (!updated) return { status: "error", message: "Sản phẩm không tồn tại hoặc bạn không có quyền cập nhật.", fieldErrors: {} };
+
+  const changesHomepageOrder = payload.display_order !== existing.display_order
+    || payload.is_featured !== existing.is_featured
+    || payload.publication_status !== existing.publication_status;
+  if (!changesHomepageOrder) {
+    revalidateUpdatedProductRoutes(existing.product_type, existing.slug, payload.slug, existing.detail_url, payload.detail_url, id);
+    redirect(`/admin/products/${id}?updated=1`);
+  }
+
+  const sectionTypes = existing.product_type === "chatbot" || existing.product_type === "ai_app" ? ["chatbot", "ai_app"] : [existing.product_type];
+  const { data: candidates, error: candidatesError } = await supabase
+    .from("products")
+    .select("id, product_type, publication_status, is_featured, display_order, created_at")
+    .in("product_type", sectionTypes)
+    .eq("publication_status", "published")
+    .eq("is_featured", true);
+  if (candidatesError) return { status: "error", message: "Đã lưu sản phẩm nhưng không thể sắp xếp lại danh sách trang chủ. Vui lòng liên hệ quản trị viên.", fieldErrors: {} };
+  const reordered = moveHomepagePosition((candidates ?? []).map((item) => ({ id: item.id, productType: item.product_type, publicationStatus: item.publication_status, isFeatured: item.is_featured, displayOrder: item.display_order, createdAt: item.created_at })) as HomepagePositionProduct[], id, validation.values.displayOrder!);
+  for (const item of reordered) {
+    const { error } = await supabase.from("products").update({ display_order: item.position }).eq("id", item.id);
+    if (error) return { status: "error", message: "Đã lưu sản phẩm nhưng chưa thể hoàn tất việc sắp xếp. Không thể cam kết thứ tự nhất quán; không tiếp tục cập nhật thêm.", fieldErrors: {} };
+  }
 
   revalidateUpdatedProductRoutes(existing.product_type, existing.slug, payload.slug, existing.detail_url, payload.detail_url, id);
   redirect(`/admin/products/${id}?updated=1`);
