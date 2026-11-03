@@ -6,6 +6,8 @@
 import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
 import { MarketplaceBrand, MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
 import type { AuthUserSummary } from "@/lib/auth/session";
+import { HomeContactLinks } from "@/components/home/HomeContactLinks";
+import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
 import type { AiTool } from "@/lib/ai-tools";
 import type { Workflow } from "@/lib/workflows";
 import type { Chatbot } from "@/lib/chatbots";
@@ -264,7 +266,7 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
   );
 }
 
-export function HomePageClient({ chatbots, apps, courses, aiTools, user }: { chatbots: Chatbot[]; apps: Workflow[]; courses: Course[]; aiTools: AiTool[]; user: AuthUserSummary }) {
+export function HomePageClient({ chatbots, apps, courses, aiTools, user, contactLinks }: { chatbots: Chatbot[]; apps: Workflow[]; courses: Course[]; aiTools: AiTool[]; user: AuthUserSummary; contactLinks: HomepageContactLinks }) {
   return (
     <div className="min-h-screen bg-ink text-slate-100">
       <MarketplaceHeader user={user} />
@@ -277,6 +279,7 @@ export function HomePageClient({ chatbots, apps, courses, aiTools, user }: { cha
             <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-400">
               Chatbot, AI App, Prompt, Khóa học và các công cụ AI giúp bạn tiết kiệm thời gian, tăng hiệu suất và tạo ra kết quả vượt trội.
             </p>
+            <HomeContactLinks settings={contactLinks} />
           </div>
           <div className="space-y-14">
             <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />

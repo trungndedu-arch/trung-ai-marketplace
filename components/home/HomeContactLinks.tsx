@@ -1,0 +1,15 @@
+import { Headphones, MessageCircle } from "lucide-react";
+import { contactLinkIsVisible, type HomepageContactLinks } from "@/lib/homepage-contact-links";
+
+function FacebookIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M13.7 21v-8h2.7l.4-3.1h-3.1V8c0-.9.3-1.6 1.6-1.6h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4.1 1.5-4.1 4.2v2.3H7.7V13h2.8v8h3.2Z" /></svg>; }
+function YouTubeIcon() { return <svg viewBox="0 0 24 24" aria-hidden="true" className="h-4 w-4 fill-current"><path d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31.4 31.4 0 0 0 0 12a31.4 31.4 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31.4 31.4 0 0 0 24 12a31.4 31.4 0 0 0-.5-5.8ZM9.6 15.6V8.4l6.3 3.6-6.3 3.6Z" /></svg>; }
+
+export function HomeContactLinks({ settings }: { settings: HomepageContactLinks }) {
+  const links = [
+    contactLinkIsVisible(settings.facebook, "facebook") ? { key: "facebook", ...settings.facebook, icon: <FacebookIcon />, className: "border-blue-400/40 bg-blue-500/15 text-blue-100 hover:border-blue-300 hover:bg-blue-500/25" } : null,
+    contactLinkIsVisible(settings.zalo, "zalo") ? { key: "zalo", ...settings.zalo, icon: <MessageCircle className="h-4 w-4" />, className: "border-sky-400/40 bg-sky-500/15 text-sky-100 hover:border-sky-300 hover:bg-sky-500/25" } : null,
+    contactLinkIsVisible(settings.youtube, "youtube") ? { key: "youtube", ...settings.youtube, icon: <YouTubeIcon />, className: "border-white/15 bg-white/[0.04] text-slate-100 hover:border-red-400/60 hover:bg-red-500/10" } : null,
+  ].filter(Boolean) as Array<{ key: string; url: string; label: string; icon: React.ReactNode; className: string }>;
+  if (!links.length) return null;
+  return <div className="mt-5"><div className="flex flex-wrap gap-2.5">{links.map((link) => <a key={link.key} href={link.url} target="_blank" rel="noopener noreferrer" className={`inline-flex min-h-10 items-center gap-2 rounded-lg border px-3.5 text-sm font-extrabold transition ${link.className}`}>{link.icon}{link.label}</a>)}</div>{settings.supportCta ? <p className="mt-4 flex max-w-4xl items-start gap-2 text-xs leading-5 text-slate-400"><Headphones className="mt-0.5 h-4 w-4 shrink-0 text-sky-300" />{settings.supportCta}</p> : null}{settings.floatingZaloEnabled && contactLinkIsVisible(settings.zalo, "zalo") ? <a href={settings.zalo.url} target="_blank" rel="noopener noreferrer" aria-label={settings.zalo.label} className="fixed bottom-5 right-5 z-40 inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-300/40 bg-sky-500 px-4 text-sm font-extrabold text-white shadow-lg shadow-sky-950/50 transition hover:bg-sky-400 sm:bottom-6 sm:right-6"><MessageCircle className="h-5 w-5" />Zalo</a> : null}</div>;
+}

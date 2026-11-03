@@ -12,6 +12,7 @@ import {
   Sparkles,
   ReceiptText,
   Settings,
+  MessageCircle,
   Users,
 } from "lucide-react";
 import type { AdminRole } from "@/lib/auth/admin";
@@ -26,6 +27,7 @@ const navigationItems = [
   { label: "Khách hàng", href: "/admin/customers", icon: Users, enabled: true, adminOnly: true },
   { label: "Đơn hàng", href: "/admin/orders", icon: ReceiptText, enabled: true, adminOnly: true },
   { label: "Cài đặt", href: "/admin/settings", icon: Settings, enabled: true, adminOnly: true },
+  { label: "Kênh liên hệ", href: "/admin/contact-links", icon: MessageCircle, enabled: true, adminOnly: false },
 ] as const;
 
 function NavigationLinks({ role }: { role: AdminRole }) {
