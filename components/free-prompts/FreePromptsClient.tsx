@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import { Search, Sparkles } from "lucide-react";
 import { MarketplaceBrand, MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
-import { orderedPrompts, type PromptItem } from "@/lib/free-prompts";
+import type { PromptItem } from "@/lib/free-prompts";
 import type { AuthUserSummary } from "@/lib/auth/session";
 
 const filters = ["Tất cả model", "Nano Banana Pro", "Nano Banana 2", "GPT Image", "Midjourney", "Grok", "Veo 3", "Sora", "Kling", "Runway", "Khác"];
@@ -23,11 +23,11 @@ function PromptCard({ item }: { item: PromptItem }) {
   );
 }
 
-export function FreePromptsClient({ user }: { user: AuthUserSummary }) {
+export function FreePromptsClient({ user, prompts }: { user: AuthUserSummary; prompts: PromptItem[] }) {
   const [activeFilter, setActiveFilter] = useState(filters[0]);
   const [query, setQuery] = useState("");
   const visible = useMemo(
-    () => orderedPrompts.filter((item) => (
+    () => prompts.filter((item) => (
       activeFilter === "Tất cả model" || item.model === activeFilter
     ) && `${item.title} ${item.category} ${item.model}`.toLowerCase().includes(query.toLowerCase().trim())),
     [activeFilter, query],
