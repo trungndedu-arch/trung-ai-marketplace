@@ -6,7 +6,7 @@
 import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
 import { MarketplaceBrand, MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
 import type { AuthUserSummary } from "@/lib/auth/session";
-import { HomeContactLinks } from "@/components/home/HomeContactLinks";
+import { HomeHeroAbout } from "@/components/home/HomeHeroAbout";
 import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
 import type { AiTool } from "@/lib/ai-tools";
 import type { Workflow } from "@/lib/workflows";
@@ -270,17 +270,9 @@ export function HomePageClient({ chatbots, apps, courses, aiTools, user, contact
   return (
     <div className="min-h-screen bg-ink text-slate-100">
       <MarketplaceHeader user={user} />
-      <main className="mx-auto max-w-[1800px] px-4 py-10 sm:px-6 lg:py-14 xl:px-8">
-        <section id="products" className="scroll-mt-36">
-          <div className="mb-9 border-b border-white/[0.07] pb-7">
-            <h1 className="max-w-5xl text-2xl font-black leading-tight tracking-tight text-white sm:text-3xl lg:text-4xl">
-              Khám phá công cụ AI thực chiến giúp bạn làm nhanh hơn, <span className="text-sky-300">bán hàng tốt hơn</span>
-            </h1>
-            <p className="mt-3 max-w-4xl text-sm leading-6 text-slate-400">
-              Chatbot, AI App, Prompt, Khóa học và các công cụ AI giúp bạn tiết kiệm thời gian, tăng hiệu suất và tạo ra kết quả vượt trội.
-            </p>
-            <HomeContactLinks settings={contactLinks} />
-          </div>
+      <main className="mx-auto max-w-[1800px] px-4 py-6 sm:px-6 lg:py-8 xl:px-8">
+        <HomeHeroAbout contactLinks={contactLinks} />
+        <section id="products" className="mt-14 scroll-mt-24">
           <div className="space-y-14">
             <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />
             <CategoryPreviewSection section={categorySections[0]} />
