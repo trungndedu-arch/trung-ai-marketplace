@@ -53,7 +53,7 @@ function SearchField({ mobile = false }: { mobile?: boolean }) {
         type="search"
         aria-label="Tìm kiếm sản phẩm AI"
         placeholder="Tìm công cụ, chatbot, prompt..."
-        className="h-10 w-full rounded-lg border border-white/[0.08] bg-white/[0.035] pl-10 pr-3 text-xs text-white outline-none placeholder:text-slate-500 focus:border-sky-400/45 focus:ring-4 focus:ring-sky-500/10"
+        className="h-10 w-full rounded-full border border-white/[0.08] bg-white/[0.035] pl-10 pr-4 text-xs text-white outline-none placeholder:text-slate-500 focus:border-sky-400/45 focus:ring-4 focus:ring-sky-500/10"
       />
     </div>
   );
@@ -66,22 +66,23 @@ export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
 
   return (
     <>
-      <header className="sticky top-0 z-40 border-b border-white/[0.07] bg-[#07111F]/95 shadow-[0_14px_34px_rgba(0,0,0,.2)] backdrop-blur-xl">
-        <div className="mx-auto flex min-h-[68px] max-w-[1800px] items-center gap-3 px-4 py-2 sm:px-6 xl:px-8">
+      <header className="sticky top-0 z-50 border-b border-white/[0.07] bg-[#07111F]/90 shadow-[0_14px_34px_rgba(0,0,0,.2)] backdrop-blur-xl">
+        <div className="mx-auto flex min-h-16 max-w-[1800px] items-center gap-3 px-4 py-2 sm:px-6 xl:px-8">
           <MarketplaceBrand />
 
           <div className="hidden md:block md:min-w-[180px] md:flex-1 xl:max-w-[240px]">
             <SearchField />
           </div>
 
-          <nav aria-label="Điều hướng chính" className="mx-auto hidden min-w-0 items-center justify-center gap-0.5 xl:flex">
+          <nav aria-label="Điều hướng chính" className="mx-auto hidden min-w-0 items-center justify-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.025] p-1 xl:flex">
             {primaryNavigation.map(({ label, href }) => {
               const active = isActivePath(pathname, href);
               return (
                 <Link
                   key={href}
                   href={href}
-                  className={`whitespace-nowrap rounded-lg px-2.5 py-2 text-[11px] font-extrabold transition 2xl:px-3 2xl:text-xs ${active ? "bg-sky-500/12 text-sky-300" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}
+                  aria-current={active ? "page" : undefined}
+                  className={`whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-extrabold transition 2xl:px-3 2xl:text-xs ${active ? "bg-sky-500/15 text-sky-200 shadow-[0_0_18px_rgba(14,165,233,.10)]" : "text-slate-300 hover:bg-white/[0.05] hover:text-white"}`}
                 >
                   {label}
                 </Link>
@@ -119,8 +120,8 @@ export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
 
       </header>
 
-      {menuOpen ? <button type="button" aria-label="Đóng menu" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm min-[1440px]:hidden" /> : null}
-      <aside className={`fixed inset-y-0 right-0 z-[60] flex w-full max-w-sm flex-col border-l border-white/[0.08] bg-[#07111F] p-5 shadow-2xl transition-transform duration-300 min-[1440px]:hidden ${menuOpen ? "translate-x-0" : "translate-x-full"}`}>
+      {menuOpen ? <button type="button" aria-label="Đóng menu" onClick={() => setMenuOpen(false)} className="fixed inset-0 z-[60] bg-black/70 backdrop-blur-sm min-[1440px]:hidden" /> : null}
+      <aside className={`fixed inset-y-0 right-0 z-[70] flex w-full max-w-sm flex-col border-l border-white/[0.08] bg-[#07111F] p-5 shadow-2xl transition-transform duration-300 motion-reduce:transition-none min-[1440px]:hidden ${menuOpen ? "translate-x-0" : "translate-x-full"}`}>
         <div className="flex items-center justify-between gap-3">
           <MarketplaceBrand />
           <button type="button" aria-label="Đóng menu" onClick={() => setMenuOpen(false)} className="grid h-10 w-10 place-items-center rounded-lg border border-white/10 text-slate-300">
@@ -131,7 +132,7 @@ export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
           {primaryNavigation.map(({ label, href, icon: Icon }) => {
             const active = isActivePath(pathname, href);
             return (
-              <Link key={href} href={href} onClick={() => setMenuOpen(false)} className={`flex min-h-12 items-center gap-3 rounded-lg px-3 text-sm font-bold transition ${active ? "bg-sky-500/12 text-sky-200" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}>
+              <Link key={href} href={href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`flex min-h-12 items-center gap-3 rounded-lg px-3 text-sm font-bold transition ${active ? "bg-sky-500/12 text-sky-200" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}>
                 <Icon className="h-[18px] w-[18px] shrink-0" />
                 {label}
               </Link>
