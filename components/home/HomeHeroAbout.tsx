@@ -5,6 +5,9 @@ import { HomeContactLinks } from "@/components/home/HomeContactLinks";
 import { HomeFloatingPromotion, type HomePromotion } from "@/components/home/HomeFloatingPromotion";
 import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
 
+// Set to true when the founder section is ready to be shown again.
+export const SHOW_HOME_ABOUT_SECTION = false;
+
 export function HomeHeroAbout({ contactLinks, promotion }: { contactLinks: HomepageContactLinks; promotion?: HomePromotion | null }) {
   return <>
     <HomeFloatingPromotion promotion={promotion} />
@@ -24,7 +27,8 @@ export function HomeHeroAbout({ contactLinks, promotion }: { contactLinks: Homep
       </div>
     </section>
 
-    <section aria-labelledby="about-nguyen-duc-trung" className="mt-8 grid overflow-hidden rounded-[2rem] border border-white/[0.07] bg-[#0B1728] shadow-[0_24px_70px_rgba(0,0,0,.24)] lg:grid-cols-[45%_55%]">
+    {SHOW_HOME_ABOUT_SECTION ? (
+      <section aria-labelledby="about-nguyen-duc-trung" className="mt-8 grid overflow-hidden rounded-[2rem] border border-white/[0.07] bg-[#0B1728] shadow-[0_24px_70px_rgba(0,0,0,.24)] lg:grid-cols-[45%_55%]">
       <div className="relative min-h-[420px] overflow-hidden border-b border-sky-300/15 bg-[radial-gradient(circle_at_50%_28%,rgba(56,189,248,.16),transparent_48%),linear-gradient(145deg,#07111F,#0B1728)] lg:min-h-[560px] lg:border-b-0 lg:border-r">
         <div aria-hidden="true" className="absolute inset-5 rounded-[1.5rem] border border-sky-300/15" />
         <Image src="/images/hero/person.png" alt="Nguyễn Đức Trung - Trung AI Media" fill sizes="(min-width: 1024px) 45vw, 100vw" className="object-contain object-bottom px-3 pt-7 sm:px-8" />
@@ -37,6 +41,7 @@ export function HomeHeroAbout({ contactLinks, promotion }: { contactLinks: Homep
         <div className="mt-7 flex flex-wrap items-center gap-3"><Link href="/cong-cu-ai" className="inline-flex min-h-11 items-center gap-2 rounded-full border border-sky-300/30 bg-sky-500/10 px-5 text-sm font-extrabold text-sky-100 transition hover:border-sky-300/55 hover:bg-sky-500/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300"><Wrench className="h-4 w-4" />Xem công cụ AI</Link></div>
         <HomeContactLinks settings={contactLinks} showSupport={false} showFloating={false} />
       </div>
-    </section>
+      </section>
+    ) : null}
   </>;
 }
