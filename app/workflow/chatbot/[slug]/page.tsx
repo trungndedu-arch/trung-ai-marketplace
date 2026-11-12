@@ -42,7 +42,7 @@ export default async function ChatbotDetailPage({ params }: { params: Promise<{ 
       <nav aria-label="Breadcrumb" className="mb-7 flex flex-wrap items-center gap-2 text-sm text-slate-400">
         <Link href="/" className="hover:text-sky-300">Trang chủ</Link>
         <span>/</span>
-        <Link href="/workflow" className="hover:text-sky-300">Chatbot & AI App</Link>
+        <Link href="/workflow" className="hover:text-sky-300">App Tạo Ảnh &amp; Video AI</Link>
         <span>/</span>
         <span className="font-semibold text-slate-200">{chatbot.name}</span>
       </nav>
@@ -52,7 +52,7 @@ export default async function ChatbotDetailPage({ params }: { params: Promise<{ 
         <div className="relative grid gap-8 lg:grid-cols-[1fr_.9fr] lg:items-center">
           <div>
             <Link href="/workflow" className="inline-flex items-center gap-2 text-sm font-bold text-sky-300 transition hover:text-white">
-              <ArrowLeft className="h-4 w-4" /> Quay lại Chatbot & AI App
+              <ArrowLeft className="h-4 w-4" /> Quay lại App Tạo Ảnh &amp; Video AI
             </Link>
 
             <div className="mt-7 flex flex-wrap items-center gap-2">

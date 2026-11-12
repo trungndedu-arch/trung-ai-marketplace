@@ -26,7 +26,7 @@ type NavigationItem = { label: string; href?: string; icon: LucideIcon; coaching
 const primaryNavigation: NavigationItem[] = [
   { label: "Trang chủ", href: "/", icon: Home },
   { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, comingSoon: true },
-  { label: "Chatbot & AI App", href: "/workflow", icon: Clapperboard },
+  { label: "App Tạo Ảnh & Video AI", href: "/workflow", icon: Clapperboard },
   { label: "Học AI Miễn Phí", icon: GraduationCap, comingSoon: true },
   { label: "Công Cụ AI Nên Dùng", href: "/cong-cu-ai", icon: Boxes },
 ];
