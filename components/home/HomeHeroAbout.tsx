@@ -1,14 +1,15 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clapperboard, GraduationCap, Sparkles, Wrench } from "lucide-react";
+import { ArrowRight, Clapperboard, GraduationCap, MessageCircle, Sparkles, Wrench } from "lucide-react";
 import { HomeContactLinks } from "@/components/home/HomeContactLinks";
 import { HomeFloatingPromotion, type HomePromotion } from "@/components/home/HomeFloatingPromotion";
+import { coachingLanding } from "@/lib/coaching";
 import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
 
 // Set to true when the founder section is ready to be shown again.
 export const SHOW_HOME_ABOUT_SECTION = false;
 
-export function HomeHeroAbout({ contactLinks, promotion }: { contactLinks: HomepageContactLinks; promotion?: HomePromotion | null }) {
+export function HomeHeroAbout({ contactLinks, promotion, onCoachingConsultation }: { contactLinks: HomepageContactLinks; promotion?: HomePromotion | null; onCoachingConsultation?: () => void }) {
   return <>
     <HomeFloatingPromotion promotion={promotion} />
     <section className="relative isolate overflow-hidden rounded-[2rem] border border-white/[0.07] bg-[#07111F] px-5 py-14 text-center shadow-[0_32px_100px_rgba(0,0,0,.32)] sm:px-8 sm:py-16 lg:px-12 lg:py-20">
@@ -21,6 +22,7 @@ export function HomeHeroAbout({ contactLinks, promotion }: { contactLinks: Homep
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link href="/workflow?tab=ai-app" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-sky-500 px-5 text-sm font-extrabold text-white shadow-[0_12px_34px_rgba(14,165,233,.28)] transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 motion-reduce:transform-none"><Clapperboard className="h-4 w-4" />Khám phá AI App<ArrowRight className="h-4 w-4" /></Link>
           <Link href="/video-ai-course" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-sky-300/25 bg-sky-500/10 px-5 text-sm font-extrabold text-sky-100 transition hover:-translate-y-0.5 hover:border-sky-300/50 hover:bg-sky-500/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 motion-reduce:transform-none"><GraduationCap className="h-4 w-4" />Khóa học Video AI</Link>
+          {coachingLanding.enabled && onCoachingConsultation ? <button type="button" onClick={onCoachingConsultation} aria-haspopup="dialog" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-400/10 px-5 text-sm font-extrabold text-cyan-100 transition hover:-translate-y-0.5 hover:border-cyan-300/50 hover:bg-cyan-400/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 motion-reduce:transform-none"><MessageCircle className="h-4 w-4" />Tư vấn Coaching AI 1:1</button> : null}
           <Link href="/free-prompts" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-white/10 bg-white/[0.035] px-5 text-sm font-extrabold text-slate-200 transition hover:-translate-y-0.5 hover:border-white/20 hover:bg-white/[0.06] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 motion-reduce:transform-none"><Sparkles className="h-4 w-4 text-sky-300" />Prompt miễn phí</Link>
         </div>
         <HomeContactLinks settings={contactLinks} align="center" />

@@ -4,7 +4,9 @@
 // Marketplace home page and featured AI tools.
 
 import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
+import { useState } from "react";
 import { MarketplaceBrand, MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
+import { CoachingConsultationModal } from "@/components/home/CoachingConsultationModal";
 import type { AuthUserSummary } from "@/lib/auth/session";
 import { HomeHeroAbout } from "@/components/home/HomeHeroAbout";
 import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
@@ -267,11 +269,14 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
 }
 
 export function HomePageClient({ chatbots, apps, courses, aiTools, user, contactLinks }: { chatbots: Chatbot[]; apps: Workflow[]; courses: Course[]; aiTools: AiTool[]; user: AuthUserSummary; contactLinks: HomepageContactLinks }) {
+  const [coachingOpen, setCoachingOpen] = useState(false);
+
   return (
     <div className="min-h-screen bg-ink text-slate-100">
-      <MarketplaceHeader user={user} />
+      <MarketplaceHeader user={user} onCoachingConsultation={() => setCoachingOpen(true)} />
+      <CoachingConsultationModal open={coachingOpen} onClose={() => setCoachingOpen(false)} settings={contactLinks} />
       <main className="mx-auto max-w-[1800px] px-4 py-6 sm:px-6 lg:py-8 xl:px-8">
-        <HomeHeroAbout contactLinks={contactLinks} />
+        <HomeHeroAbout contactLinks={contactLinks} onCoachingConsultation={() => setCoachingOpen(true)} />
         <section id="products" className="mt-14 scroll-mt-24">
           <div className="space-y-14">
             <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />

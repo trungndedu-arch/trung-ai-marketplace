@@ -15,11 +15,15 @@ import {
   Search,
   X,
 } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { HeaderAccountNav, SidebarAccountNav } from "@/components/auth/AccountNav";
 import { CartNavLink } from "@/components/cart/CartNavLink";
 import type { AuthUserSummary } from "@/lib/auth/session";
+import { coachingLanding } from "@/lib/coaching";
 
-const primaryNavigation = [
+type NavigationItem = { label: string; href: string; icon: LucideIcon; coaching?: boolean };
+
+const primaryNavigation: NavigationItem[] = [
   { label: "Trang chủ", href: "/", icon: Home },
   { label: "Prompt AI Miễn Phí", href: "/free-prompts", icon: MessageSquareMore },
   { label: "Chatbot & AI App", href: "/workflow", icon: Clapperboard },
@@ -59,10 +63,13 @@ function SearchField({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
-export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
+export function MarketplaceHeader({ user, onCoachingConsultation }: { user: AuthUserSummary; onCoachingConsultation?: () => void }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
+  const navigation = coachingLanding.enabled && onCoachingConsultation
+    ? [...primaryNavigation.slice(0, 4), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...primaryNavigation.slice(4)]
+    : primaryNavigation;
 
   return (
     <>
@@ -75,7 +82,8 @@ export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
           </div>
 
           <nav aria-label="Điều hướng chính" className="mx-auto hidden min-w-0 items-center justify-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.025] p-1 xl:flex">
-            {primaryNavigation.map(({ label, href }) => {
+            {navigation.map(({ label, href, coaching }) => {
+              if (coaching) return <button key={label} type="button" aria-haspopup="dialog" onClick={onCoachingConsultation} className="whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-extrabold text-slate-300 transition hover:bg-white/[0.05] hover:text-white 2xl:px-3 2xl:text-xs">{label}</button>;
               const active = isActivePath(pathname, href);
               return (
                 <Link
@@ -129,7 +137,8 @@ export function MarketplaceHeader({ user }: { user: AuthUserSummary }) {
           </button>
         </div>
         <nav aria-label="Điều hướng mobile" className="mt-8 space-y-1.5">
-          {primaryNavigation.map(({ label, href, icon: Icon }) => {
+          {navigation.map(({ label, href, icon: Icon, coaching }) => {
+            if (coaching) return <button key={label} type="button" aria-haspopup="dialog" onClick={() => { setMenuOpen(false); onCoachingConsultation?.(); }} className="flex min-h-12 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-bold text-slate-300 transition hover:bg-white/[0.04] hover:text-white"><Icon className="h-[18px] w-[18px] shrink-0" />{label}</button>;
             const active = isActivePath(pathname, href);
             return (
               <Link key={href} href={href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`flex min-h-12 items-center gap-3 rounded-lg px-3 text-sm font-bold transition ${active ? "bg-sky-500/12 text-sky-200" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}>
