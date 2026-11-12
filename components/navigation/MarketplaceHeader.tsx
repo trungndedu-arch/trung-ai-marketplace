@@ -7,7 +7,6 @@ import {
   Bell,
   Boxes,
   Clapperboard,
-  GraduationCap,
   Heart,
   Home,
   Menu,
@@ -27,7 +26,6 @@ const primaryNavigation: NavigationItem[] = [
   { label: "Trang chủ", href: "/", icon: Home },
   { label: "Prompt AI Miễn Phí", href: "/free-prompts", icon: MessageSquareMore },
   { label: "Chatbot & AI App", href: "/workflow", icon: Clapperboard },
-  { label: "Khóa Học Video AI", href: "/video-ai-course", icon: GraduationCap },
   { label: "Công Cụ AI Nên Dùng", href: "/cong-cu-ai", icon: Boxes },
 ];
 
@@ -68,7 +66,7 @@ export function MarketplaceHeader({ user, onCoachingConsultation }: { user: Auth
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const navigation = coachingLanding.enabled && onCoachingConsultation
-    ? [...primaryNavigation.slice(0, 4), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...primaryNavigation.slice(4)]
+    ? [...primaryNavigation.slice(0, 3), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...primaryNavigation.slice(3)]
     : primaryNavigation;
 
   return (

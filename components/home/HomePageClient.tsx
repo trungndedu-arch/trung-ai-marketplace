@@ -13,14 +13,12 @@ import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
 import type { AiTool } from "@/lib/ai-tools";
 import type { Workflow } from "@/lib/workflows";
 import type { Chatbot } from "@/lib/chatbots";
-import type { Course } from "@/lib/courses";
 import { getMarketplaceCardActions, getMarketplaceCompareAtPriceLabel, getMarketplaceDiscountPercent, getMarketplacePriceLabel } from "@/lib/catalog/product-state";
 import { ProductCard, ProductCardGrid } from "@/components/product/ProductCard";
 import {
   ArrowRight,
   Boxes,
   Clapperboard,
-  GraduationCap,
   Sparkles,
 } from "lucide-react";
 
@@ -71,27 +69,6 @@ function renderPromptCard(item: FreePromptItem) {
         { label: item.model, tone: "blue" },
         { label: item.count },
       ]}
-    />
-  );
-}
-
-function renderCourseCard(course: Course) {
-  return (
-    <ProductCard
-      key={course.id}
-      title={course.name}
-      description={course.shortDescription}
-      image={course.coverImage}
-      imageAlt={`Ảnh bìa ${course.name}`}
-      category={course.category}
-      badge={course.badge}
-      status={course.status}
-      price={course.state.isComingSoon ? "Sắp ra mắt" : course.price}
-      originalPrice={course.originalPrice}
-      discountPercent={getMarketplaceDiscountPercent(course.state)}
-      href={course.landingPageUrl}
-      actions={[course.state.isOnSale && course.landingPageUrl ? { label: "Xem chi tiết", href: course.landingPageUrl } : { label: course.status, disabled: true, variant: "muted" }]}
-      demoVideo={course.demoVideo}
     />
   );
 }
@@ -192,29 +169,6 @@ function CategoryPreviewSection({ section }: { section: CategorySection }) {
   );
 }
 
-function FeaturedCoursesSection({ courses }: { courses: Course[] }) {
-  return (
-    <section id="video-ai-course" className="scroll-mt-24">
-      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
-            <GraduationCap className="h-3.5 w-3.5" /> Khóa Học Video AI
-          </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">Khóa Học Video AI</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">Lộ trình học Video AI thực chiến để xây kênh, tạo nội dung ngắn và làm Affiliate từ số 0.</p>
-        </div>
-        <a href="/video-ai-course" className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
-          Xem khóa học
-          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-        </a>
-      </div>
-      <ProductCardGrid>
-        {courses.map(renderCourseCard)}
-      </ProductCardGrid>
-    </section>
-  );
-}
-
 function FeaturedAiToolsSection({ tools }: { tools: AiTool[] }) {
   return (
     <section id="ai-apps" className="scroll-mt-24">
@@ -268,7 +222,7 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
   );
 }
 
-export function HomePageClient({ chatbots, apps, courses, aiTools, user, contactLinks }: { chatbots: Chatbot[]; apps: Workflow[]; courses: Course[]; aiTools: AiTool[]; user: AuthUserSummary; contactLinks: HomepageContactLinks }) {
+export function HomePageClient({ chatbots, apps, aiTools, user, contactLinks }: { chatbots: Chatbot[]; apps: Workflow[]; aiTools: AiTool[]; user: AuthUserSummary; contactLinks: HomepageContactLinks }) {
   const [coachingOpen, setCoachingOpen] = useState(false);
 
   return (
@@ -281,7 +235,6 @@ export function HomePageClient({ chatbots, apps, courses, aiTools, user, contact
           <div className="space-y-14">
             <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />
             <CategoryPreviewSection section={categorySections[0]} />
-            <FeaturedCoursesSection courses={courses} />
             <FeaturedAiToolsSection tools={aiTools} />
           </div>
         </section>
