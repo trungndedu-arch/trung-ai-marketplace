@@ -7,6 +7,7 @@ import {
   Bell,
   Boxes,
   Clapperboard,
+  GraduationCap,
   Heart,
   Home,
   Menu,
@@ -20,12 +21,13 @@ import { CartNavLink } from "@/components/cart/CartNavLink";
 import type { AuthUserSummary } from "@/lib/auth/session";
 import { coachingLanding } from "@/lib/coaching";
 
-type NavigationItem = { label: string; href: string; icon: LucideIcon; coaching?: boolean };
+type NavigationItem = { label: string; href?: string; icon: LucideIcon; coaching?: boolean; comingSoon?: boolean };
 
 const primaryNavigation: NavigationItem[] = [
   { label: "Trang chủ", href: "/", icon: Home },
   { label: "Prompt AI Miễn Phí", href: "/free-prompts", icon: MessageSquareMore },
   { label: "Chatbot & AI App", href: "/workflow", icon: Clapperboard },
+  { label: "Học AI Miễn Phí", icon: GraduationCap, comingSoon: true },
   { label: "Công Cụ AI Nên Dùng", href: "/cong-cu-ai", icon: Boxes },
 ];
 
@@ -66,7 +68,7 @@ export function MarketplaceHeader({ user, onCoachingConsultation }: { user: Auth
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
   const navigation = coachingLanding.enabled && onCoachingConsultation
-    ? [...primaryNavigation.slice(0, 3), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...primaryNavigation.slice(3)]
+    ? [...primaryNavigation.slice(0, 4), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...primaryNavigation.slice(4)]
     : primaryNavigation;
 
   return (
@@ -79,9 +81,11 @@ export function MarketplaceHeader({ user, onCoachingConsultation }: { user: Auth
             <SearchField />
           </div>
 
-          <nav aria-label="Điều hướng chính" className="mx-auto hidden min-w-0 items-center justify-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.025] p-1 xl:flex">
-            {navigation.map(({ label, href, coaching }) => {
+          <nav aria-label="Điều hướng chính" className="mx-auto hidden min-w-0 items-center justify-center gap-0.5 rounded-full border border-white/[0.06] bg-white/[0.025] p-1 min-[1440px]:flex">
+            {navigation.map(({ label, href, coaching, comingSoon }) => {
+              if (comingSoon) return <button key={label} type="button" disabled aria-disabled="true" title="Nội dung đang được chuẩn bị" className="inline-flex cursor-not-allowed items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-extrabold text-slate-500 2xl:px-3 2xl:text-xs"><span>{label}</span><span className="rounded-full border border-white/10 px-1.5 py-0.5 text-[8px] font-black uppercase tracking-wide text-slate-500">Sắp có</span></button>;
               if (coaching) return <button key={label} type="button" aria-haspopup="dialog" onClick={onCoachingConsultation} className="whitespace-nowrap rounded-full px-2.5 py-2 text-[11px] font-extrabold text-slate-300 transition hover:bg-white/[0.05] hover:text-white 2xl:px-3 2xl:text-xs">{label}</button>;
+              if (!href) return null;
               const active = isActivePath(pathname, href);
               return (
                 <Link
@@ -135,8 +139,10 @@ export function MarketplaceHeader({ user, onCoachingConsultation }: { user: Auth
           </button>
         </div>
         <nav aria-label="Điều hướng mobile" className="mt-8 space-y-1.5">
-          {navigation.map(({ label, href, icon: Icon, coaching }) => {
+          {navigation.map(({ label, href, icon: Icon, coaching, comingSoon }) => {
+            if (comingSoon) return <button key={label} type="button" disabled aria-disabled="true" className="flex min-h-12 w-full cursor-not-allowed items-center gap-3 rounded-lg px-3 text-left text-sm font-bold text-slate-500"><Icon className="h-[18px] w-[18px] shrink-0" />{label}<span className="ml-auto rounded-full border border-white/10 px-2 py-0.5 text-[9px] font-black uppercase tracking-wide text-slate-500">Sắp có</span></button>;
             if (coaching) return <button key={label} type="button" aria-haspopup="dialog" onClick={() => { setMenuOpen(false); onCoachingConsultation?.(); }} className="flex min-h-12 w-full items-center gap-3 rounded-lg px-3 text-left text-sm font-bold text-slate-300 transition hover:bg-white/[0.04] hover:text-white"><Icon className="h-[18px] w-[18px] shrink-0" />{label}</button>;
+            if (!href) return null;
             const active = isActivePath(pathname, href);
             return (
               <Link key={href} href={href} aria-current={active ? "page" : undefined} onClick={() => setMenuOpen(false)} className={`flex min-h-12 items-center gap-3 rounded-lg px-3 text-sm font-bold transition ${active ? "bg-sky-500/12 text-sky-200" : "text-slate-300 hover:bg-white/[0.04] hover:text-white"}`}>
