@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import { AiToolsShell } from "@/components/ai-tools/AiToolsShell";
 
 export const metadata: Metadata = {
-  title: "Chatbot & AI App | Trung AI Media",
-  description: "Khám phá chatbot và AI App giúp tạo nội dung, xây kênh, bán hàng và làm Affiliate hiệu quả hơn.",
+  title: "App Tạo Ảnh & Video AI | Trung AI Media",
+  description: "Khám phá App AI giúp tạo ảnh, tạo video, xây nội dung và bán hàng hiệu quả hơn.",
 };
 
 export default function WorkflowsLayout({ children }: { children: React.ReactNode }) {
