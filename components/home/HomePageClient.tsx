@@ -3,7 +3,6 @@
 
 // Marketplace home page and featured AI tools.
 
-import { orderedPrompts, type PromptItem as FreePromptItem } from "@/lib/free-prompts";
 import { useState } from "react";
 import { MarketplaceBrand, MarketplaceHeader } from "@/components/navigation/MarketplaceHeader";
 import { CoachingConsultationModal } from "@/components/home/CoachingConsultationModal";
@@ -19,59 +18,7 @@ import {
   ArrowRight,
   Boxes,
   Clapperboard,
-  Sparkles,
 } from "lucide-react";
-
-const homeFeaturedPromptTitles = [
-  "Mẫu Nữ Ngồi Ô Tô",
-  "Prompt Video Sức Khỏe Hoạt Hình 3D",
-  "Quảng Cáo Đồ Uống Splash Siêu Thực",
-  "Ốp Điện Thoại Xinh",
-];
-
-const homeFeaturedPrompts = homeFeaturedPromptTitles.flatMap((title) => {
-  const prompt = orderedPrompts.find((item) => item.title === title);
-  return prompt ? [prompt] : [];
-});
-
-type CategorySection = {
-  id: string;
-  title: string;
-  description: string;
-  href: string;
-  cta: string;
-  kind: "prompts";
-  prompts: FreePromptItem[];
-};
-
-const categorySections: CategorySection[] = [
-  {
-    id: "free-prompts",
-    title: "Prompt AI Miễn Phí",
-    description: "Các prompt nổi bật dùng ngay cho ảnh, video, quảng cáo, bán hàng và xây kênh nội dung.",
-    href: "/free-prompts",
-    cta: "Xem thêm prompt",
-    kind: "prompts",
-    prompts: homeFeaturedPrompts,
-  },
-];
-function renderPromptCard(item: FreePromptItem) {
-  return (
-    <ProductCard
-      key={item.id}
-      title={item.title}
-      description={item.description}
-      image={item.image}
-      category={item.category}
-      badge="Prompt"
-      href="/free-prompts"
-      meta={[
-        { label: item.model, tone: "blue" },
-        { label: item.count },
-      ]}
-    />
-  );
-}
 
 function renderChatbotCard(chatbot: Chatbot) {
   const detailHref = `/workflow/chatbot/${chatbot.slug}`;
@@ -146,29 +93,6 @@ function renderAiToolCard(tool: AiTool) {
   );
 }
 
-function CategoryPreviewSection({ section }: { section: CategorySection }) {
-  return (
-    <section id={section.id} className="scroll-mt-24">
-      <div className="mb-5 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div>
-          <div className="mb-2 inline-flex items-center gap-2 rounded-full border border-sky-400/15 bg-sky-400/10 px-3 py-1 text-[10px] font-black uppercase tracking-[0.18em] text-sky-300">
-            <Sparkles className="h-3.5 w-3.5" /> {section.title}
-          </div>
-          <h3 className="text-2xl font-extrabold tracking-tight text-white sm:text-3xl">{section.title}</h3>
-          <p className="mt-2 max-w-2xl text-sm leading-6 text-slate-400">{section.description}</p>
-        </div>
-        <a href={section.href} className="group inline-flex w-fit items-center gap-2 rounded-xl border border-sky-400/25 bg-sky-400/10 px-4 py-3 text-sm font-extrabold text-sky-200 transition hover:border-sky-300/50 hover:bg-sky-400/15 hover:text-white">
-          {section.cta}
-          <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
-        </a>
-      </div>
-      <ProductCardGrid>
-        {section.prompts.map(renderPromptCard)}
-      </ProductCardGrid>
-    </section>
-  );
-}
-
 function FeaturedAiToolsSection({ tools }: { tools: AiTool[] }) {
   return (
     <section id="ai-apps" className="scroll-mt-24">
@@ -234,7 +158,6 @@ export function HomePageClient({ chatbots, apps, aiTools, user, contactLinks }: 
         <section id="products" className="mt-14 scroll-mt-24">
           <div className="space-y-14">
             <FeaturedChatbotAiAppsSection chatbots={chatbots} apps={apps} />
-            <CategoryPreviewSection section={categorySections[0]} />
             <FeaturedAiToolsSection tools={aiTools} />
           </div>
         </section>
