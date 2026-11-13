@@ -30,7 +30,7 @@ export function parseYouTubeVideoUrl(value: string) {
   } else if (YOUTUBE_HOSTS.has(hostname)) {
     if (pathSegments.length === 1 && pathSegments[0] === "watch") {
       videoId = url.searchParams.get("v");
-    } else if (pathSegments.length === 2 && (pathSegments[0] === "shorts" || pathSegments[0] === "embed")) {
+    } else if (pathSegments.length === 2 && (pathSegments[0] === "shorts" || pathSegments[0] === "embed" || pathSegments[0] === "live")) {
       videoId = pathSegments[1];
     }
   }

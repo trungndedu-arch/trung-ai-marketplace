@@ -23,7 +23,7 @@ function PromptCard({ item }: { item: PromptItem }) {
   );
 }
 
-export function FreePromptsClient({ user, prompts }: { user: AuthUserSummary; prompts: PromptItem[] }) {
+export function FreePromptsClient({ user, prompts, freeAiLearningAvailable }: { user: AuthUserSummary; prompts: PromptItem[]; freeAiLearningAvailable: boolean }) {
   const [activeFilter, setActiveFilter] = useState(filters[0]);
   const [query, setQuery] = useState("");
   const visible = useMemo(
@@ -35,7 +35,7 @@ export function FreePromptsClient({ user, prompts }: { user: AuthUserSummary; pr
 
   return (
     <div className="min-h-screen bg-ink text-slate-100">
-      <MarketplaceHeader user={user} />
+      <MarketplaceHeader user={user} freeAiLearningAvailable={freeAiLearningAvailable} />
       <main className="mx-auto max-w-[1800px] px-4 py-9 sm:px-6 lg:py-12 xl:px-8">
         <section className="relative overflow-hidden border-y border-white/[0.07] bg-[#0B1728] px-6 py-10 sm:px-10 lg:px-12">
           <div className="absolute inset-0 hero-grid opacity-60" />

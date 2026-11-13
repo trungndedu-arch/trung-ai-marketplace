@@ -13,6 +13,7 @@ import {
   ReceiptText,
   Settings,
   MessageCircle,
+  Youtube,
   Users,
 } from "lucide-react";
 import type { AdminRole } from "@/lib/auth/admin";
@@ -22,6 +23,7 @@ const navigationItems = [
   { label: "Sản phẩm", href: "/admin/products", icon: PackageSearch, enabled: true, adminOnly: false },
   { label: "Danh mục", href: "/admin/categories", icon: ListTree, enabled: true, adminOnly: false },
   { label: "Prompt miễn phí", href: "/admin/free-prompts", icon: Sparkles, enabled: true, adminOnly: false },
+  { label: "Học AI Miễn Phí", href: "/admin/free-ai-learning", icon: Youtube, enabled: true, adminOnly: true },
   { label: "Banner", href: "/admin/banners", icon: ImageIcon, enabled: true, adminOnly: false },
   { label: "Flash Sale", href: "/admin/flash-sales", icon: BadgePercent, enabled: true, adminOnly: false },
   { label: "Khách hàng", href: "/admin/customers", icon: Users, enabled: true, adminOnly: true },

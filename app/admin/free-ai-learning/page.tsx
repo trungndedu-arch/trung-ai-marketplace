@@ -1,0 +1,20 @@
+import Link from "next/link";
+import { Pencil, Plus, Youtube } from "lucide-react";
+import { FreeAiLearningRowActions } from "@/components/admin/FreeAiLearningRowActions";
+import { FreeAiLearningSettingsForm } from "@/components/admin/FreeAiLearningSettingsForm";
+import { YouTubeThumbnail } from "@/components/shared/YouTubeThumbnail";
+import { getAdminFreeAiLearning } from "@/lib/admin/free-ai-learning";
+
+export const metadata = { title: "Học AI Miễn Phí | Trung AI Admin" };
+
+export default async function AdminFreeAiLearningPage() {
+  const result = await getAdminFreeAiLearning();
+  const visibleCount = result.videos.filter((video) => video.isVisible).length;
+  return <div className="mx-auto w-full max-w-[1400px]">
+    <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="text-xs font-black uppercase tracking-[0.18em] text-sky-300">Homepage Content</p><h1 className="mt-2 text-2xl font-extrabold text-white sm:text-3xl">Học AI Miễn Phí</h1><p className="mt-2 text-sm text-slate-400">Quản lý video YouTube hướng dẫn hiển thị trên trang chủ.</p></div>{result.schemaReady ? <Link href="/admin/free-ai-learning/new" className="inline-flex min-h-10 items-center gap-2 rounded-lg bg-sky-500 px-4 text-sm font-extrabold text-white"><Plus className="h-4 w-4" />Thêm video</Link> : null}</div>
+    {result.error ? <section className="mt-6 rounded-lg border border-amber-300/20 bg-amber-400/10 p-5 text-sm text-amber-100">{result.error} Không có thay đổi nào được thực hiện.</section> : <>
+      <div className="mt-6"><FreeAiLearningSettingsForm settings={result.settings} visibleCount={visibleCount} /></div>
+      {result.videos.length ? <div className="mt-6 overflow-x-auto rounded-lg border border-white/10"><table className="w-full min-w-[900px] text-sm"><thead className="bg-slate-950/50 text-left text-slate-400"><tr><th className="p-3">Video</th><th className="p-3">Trạng thái</th><th className="p-3">Thứ tự</th><th className="p-3">Cập nhật</th><th className="p-3">Thao tác</th></tr></thead><tbody>{result.videos.map((video) => <tr key={video.id} className="border-t border-white/10 text-slate-200"><td className="p-3"><div className="flex min-w-[380px] items-center gap-3"><YouTubeThumbnail videoId={video.videoId} alt={`Thumbnail ${video.title}`} className="aspect-video w-28 shrink-0 overflow-hidden rounded" imageClassName="h-full w-full object-cover" /><div><a href={video.videoUrl} target="_blank" rel="noopener noreferrer" className="line-clamp-2 max-w-md font-bold text-white hover:text-sky-300">{video.title}</a><small className="mt-1 block font-mono text-slate-500">{video.videoId}</small></div></div></td><td className="p-3"><span className={`rounded-full border px-2 py-1 text-xs font-bold ${video.isVisible ? "border-emerald-300/20 text-emerald-200" : "border-white/15 text-slate-400"}`}>{video.isVisible ? "Đang bật" : "Đang ẩn"}</span></td><td className="p-3 font-bold">{video.displayOrder}</td><td className="p-3 text-xs text-slate-400">{new Intl.DateTimeFormat("vi-VN", { dateStyle: "short", timeStyle: "short" }).format(new Date(video.updatedAt))}</td><td className="p-3"><div className="flex flex-wrap gap-2"><Link href={`/admin/free-ai-learning/${video.id}/edit`} className="inline-flex items-center gap-1.5 rounded-md border border-white/15 px-2.5 py-1.5 text-xs font-bold text-slate-200"><Pencil className="h-3.5 w-3.5" />Sửa</Link><FreeAiLearningRowActions id={video.id} isVisible={video.isVisible} /></div></td></tr>)}</tbody></table></div> : <section className="mt-6 grid min-h-56 place-items-center rounded-lg border border-dashed border-white/10 bg-[#0B1728]/60 text-center"><div><Youtube className="mx-auto h-10 w-10 text-slate-600" /><h2 className="mt-3 font-extrabold text-white">Chưa có video</h2><p className="mt-2 text-sm text-slate-500">Thêm video thật từ kênh YouTube để bắt đầu.</p><Link href="/admin/free-ai-learning/new" className="mt-5 inline-flex min-h-10 items-center gap-2 rounded-lg bg-sky-500 px-4 text-sm font-bold text-white"><Plus className="h-4 w-4" />Thêm video</Link></div></section>}
+    </>}
+  </div>;
+}

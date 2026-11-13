@@ -21,13 +21,13 @@ import { CartNavLink } from "@/components/cart/CartNavLink";
 import type { AuthUserSummary } from "@/lib/auth/session";
 import { coachingLanding } from "@/lib/coaching";
 
-type NavigationItem = { label: string; href?: string; icon: LucideIcon; coaching?: boolean; comingSoon?: boolean };
+type NavigationItem = { label: string; href?: string; icon: LucideIcon; coaching?: boolean; comingSoon?: boolean; freeAiLearning?: boolean };
 
 const primaryNavigation: NavigationItem[] = [
   { label: "Trang chủ", href: "/", icon: Home },
   { label: "Prompt AI Miễn Phí", icon: MessageSquareMore, comingSoon: true },
   { label: "App Tạo Ảnh & Video AI", href: "/workflow", icon: Clapperboard },
-  { label: "Học AI Miễn Phí", icon: GraduationCap, comingSoon: true },
+  { label: "Học AI Miễn Phí", icon: GraduationCap, freeAiLearning: true },
   { label: "Công Cụ AI Nên Dùng", href: "/cong-cu-ai", icon: Boxes },
 ];
 
@@ -63,14 +63,19 @@ function SearchField({ mobile = false }: { mobile?: boolean }) {
   );
 }
 
-export function MarketplaceHeader({ user, onCoachingConsultation }: { user: AuthUserSummary; onCoachingConsultation?: () => void }) {
+export function MarketplaceHeader({ user, onCoachingConsultation, freeAiLearningAvailable = false }: { user: AuthUserSummary; onCoachingConsultation?: () => void; freeAiLearningAvailable?: boolean }) {
   const pathname = usePathname();
   const [menuOpen, setMenuOpen] = useState(false);
   const [mobileSearchOpen, setMobileSearchOpen] = useState(false);
-  const coachingIndex = primaryNavigation.findIndex((item) => item.label === "Học AI Miễn Phí") + 1;
+  const publicNavigation = primaryNavigation.map((item) => item.freeAiLearning ? {
+    ...item,
+    href: freeAiLearningAvailable ? "/#hoc-ai-mien-phi" : undefined,
+    comingSoon: !freeAiLearningAvailable,
+  } : item);
+  const coachingIndex = publicNavigation.findIndex((item) => item.label === "Học AI Miễn Phí") + 1;
   const navigation = coachingLanding.enabled && onCoachingConsultation
-    ? [...primaryNavigation.slice(0, coachingIndex), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...primaryNavigation.slice(coachingIndex)]
-    : primaryNavigation;
+    ? [...publicNavigation.slice(0, coachingIndex), { label: coachingLanding.label, href: coachingLanding.href, icon: MessageSquareMore, coaching: true }, ...publicNavigation.slice(coachingIndex)]
+    : publicNavigation;
 
   return (
     <>

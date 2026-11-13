@@ -6,18 +6,20 @@ import { getFeaturedWorkflows } from "@/lib/workflows";
 import { getCurrentUserSummary } from "@/lib/auth/session";
 import { getPublicSiteSettings } from "@/lib/catalog/public-content";
 import { HOMEPAGE_CONTACT_SETTING_KEYS, parseHomepageContactLinks } from "@/lib/homepage-contact-links";
+import { getPublicFreeAiLearning } from "@/lib/free-ai-learning";
 
 // Marketplace home page and featured AI tools.
 
 export const dynamic = "force-dynamic";
 
 export default async function HomePage() {
-  const [chatbots, apps, aiTools, user, contactSettings] = await Promise.all([
+  const [chatbots, apps, aiTools, user, contactSettings, freeAiLearning] = await Promise.all([
     getFeaturedChatbots(),
     getFeaturedWorkflows(),
     getFeaturedAiTools(),
     getCurrentUserSummary(),
     getPublicSiteSettings([...HOMEPAGE_CONTACT_SETTING_KEYS]),
+    getPublicFreeAiLearning(),
   ]);
 
   return (
@@ -27,6 +29,7 @@ export default async function HomePage() {
       aiTools={aiTools}
       user={user}
       contactLinks={parseHomepageContactLinks(contactSettings)}
+      freeAiLearning={freeAiLearning}
     />
   );
 }
