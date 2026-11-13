@@ -24,6 +24,8 @@ export type ProductCardMeta = {
   tone?: "blue" | "cyan" | "slate";
 };
 
+type ProductCardVariant = "default" | "compact";
+
 type ProductCardProps = {
   title: string;
   description?: string;
@@ -41,12 +43,25 @@ type ProductCardProps = {
   actions?: ProductCardAction[];
   showFavorite?: boolean;
   demoVideo?: CatalogDemoVideo | null;
+  variant?: ProductCardVariant;
   className?: string;
 };
 
-export function ProductCardGrid({ children, className = "" }: { children: ReactNode; className?: string }) {
+export function ProductCardGrid({
+  children,
+  className = "",
+  variant = "default",
+}: {
+  children: ReactNode;
+  className?: string;
+  variant?: ProductCardVariant;
+}) {
+  const gridClass = variant === "compact"
+    ? "grid-cols-2 gap-3 md:grid-cols-3 lg:grid-cols-4 min-[1440px]:grid-cols-5 sm:gap-4"
+    : "grid-cols-1 gap-4 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 min-[1600px]:grid-cols-5 xl:gap-5";
+
   return (
-    <section className={`grid auto-rows-fr items-stretch gap-4 min-[480px]:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 min-[1600px]:grid-cols-5 xl:gap-5 ${className}`}>
+    <section className={`grid auto-rows-fr items-stretch ${gridClass} ${className}`}>
       {children}
     </section>
   );
@@ -113,6 +128,7 @@ function ProductCardMedia({
   imageBadges,
   showFavorite,
   demoVideo,
+  variant,
 }: {
   title: string;
   image?: string;
@@ -120,6 +136,7 @@ function ProductCardMedia({
   imageBadges: string[];
   showFavorite: boolean;
   demoVideo?: CatalogDemoVideo | null;
+  variant: ProductCardVariant;
 }) {
   const [isPlaying, setIsPlaying] = useState(false);
   const canPlayDemo = demoVideo?.provider === "youtube" && isYouTubeVideoId(demoVideo.id);
@@ -131,7 +148,7 @@ function ProductCardMedia({
   }
 
   return (
-    <div className="pointer-events-none relative z-10 aspect-[9/16] w-full shrink-0 overflow-hidden rounded-t-2xl bg-[#07111F]">
+    <div className={`pointer-events-none relative z-10 w-full shrink-0 overflow-hidden rounded-t-2xl bg-[#07111F] ${variant === "compact" ? "aspect-[3/4]" : "aspect-[9/16]"}`}>
       {isPlaying && canPlayDemo ? (
         <iframe
           src={`https://www.youtube-nocookie.com/embed/${demoVideo.id}?autoplay=1&playsinline=1&rel=0`}
@@ -148,8 +165,8 @@ function ProductCardMedia({
               src={image}
               alt={imageAlt ?? title}
               fill
-              sizes="(min-width: 1600px) 20vw, (min-width: 1280px) 25vw, (min-width: 768px) 33vw, (min-width: 480px) 50vw, 100vw"
-              className="object-cover object-center transition duration-500 group-hover:scale-[1.025]"
+              sizes={variant === "compact" ? "(min-width: 1440px) 20vw, (min-width: 1024px) 25vw, (min-width: 768px) 33vw, 50vw" : "(min-width: 1600px) 20vw, (min-width: 1280px) 25vw, (min-width: 768px) 33vw, (min-width: 480px) 50vw, 100vw"}
+              className={variant === "compact" ? "object-contain object-center" : "object-cover object-center transition duration-500 group-hover:scale-[1.025]"}
             />
           ) : (
             <div className="absolute inset-0 bg-gradient-to-br from-sky-500/20 via-blue-700/20 to-cyan-500/10" />
@@ -204,6 +221,7 @@ export function ProductCard({
   actions = [],
   showFavorite = false,
   demoVideo,
+  variant = "default",
   className = "",
 }: ProductCardProps) {
   const visibleMeta = meta.filter((item) => item.label.trim()).slice(0, 3);
@@ -217,19 +235,19 @@ export function ProductCard({
   const content = (
     <>
       {href && !onClick ? <Link href={href} aria-label={`Xem chi tiết ${title}`} className="absolute inset-0 z-0 rounded-2xl focus:outline-none focus-visible:ring-2 focus-visible:ring-sky-300" /> : null}
-      <ProductCardMedia title={title} image={image} imageAlt={imageAlt} imageBadges={imageBadges} showFavorite={showFavorite} demoVideo={demoVideo} />
+      <ProductCardMedia title={title} image={image} imageAlt={imageAlt} imageBadges={imageBadges} showFavorite={showFavorite} demoVideo={demoVideo} variant={variant} />
 
-      <div className="pointer-events-none relative z-10 flex min-h-0 flex-1 flex-col p-3.5 sm:p-4">
+      <div className={`pointer-events-none relative z-10 flex min-h-0 flex-1 flex-col ${variant === "compact" ? "p-3 sm:p-3.5" : "p-3.5 sm:p-4"}`}>
         {category ? <span className="block min-h-4 truncate text-[10px] font-bold uppercase tracking-[0.14em] text-sky-400">{category}</span> : null}
-        <div className="mt-1.5 shrink-0">
-          <h3 className="line-clamp-2 min-h-11 text-[15px] font-extrabold leading-[1.45] text-white transition group-hover:text-sky-300">{title}</h3>
-          {description ? <p className="mt-1.5 line-clamp-2 min-h-10 text-xs leading-5 text-slate-400">{description}</p> : <div className="mt-1.5 min-h-10" />}
+        <div className={`shrink-0 ${variant === "compact" ? "mt-1" : "mt-1.5"}`}>
+          <h3 className={`line-clamp-2 font-extrabold text-white transition group-hover:text-sky-300 ${variant === "compact" ? "min-h-10 text-[13px] leading-5 sm:text-sm" : "min-h-11 text-[15px] leading-[1.45]"}`}>{title}</h3>
+          {variant !== "compact" && (description ? <p className="mt-1.5 line-clamp-2 min-h-10 text-xs leading-5 text-slate-400">{description}</p> : <div className="mt-1.5 min-h-10" />)}
         </div>
 
         {hasFooter ? (
-          <div className="mt-auto shrink-0 space-y-2.5 pt-2.5">
+          <div className={`mt-auto shrink-0 ${variant === "compact" ? "space-y-2 pt-2" : "space-y-2.5 pt-2.5"}`}>
             {hasPrice ? (
-              <div className={`relative min-h-[58px] min-w-0 rounded-xl border px-3 pb-2.5 transition duration-300 ${hasDiscount ? "border-amber-300/35 bg-gradient-to-br from-amber-400/[0.12] via-[#111B2D] to-rose-500/[0.09] pt-4 shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_0_22px_rgba(245,158,11,.09)] group-hover:border-amber-200/55 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,.07),0_0_28px_rgba(251,146,60,.16)]" : "border-amber-300/20 bg-gradient-to-r from-amber-400/[0.07] via-white/[0.025] to-transparent pt-2.5 group-hover:border-amber-200/35"}`}>
+              <div className={`relative min-w-0 rounded-xl border transition duration-300 ${variant === "compact" ? "min-h-[51px] px-2.5 pb-2" : "min-h-[58px] px-3 pb-2.5"} ${hasDiscount ? `border-amber-300/35 bg-gradient-to-br from-amber-400/[0.12] via-[#111B2D] to-rose-500/[0.09] shadow-[inset_0_1px_0_rgba(255,255,255,.05),0_0_22px_rgba(245,158,11,.09)] group-hover:border-amber-200/55 group-hover:shadow-[inset_0_1px_0_rgba(255,255,255,.07),0_0_28px_rgba(251,146,60,.16)] ${variant === "compact" ? "pt-3.5" : "pt-4"}` : `border-amber-300/20 bg-gradient-to-r from-amber-400/[0.07] via-white/[0.025] to-transparent group-hover:border-amber-200/35 ${variant === "compact" ? "pt-2" : "pt-2.5"}`} `}>
                 {hasDiscount ? (
                   <span className="absolute -top-2.5 left-3 inline-flex h-5 items-center gap-1 rounded-full border border-orange-200/25 bg-gradient-to-r from-orange-500 to-rose-500 px-2 text-[9px] font-black uppercase tracking-[0.13em] text-white shadow-[0_0_16px_rgba(244,63,94,.28)]">
                     <Zap aria-hidden="true" className="h-2.5 w-2.5 fill-current" />
@@ -238,7 +256,7 @@ export function ProductCard({
                 ) : null}
                 <div className={`${hasDiscount ? "grid min-w-0 grid-cols-[minmax(0,1fr)_auto] items-end gap-x-2 gap-y-1" : "flex min-h-8 min-w-0 flex-wrap items-center gap-x-2 gap-y-1"}`}>
                   <div className="flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-                    {price ? <span className="whitespace-nowrap bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400 bg-clip-text text-2xl font-black leading-none tracking-[-0.035em] text-transparent drop-shadow-[0_0_12px_rgba(251,191,36,.2)]">{price}</span> : null}
+                    {price ? <span className={`whitespace-nowrap bg-gradient-to-r from-yellow-200 via-amber-300 to-orange-400 bg-clip-text font-black leading-none tracking-[-0.035em] text-transparent drop-shadow-[0_0_12px_rgba(251,191,36,.2)] ${variant === "compact" ? "text-lg sm:text-xl" : "text-2xl"}`}>{price}</span> : null}
                     {originalPrice ? <span className="whitespace-nowrap text-[11px] font-bold text-slate-300/75 line-through decoration-slate-400/80 decoration-[1.5px]">{originalPrice}</span> : null}
                   </div>
                   {hasDiscount ? <span className="mb-px whitespace-nowrap rounded-full border border-rose-200/30 bg-gradient-to-r from-rose-600 to-pink-500 px-2 py-1 text-[10px] font-black leading-none text-white shadow-[0_0_14px_rgba(244,63,94,.24)]">-{normalizedDiscount}%</span> : null}
@@ -255,7 +273,7 @@ export function ProductCard({
               </div>
             ) : null}
             {actions.length ? (
-              <div className="pointer-events-auto relative z-20 grid grid-cols-2 gap-2">
+              <div className={`pointer-events-auto relative z-20 grid gap-2 ${variant === "compact" ? "grid-cols-1 min-[480px]:grid-cols-2" : "grid-cols-2"}`}>
                 {actions.slice(0, 2).map((action) => <ActionItem key={`${action.label}-${action.href ?? action.productId ?? "disabled"}`} action={action} />)}
               </div>
             ) : href ? (

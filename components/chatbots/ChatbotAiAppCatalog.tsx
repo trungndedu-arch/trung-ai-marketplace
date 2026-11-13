@@ -34,6 +34,7 @@ function renderChatbotCard(chatbot: Chatbot) {
       actions={getMarketplaceCardActions(chatbot.state, detailHref, chatbot.appUrl, chatbot.databaseId)}
       showFavorite
       demoVideo={chatbot.demoVideo}
+      variant="compact"
     />
   );
 }
@@ -59,6 +60,7 @@ function renderWorkflowCard(workflow: Workflow) {
       meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
       actions={actions}
       demoVideo={workflow.demoVideo}
+      variant="compact"
     />
   );
 }
@@ -119,7 +121,7 @@ export function ChatbotAiAppCatalog({ chatbots, apps, initialTab = "all" }: { ch
     </section>
     <div className="mb-5 mt-9 flex items-center justify-between"><p className="text-sm text-slate-400"><b className="text-white">{visible.length}</b> {label} phù hợp</p><span className="text-xs text-slate-500">Nhấn vào thẻ để xem chi tiết</span></div>
     {visible.length ? (
-      <ProductCardGrid>
+      <ProductCardGrid variant="compact">
         {visible.map((entry) => entry.kind === "chatbot" ? renderChatbotCard(entry.item) : renderWorkflowCard(entry.item))}
       </ProductCardGrid>
     ) : (
