@@ -1,10 +1,11 @@
 import Image from "next/image";
 import Link from "next/link";
-import { ArrowRight, Clapperboard, MessageCircle, Sparkles, Wrench } from "lucide-react";
+import { ArrowRight, Clapperboard, ExternalLink, MessageCircle, Sparkles, UsersRound, Wrench } from "lucide-react";
 import { HomeContactLinks } from "@/components/home/HomeContactLinks";
 import { HomeFloatingPromotion, type HomePromotion } from "@/components/home/HomeFloatingPromotion";
 import { coachingLanding } from "@/lib/coaching";
 import type { HomepageContactLinks } from "@/lib/homepage-contact-links";
+import { zaloCommunity } from "@/lib/zalo-community";
 
 // Set to true when the founder section is ready to be shown again.
 export const SHOW_HOME_ABOUT_SECTION = false;
@@ -22,6 +23,14 @@ export function HomeHeroAbout({ contactLinks, promotion, onCoachingConsultation 
         <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
           <Link href="/workflow" className="inline-flex min-h-12 items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 to-sky-500 px-5 text-sm font-extrabold text-white shadow-[0_12px_34px_rgba(14,165,233,.28)] transition hover:-translate-y-0.5 hover:brightness-110 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-300 motion-reduce:transform-none"><Clapperboard className="h-4 w-4" />Khám phá App Ảnh &amp; Video AI<ArrowRight className="h-4 w-4" /></Link>
           {coachingLanding.enabled && onCoachingConsultation ? <button type="button" onClick={onCoachingConsultation} aria-haspopup="dialog" className="inline-flex min-h-12 items-center gap-2 rounded-full border border-cyan-300/25 bg-cyan-400/10 px-5 text-sm font-extrabold text-cyan-100 transition hover:-translate-y-0.5 hover:border-cyan-300/50 hover:bg-cyan-400/15 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 motion-reduce:transform-none"><MessageCircle className="h-4 w-4" />Tư vấn Coaching AI 1:1</button> : null}
+        </div>
+        <div className="mt-3 flex justify-center">
+          <a href={zaloCommunity.url} target="_blank" rel="noopener noreferrer" aria-label={zaloCommunity.ariaLabel} className="inline-flex min-h-12 max-w-full items-center justify-center gap-2 rounded-full border border-cyan-300/30 bg-cyan-400/[0.12] px-4 text-center text-xs font-extrabold text-cyan-100 shadow-[0_10px_28px_rgba(14,165,233,.14)] transition hover:-translate-y-0.5 hover:border-cyan-200/55 hover:bg-cyan-400/[0.18] hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-cyan-200 motion-reduce:transform-none sm:px-5 sm:text-sm">
+            <UsersRound className="h-4 w-4 shrink-0" />
+            <span className="sm:hidden">{zaloCommunity.heroMobileLabel}</span>
+            <span className="hidden sm:inline">{zaloCommunity.heroLabel}</span>
+            <ExternalLink className="h-3.5 w-3.5 shrink-0" aria-hidden="true" />
+          </a>
         </div>
         <HomeContactLinks settings={contactLinks} align="center" />
       </div>
