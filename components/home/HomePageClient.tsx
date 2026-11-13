@@ -39,6 +39,7 @@ function renderChatbotCard(chatbot: Chatbot) {
       actions={getMarketplaceCardActions(chatbot.state, detailHref, chatbot.appUrl, chatbot.databaseId)}
       showFavorite
       demoVideo={chatbot.demoVideo}
+      variant="compact"
     />
   );
 }
@@ -63,6 +64,7 @@ function renderWorkflowCard(workflow: Workflow) {
       meta={!workflow.appUrl ? workflow.tools.slice(0, 3).map((tool) => ({ label: tool })) : undefined}
       actions={getMarketplaceCardActions(workflow.state, detailHref, workflow.appUrl, workflow.databaseId)}
       demoVideo={workflow.demoVideo}
+      variant="compact"
     />
   );
 }
@@ -89,6 +91,7 @@ function renderAiToolCard(tool: AiTool) {
           : { label: "Sắp cập nhật", disabled: true, variant: "muted" },
       ]}
       demoVideo={tool.demoVideo}
+      variant="compact"
     />
   );
 }
@@ -110,7 +113,7 @@ function FeaturedAiToolsSection({ tools }: { tools: AiTool[] }) {
         </a>
       </div>
       {tools.length ? (
-        <ProductCardGrid>
+        <ProductCardGrid variant="compact">
           {tools.map(renderAiToolCard)}
         </ProductCardGrid>
       ) : (
@@ -141,7 +144,7 @@ function FeaturedChatbotAiAppsSection({ chatbots, apps }: { chatbots: Chatbot[];
           <ArrowRight className="h-4 w-4 transition group-hover:translate-x-1" />
         </a>
       </div>
-      {products.length ? <ProductCardGrid>{products.map((item) => item.kind === "chatbot" ? renderChatbotCard(item.product) : renderWorkflowCard(item.product))}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có App Tạo Ảnh hoặc Video AI nổi bật.</div>}
+      {products.length ? <ProductCardGrid variant="compact">{products.map((item) => item.kind === "chatbot" ? renderChatbotCard(item.product) : renderWorkflowCard(item.product))}</ProductCardGrid> : <div className="rounded-2xl border border-dashed border-sky-300/20 bg-[#0B1728]/60 p-8 text-sm text-slate-400">Chưa có App Tạo Ảnh hoặc Video AI nổi bật.</div>}
     </section>
   );
 }
