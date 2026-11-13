@@ -10,4 +10,6 @@ test("uses the supplied HTTPS Zalo community invitation without rewriting it", (
   assert.equal(parsed.protocol, "https:");
   assert.equal(parsed.hostname, "zalo.me");
   assert.equal(parsed.pathname, "/g/u5owdtukfy0tpuc7odi2");
+  assert.equal(zaloCommunity.heroLabel, "Nhóm Zalo Nhận Tài Liệu & Câu Lệnh AI Miễn Phí");
+  assert.equal(zaloCommunity.heroMobileLabel, "Nhóm Zalo Nhận Tài Liệu AI");
 });
