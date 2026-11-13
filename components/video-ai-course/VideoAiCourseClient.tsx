@@ -123,8 +123,8 @@ const problemCards = [
   },
 ];
 
-function Header({ user }: { user: AuthUserSummary }) {
-  return <MarketplaceHeader user={user} />;
+function Header({ user, freeAiLearningAvailable }: { user: AuthUserSummary; freeAiLearningAvailable: boolean }) {
+  return <MarketplaceHeader user={user} freeAiLearningAvailable={freeAiLearningAvailable} />;
 }
 function VideoPanel({ className = "", wide = false, label = "AI Render" }: { className?: string; wide?: boolean; label?: string }) {
   return (
@@ -1927,13 +1927,13 @@ function FinalCTASection() {
   );
 }
 
-export function VideoAiCourseClient({ user }: { user: AuthUserSummary }) {
+export function VideoAiCourseClient({ user, freeAiLearningAvailable }: { user: AuthUserSummary; freeAiLearningAvailable: boolean }) {
   const [activeCase, setActiveCase] = useState(0);
   const [activePart, setActivePart] = useState(0);
 
   return (
     <main className="min-h-screen scroll-smooth overflow-hidden bg-[#07111F] text-white">
-      <Header user={user} />
+      <Header user={user} freeAiLearningAvailable={freeAiLearningAvailable} />
 
       <section className="relative px-3 py-4 sm:px-6 sm:py-7 lg:px-8">
         <div className="absolute inset-x-0 top-0 h-32 bg-gradient-to-b from-blue-700/18 to-transparent" />
