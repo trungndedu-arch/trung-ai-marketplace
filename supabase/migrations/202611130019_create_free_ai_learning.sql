@@ -55,8 +55,25 @@ create policy "free AI learning: admin manages videos"
   using (public.has_role('admin'))
   with check (public.has_role('admin'));
 
+-- Production default ACLs may grant TRUNCATE/TRIGGER to API roles on creation.
+-- RLS does not protect either privilege; remove them explicitly for this new table.
+-- Keep existing DML grants below and do not change database-wide defaults.
+revoke truncate, trigger on table public.free_ai_learning_videos from PUBLIC, anon, authenticated;
+
 grant select on public.free_ai_learning_videos to anon, authenticated;
 grant insert, update, delete on public.free_ai_learning_videos to authenticated;
+
+-- Fail the migration transaction if an inherited grant still exposes these rights.
+do $
+begin
+  if has_table_privilege('anon', 'public.free_ai_learning_videos', 'TRUNCATE')
+     or has_table_privilege('anon', 'public.free_ai_learning_videos', 'TRIGGER')
+     or has_table_privilege('authenticated', 'public.free_ai_learning_videos', 'TRUNCATE')
+     or has_table_privilege('authenticated', 'public.free_ai_learning_videos', 'TRIGGER')
+  then
+    raise exception 'free_ai_learning_videos: effective TRUNCATE/TRIGGER privileges remain';
+  end if;
+end $;
 
 -- The existing permissive Editor policy covers every public site_settings key.
 -- Replace it so only Admin can mutate the free_ai_learning namespace while
