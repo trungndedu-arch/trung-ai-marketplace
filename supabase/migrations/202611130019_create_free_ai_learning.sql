@@ -64,7 +64,7 @@ grant select on public.free_ai_learning_videos to anon, authenticated;
 grant insert, update, delete on public.free_ai_learning_videos to authenticated;
 
 -- Fail the migration transaction if an inherited grant still exposes these rights.
-do $
+do $$
 begin
   if has_table_privilege('anon', 'public.free_ai_learning_videos', 'TRUNCATE')
      or has_table_privilege('anon', 'public.free_ai_learning_videos', 'TRIGGER')
@@ -73,7 +73,7 @@ begin
   then
     raise exception 'free_ai_learning_videos: effective TRUNCATE/TRIGGER privileges remain';
   end if;
-end $;
+end $$;
 
 -- The existing permissive Editor policy covers every public site_settings key.
 -- Replace it so only Admin can mutate the free_ai_learning namespace while
